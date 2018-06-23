@@ -11,8 +11,22 @@ document.addEventListener('DOMContentLoaded', () => {
     let clearCanvasButton = document.getElementsByClassName("clear-canvas")[0];
     clearCanvasButton.addEventListener("click", (e) => {
         e.preventDefault();
-        debugger;
         canvas.clearCanvas();
+    })
+
+    let normalizeCanvasButton = document.getElementsByClassName("normalize-canvas")[0];
+    normalizeCanvasButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        canvas.doSimulationStep();
+        canvas.pixels = [];
+        canvas.getPixels();
+        canvas.draw(canvas.ctx);
+    })
+
+    let reduceButton = document.getElementsByClassName("reduce-canvas")[0];
+    reduceButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        canvas.reduce();
     })
 
 })
@@ -31,7 +45,7 @@ class Canvas {
 
         window.array = this.array;
 
-        document.addEventListener("mousedown", (event) => {
+        this.canvas.addEventListener("mousedown", (event) => {
             this.mousedown = true;
             this.canvas.addEventListener("mousemove", this.getCoords())
         })
@@ -49,18 +63,19 @@ class Canvas {
         this.canvas.addEventListener("mouseout", (event) => {
             this.canvas.removeEventListener("mousemove", this.getCoords())
         })
+
+        window.canvas = canvas;
     }
 
     getCoords() {
         const that = this;
+        const rect = this.canvas.getBoundingClientRect();
 
         return (event) => {
             // scales the mouse pointer position down by two to account for the canvas being 100x100
             // also normalizes the position by removing the space between the top right 0,0 to the position of the canvas
-            console.log(event.clientX);
-            console.log(event.clientY);
-            that.x =  Math.floor(( event.clientX - 695 ) / 2);
-            that.y =  Math.floor(( event.clientY - 425 ) / 2);
+            that.x =  Math.floor(( event.clientX - rect.left ) / 2);
+            that.y =  Math.floor(( event.clientY - rect.top ) / 2);
         }
     }
 
@@ -133,9 +148,103 @@ class Canvas {
 
     clearCanvas() {
         this.array = this.createArray();
-        debugger
         this.pixels = [];
         this.draw(this.ctx);
     }
+
+    countNeighbors(x,y, start = -1) {
+        let count = 0;
+        let array = this.array;
+
+        for (let i = start; i < 2; i++) {
+            for (let j = start; j < 2; j++) {
+                let adjX = x + i;
+                let adjY = y + j;
+
+                if (i === 0 && y === 0) {
+                    continue;
+                } else if (this.outOfBounds(adjX, adjY)) {
+                    count += 0;
+                } else if (array[adjX][adjY] === 1) {
+                    count += 1;
+                }
+            }
+        }
+
+        return count;
+    }
+
+    outOfBounds(adjX, adjY) {
+        let array = this.array;
+
+        return adjX < 0 || adjX >= array[0].length || adjY < 0 || adjY >= array.length
+    }
+
+    doSimulationStep() {
+        const birthLimit = 4;
+        const deathLimit = 1;
+        let array = this.array;
+        const newMap = [];
+
+        for (let x = 0; x < array.length; x++) {
+            newMap[x] = [];
+
+            for (let y = 0; y < array[0].length; y++) {
+                let neighbors = this.countNeighbors(x, y);
+                let row = newMap[x];
+
+                if (array[x][y] === 0) {
+                    if (neighbors < deathLimit) {
+                        row.push(0);
+                    } else {
+                        row.push(1);
+                    }
+                } else {
+                    if (neighbors > birthLimit) {
+                        row.push(0);
+                    } else {
+                        row.push(1);
+                    }
+                }
+            }
+        }
+
+        this.array = newMap;       
+        return newMap;
+    }
+
+    getPixels() {
+       for ( let i = 0; i < this.array.length; i ++ ) {
+           for ( let j = 0; j < this.array[i].length; j++ ) {
+                if ( this.array[i][j] === 1 ) {
+                    this.pixels.push([2 * i, 2 * j]);
+                }
+           }
+       }
+    }
+
+    reduce() {
+        let array = this.array;
+        let newArr = [];
+
+        for ( let i = 0; i < array.length; i += 2 ) {
+            let row = [];
+
+            for ( let j = 0; j < array[0].length; j += 2 ) {
+                if ( this.countNeighbors(i,j,0) >= 2 ) {
+                    row.push(1);
+                } else {
+                    row.push(0);
+                }
+            }
+
+            newArr.push(row);
+        }
+
+        this.reducedArr = newArr;
+        console.log(newArr);
+        return newArr;
+    }
+
 }
 
