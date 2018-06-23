@@ -242,7 +242,7 @@ class Canvas {
         }
 
         this.reducedArr = newArr;
-        console.log(newArr);
+        console.log(newArr.toString());
         return newArr;
     }
 
