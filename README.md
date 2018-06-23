@@ -38,3 +38,5 @@ Backwards propagation
 Train data
 ### Fri / Sat / Sun
 Determine functions to disable and and polish 
+
+
