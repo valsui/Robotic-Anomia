@@ -21,6 +21,10 @@ ul {
   list-style: none;
 }
 
+div {
+  display: flex;
+}
+
 button {
   cursor: pointer;
 }

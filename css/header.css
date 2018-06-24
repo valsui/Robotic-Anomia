@@ -1,0 +1,33 @@
+.page-header {
+    height: 100px;
+    background-color: lavender;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    font-size: 20px;
+}
+
+.title-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.page-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.github-link {
+    color: black;
+    height: 50px;
+    width: 50px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 50px;
+}
