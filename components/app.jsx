@@ -1,9 +1,12 @@
 import React from 'react';
+import Modal from './modal/modal';
+import Header from './header/header';
 
 const App = () => {
     return (
         <div className="main-body">
-            <h1>We are on the App Page!</h1>
+            <Header />
+            <Modal />
         </div>
     )
 }
