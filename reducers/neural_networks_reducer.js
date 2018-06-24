@@ -1,12 +1,12 @@
 import { RECEIVE_NEURAL_NETWORK } from '../actions/neural_network_actions';
-import net from '../javascripts/trained_net';
+// import net from '../javascripts/trained_net';
 
 
 // On intialization, it will create a neural network object called "trainedNet" users can access this trainedNet to run test on whether or not their canvas is recognizable.
 // Users should not be able modify the training data in this neural network.  
 
 const initialState = {
-    trainedNet: net,
+    // trainedNet: net,
     dumbNet: null
 }
 
