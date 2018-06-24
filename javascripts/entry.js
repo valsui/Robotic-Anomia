@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         data.push(JSON.stringify(dataPoint));
-        debugger;
+        // debugger;
         // writeDataToFile(dataPoint.toString());
     })
 
