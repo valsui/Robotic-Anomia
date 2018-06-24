@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import configureStore from './store/store';
-import { testData } from './test_suite/brain_train';
-import brain from 'brain.js';
+import net from './javascripts/trained_net.js';
 import Root from './components/root';
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -14,16 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
     ReactDOM.render(<Root store={store} />, root);
 })
 
-
-let config = {
-    iterations: 10000,
-    learningRate: 0.3,
-    layers: [5]
-}
-
-let net = new brain.NeuralNetwork(config);
-
-net.train(testData);
 
 //real a
 let outputa = net.run(
