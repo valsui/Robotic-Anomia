@@ -1,4 +1,5 @@
 // import Canvas from '../canvas/canvas.js';
+// import { writeDataToFile } from '../test_suite/add_data';
 
 document.addEventListener('DOMContentLoaded', () => {
     let canvasEl = document.getElementById("canvas");
@@ -27,6 +28,33 @@ document.addEventListener('DOMContentLoaded', () => {
     reduceButton.addEventListener("click", (e) => {
         e.preventDefault();
         canvas.reduce();
+    })
+
+    let data = [];
+
+    let flatten = (arr) => {
+        return arr.reduce((acc,a) => acc.concat(a));
+    }
+
+    let addDataButton = document.getElementById("add-data");
+    addDataButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        let letter = document.getElementById('letter').value;
+
+        let dataPoint = {
+            input: flatten(canvas.reducedArr),
+            output: {[letter]: 1}
+        };
+
+        data.push(JSON.stringify(dataPoint));
+        // debugger;
+        // writeDataToFile(dataPoint.toString());
+    })
+
+    let downloadButton = document.getElementById('download');
+    downloadButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        download(document.getElementById('filename').value, data.toString());
     })
 
 })
@@ -245,6 +273,17 @@ class Canvas {
         console.log(newArr.toString());
         return newArr;
     }
-
 }
 
+function download(filename, text) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+}
