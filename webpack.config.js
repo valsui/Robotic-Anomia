@@ -2,7 +2,7 @@ var path = require("path");
 
 module.exports = {
     context: __dirname,
-    entry: "./javascripts/robotic_anomia.jsx",
+    entry: "./robotic_anomia.jsx",
     output: {
         path: path.resolve(__dirname),
         filename: "bundle.js"
