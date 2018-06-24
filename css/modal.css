@@ -14,3 +14,14 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.dev-bios-container {
+  height: 600px;
+  width: 600px;
+  background-color: white;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+}

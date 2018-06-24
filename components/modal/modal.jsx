@@ -1,6 +1,7 @@
 import React from 'react';
 import { closeModal } from '../../actions/modal_actions';
 import { connect } from 'react-redux';
+import DevBios from "./dev_bios";
 
 class Modal extends React.Component {
     constructor(props) {
@@ -11,8 +12,8 @@ class Modal extends React.Component {
     }
 
 
-    componentDidUpdate() {
-        this.component.addEventListener('keydown', (event) => this.escapeModal(event));
+    componentDidMount() {
+        document.addEventListener('keydown', (event) => this.escapeModal(event));
     }
 
     escapeModal(event) {
@@ -29,6 +30,9 @@ class Modal extends React.Component {
         }
 
         switch (modal) {
+            case "devBios":
+                this.component = <DevBios />;
+                break;
             default: 
                 return null;
         }
