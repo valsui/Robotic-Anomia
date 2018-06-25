@@ -26,33 +26,33 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         canvas.reduce();
     })
-    //
-    // let data = [];
-    //
-    // let flatten = (arr) => {
-    //     return arr.reduce((acc,a) => acc.concat(a));
-    // }
-    //
-    // let addDataButton = document.getElementById("add-data");
-    // addDataButton.addEventListener('click', (e) => {
-    //     e.preventDefault();
-    //     let letter = document.getElementById('letter').value;
-    //
-    //     let dataPoint = {
-    //         input: flatten(canvas.reducedArr),
-    //         output: {[letter]: 1}
-    //     };
-    //
-    //     data.push(JSON.stringify(dataPoint));
-    //     // debugger;
-    //     // writeDataToFile(dataPoint.toString());
-    // })
-    //
-    // let downloadButton = document.getElementById('download');
-    // downloadButton.addEventListener('click', (e) => {
-    //     e.preventDefault();
-    //     download(document.getElementById('filename').value, data.toString());
-    // })
+
+    let data = [];
+
+    let flatten = (arr) => {
+        return arr.reduce((acc,a) => acc.concat(a));
+    }
+
+    let addDataButton = document.getElementById("add-data");
+    addDataButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        let letter = document.getElementById('letter').value;
+
+        let dataPoint = {
+            input: flatten(canvas.reducedArr),
+            output: {[letter]: 1}
+        };
+
+        data.push(JSON.stringify(dataPoint));
+        // debugger;
+        // writeDataToFile(dataPoint.toString());
+    })
+
+    let downloadButton = document.getElementById('download');
+    downloadButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        download(document.getElementById('filename').value, data.toString());
+    })
 
 })
 
@@ -226,7 +226,6 @@ class Canvas {
            newArr.push(row);
        }
 
-       // this.reducedArr = newArr;
        let top  = 25;
        let bottom = 0;
        let left = 25;
@@ -264,10 +263,10 @@ class Canvas {
        let width = 25 - anotherArray[0].length;
        let height = 25 - anotherArray.length;
        this.addTopBottomPadding(height, anotherArray);
-       setTimeout(this.addRightLeftPadding(width, anotherArray), 3000);
-       // this.addRightLeftPadding(width, anotherArray);
+       setTimeout(this.addRightLeftPadding(width, anotherArray), 10000);
        console.log(anotherArray);
        console.log(anotherArray.toString());
+       this.reducedArr = anotherArray;
        return anotherArray;
    }
    addTopBottomPadding(height, array){
@@ -321,4 +320,17 @@ class Canvas {
      }
      return array;
    }
+}
+
+function download(filename, text) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
 }
