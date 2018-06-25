@@ -36,7 +36,7 @@ export const reduce = (array) => {
     let height = 25 - anotherArray.length;
     addTopBottomPadding(height, anotherArray);
     addRightLeftPadding(width, anotherArray);
-    let returnArray = this.addPadding(25, anotherArray);
+    let returnArray = addPadding(25, anotherArray);
     return returnArray;
 }
 
@@ -82,8 +82,8 @@ const cutOut = (array) => {
 const addPadding = (size, array) => {
   let width = size - array[0].length;
   let height = size - array.length;
-  let returnArray = this.addTopBottomPadding(height, JSON.parse(JSON.stringify(array)));
-  return this.addRightLeftPadding(width, JSON.parse(JSON.stringify(returnArray)));
+  let returnArray = addTopBottomPadding(height, JSON.parse(JSON.stringify(array)));
+  return addRightLeftPadding(width, JSON.parse(JSON.stringify(returnArray)));
 }
 
 const addTopBottomPadding = (height, array) => {
@@ -119,7 +119,10 @@ const addRightLeftPadding = (width, array) => {
   }
   return array;
 }
+<<<<<<< HEAD
 // }
+=======
+>>>>>>> 83af0761b97fbe31b3c84b1fe7594e3ea29eaace
 
 export const doSimulationStep = (array) => {
     const birthLimit = 4;
