@@ -15,6 +15,13 @@ span, article, footer, time, small {
   box-sizing: inherit;
   background: transparent;
   font-family: Helvetica, sans-serif;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 
 input {
@@ -47,3 +54,4 @@ input {
   display: flex;
   flex-direction: column;
 }
+
