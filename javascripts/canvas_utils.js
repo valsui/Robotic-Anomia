@@ -87,56 +87,38 @@ const addPadding = (size, array) => {
 }
 
 const addTopBottomPadding = (height, array) => {
-    let tempArray = [];
-    for (let i = 0; i < array[0].length; i++) {
-        tempArray.push(0);
-    }
-    if (height % 2 === 0) {
-        let padding = Math.floor(height / 2);
-
-        for (let i = 0; i < padding; i++) {
-            array.unshift(tempArray);
-            array.push(tempArray);
-        }
-    } else {
-        let paddingTop = Math.floor(height / 2);
-        let paddingBottom = Math.floor(height / 2) + 1;
-        for (let i = 0; i < paddingTop; i++) {
-            array.unshift(tempArray);
-        }
-        for (let i = 0; i < paddingBottom; i++) {
-            array.push(tempArray);
-        }
-    }
-    return array;
+  let tempArray = [];
+  for(let i = 0; i < array[0].length; i++){
+    tempArray.push(0);
+  }
+  // In case of odd numbers, add extra padding to bottom.
+  if(height % 2 !== 0){
+   array.push(tempArray);
+  }
+  let padding = Math.floor(height / 2);
+  for(let i = 0; i < padding; i++){
+    array.unshift(tempArray);
+    array.push(tempArray);
+  }
+  return array;
 }
 
 const addRightLeftPadding = (width, array) => {
-    if (width % 2 === 0) {
-        let padding = Math.floor(width / 2);
-        for (let i = 0; i < 25; i++) {
-            for (let j = 0; j < padding; j++) {
-                array[i].unshift(0);
-                array[i].push(0);
-            }
-        }
-    } else {
-        let paddingLeft = Math.floor(width / 2);
-        let paddingRight = Math.floor(width / 2) + 1;
-        for (let i = 0; i < 25; i++) {
-            for (let j = 0; j < paddingLeft; j++) {
-                if (array[i].length < 25) {
-                    array[i].unshift(0);
-                }
-            }
-            for (let j = 0; j < paddingRight; j++) {
-                if (array[i].length < 25) {
-                    array[i].push(0);
-                }
-            }
-        }
+  // Add extra padding at end in case of odd numbers
+  if(width % 2 !== 0){
+    for(let i = 0; i < 25; i++){
+      array[i].push(0);
     }
-    return array;
+  }
+  let padding = Math.floor(width / 2);
+  for(let i = 0; i < 25; i++){
+    for(let j = 0; j < padding; j++){
+      array[i].unshift(0);
+      array[i].push(0);
+    }
+  }
+  return array;
+}
 }
 
 export const doSimulationStep = (array) => {
