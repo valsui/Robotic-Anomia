@@ -1,7 +1,6 @@
 import brain from 'brain.js';
 import { testData } from '../test_suite/brain_train';
-import { getImageMapping } from './heatmap';
-
+import { slicedTestData} from '../test_suite/sliced_brain_train';
 // This is our trained neural network.  It will be trained using the information stored on test data, which is what we need to train the neural network every time the page loads.
 
 let config = {
@@ -12,6 +11,3 @@ let config = {
 
 const net = new brain.NeuralNetwork(config);
 
-net.train(testData);
-////// testing heat map
-export default net;
