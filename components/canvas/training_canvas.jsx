@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createArray, doSimulationStep, reduce, download } from '../../javascripts/canvas_utils';
-import { receiveTestData } from '../../actions/test_data_actions';
+import { receiveTestData, resetTestData } from '../../actions/test_data_actions';
 
 class TrainingCanvas extends React.Component {
     constructor(props) {
@@ -16,6 +16,7 @@ class TrainingCanvas extends React.Component {
         this.array = createArray();
         this.sendData = this.sendData.bind(this);
         this.changeLetter = this.changeLetter.bind(this);
+        this.trainData = this.trainData.bind(this);
     }
 
     componentDidMount() {
@@ -111,17 +112,28 @@ class TrainingCanvas extends React.Component {
         e.preventDefault();
         let newArray = doSimulationStep(this.array);
         let tempArray = reduce(newArray);
+        let newArr = [];
+        let consoleLogArray = []
 
-        while ( tempArray[0].length > 25 ) {
-            newArray = doSimulationStep(this.array);
-            tempArray = reduce(newArray);
+    
+        for ( let i = 0; i < tempArray.length; i++ ) {
+             newArr = newArr.concat(tempArray[i].slice(0,25));
+             consoleLogArray.push(tempArray[i].slice(0,25))
         }
-
-        this.array = tempArray;
-
-        let data = { input: [this.array.toString()], output: {[this.state.letter]: 1} }
+        
+        console.log(consoleLogArray);
+        let data = { input: newArr, output: {[this.state.letter]: 1} }
         
         this.props.receiveTestData(data);
+        this.resetCanvas();
+    }
+
+    resetCanvas() {
+        const { ctx, canvas } = this.state;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        this.array = createArray();
     }
 
     changeLetter(e) {
@@ -131,13 +143,28 @@ class TrainingCanvas extends React.Component {
         })
     }
 
+    trainData(e) {
+        e.preventDefault();
+        let data = [];
+        this.props.data.forEach ((datum) => {
+            data.push(JSON.stringify(datum))
+        })
+        let filename = document.getElementById("filename");
+        download(filename.value, data.toString());
+        this.props.resetTestData();
+    }
+
     render() {
         return (
             <div className="training-canvas-div">
                 <canvas ref="trainingCanvas" width={100} height={100} />
                 <input onChange={this.changeLetter} value={this.state.letter} />
                 <button onClick={this.sendData}>Add Data</button>
-                <button onClick={this.download}>Download Data</button>
+                <button onClick={this.trainData}>Download Data</button>
+                <form>
+                    <input id="filename" type="text" name="name" value="data.txt"/>
+                    <input id="download" type="submit" value="Download"/>
+                </form>
             </div>
         )
     }
@@ -148,7 +175,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    receiveTestData: (data) => dispatch(receiveTestData(data))
+    receiveTestData: (data) => dispatch(receiveTestData(data)),
+    resetTestData: () => dispatch(resetTestData())
 })
 
 export default (connect(mapStateToProps, mapDispatchToProps)(TrainingCanvas));

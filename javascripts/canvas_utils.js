@@ -74,8 +74,6 @@ export const reduce = (array) => {
     let height = 25 - anotherArray.length;
     addTopBottomPadding(height, anotherArray);
     setTimeout(addRightLeftPadding(width, anotherArray), 10000);
-    console.log(anotherArray);
-    console.log(anotherArray.toString());
 
     return anotherArray;
 }
