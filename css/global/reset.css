@@ -17,6 +17,10 @@ span, article, footer, time, small {
   font-family: Helvetica, sans-serif;
 }
 
+input {
+  border: 1px solid black;
+}
+
 ul {
   list-style: none;
 }
@@ -37,4 +41,9 @@ img {
 
 input {
   font-weight: 500;
+}
+
+.main-body {
+  display: flex;
+  flex-direction: column;
 }

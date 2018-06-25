@@ -12,9 +12,7 @@ let config = {
 
 const net = new brain.NeuralNetwork(config);
 
-// net.train(testData);
-// net.train(slicedTestData);
-const data = testData.concat(slicedTestData).concat(valTestData);
-net.train(data);
+net.train(testData);
+net.train(slicedTestData);
 
 export default net;
