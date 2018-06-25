@@ -11,3 +11,7 @@ let config = {
 
 const net = new brain.NeuralNetwork(config);
 
+// net.train(testData);
+net.train(slicedTestData);
+
+export default net;
