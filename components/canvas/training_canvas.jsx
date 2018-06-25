@@ -34,7 +34,9 @@ class TrainingCanvas extends React.Component {
         document.addEventListener("mouseup", this.mouseUp());
     }
 
-    componentDidUnMount() {
+    componentWillUnmount() {
+        const { canvas } = this.state;
+
         canvas.removeEventListener("mousedown", this.mouseDown());
         canvas.removeEventListener("mousemove", this.mouseMove());
         document.removeEventListener("mouseup", this.mouseUp());
@@ -110,6 +112,15 @@ class TrainingCanvas extends React.Component {
 
     sendData(e) {
         e.preventDefault();
+
+        if ( this.state.letter.length < 1 ) {
+            console.log("please enter one letter");
+            return;
+        } else if ( this.state.letter.length > 1 ) {
+            console.log("please only enter one letter");
+            return;
+        }
+
         let newArray = doSimulationStep(this.array);
         let tempArray = reduce(newArray);
         let newArr = [];
@@ -138,6 +149,7 @@ class TrainingCanvas extends React.Component {
 
     changeLetter(e) {
         e.preventDefault();
+        
         this.setState({
             letter: e.currentTarget.value
         })
@@ -145,6 +157,7 @@ class TrainingCanvas extends React.Component {
 
     trainData(e) {
         e.preventDefault();
+        
         let data = [];
         this.props.data.forEach ((datum) => {
             data.push(JSON.stringify(datum))

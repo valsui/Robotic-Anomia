@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createArray, doSimulationStep, reduce, download } from '../../javascripts/canvas_utils';
+import { createArray, doSimulationStep, reduce } from '../../javascripts/canvas_utils';
+import { receiveOutputData } from '../../actions/test_data_actions';
 
 class TestingCanvas extends React.Component {
     constructor(props) {
@@ -31,7 +32,9 @@ class TestingCanvas extends React.Component {
         document.addEventListener("mouseup", this.mouseUp());
     }
 
-    componentDidUnMount() {
+    componentWillUnmount() {
+        const { canvas } = this.state;
+
         canvas.removeEventListener("mousedown", this.mouseDown());
         canvas.removeEventListener("mousemove", this.mouseMove());
         document.removeEventListener("mouseup", this.mouseUp());
@@ -119,7 +122,7 @@ class TestingCanvas extends React.Component {
         }
 
         console.log(consoleLogArray);
-        console.log(this.props.trainedNet.run(newArr));
+        this.props.receiveOutputData((this.props.trainedNet.run(newArr)));
 
         this.resetCanvas();
     }
@@ -148,6 +151,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+    receiveOutputData: (data) => dispatch(receiveOutputData(data))
 })
 
-export default (connect(mapStateToProps, null)(TestingCanvas));
+export default (connect(mapStateToProps, mapDispatchToProps)(TestingCanvas));

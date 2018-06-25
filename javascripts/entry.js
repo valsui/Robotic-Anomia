@@ -99,7 +99,6 @@ class Canvas {
 
     return array;
   }
-
   draw(e){
     if(this.mousedown){
         const rect = this.canvas.getBoundingClientRect();
@@ -206,15 +205,9 @@ class Canvas {
 
     reduce() {
        let array = this.array;
-       // console.log(array);
-       // Set extreme boundaries to ensure they will be changed
-       // when real bounds are found.
-
        let newArr = [];
-
        for ( let i = 0; i < array.length; i += 2 ) {
            let row = [];
-
            for ( let j = 0; j < array[0].length; j += 2 ) {
                if ( this.countNeighbors(i,j,0) >= 2 ) {
                    row.push(1);
@@ -222,101 +215,89 @@ class Canvas {
                    row.push(0);
                }
            }
-
            newArr.push(row);
        }
 
-       let top  = 25;
-       let bottom = 0;
-       let left = 25;
-       let right = 0;
-       for(let i = 0; i < newArr.length; i++){
-         for(let j = 0; j < newArr[i].length; j++){
-           if(newArr[i][j] === 1){
-             if(i < top){
-               top = i;
-             }
-             if(i > bottom){
-               bottom = i;
-             }
-             if(j < left){
-               left = j;
-             }
-             if(j > right){
-               right = j
-             }
+       let anotherArray = this.cutOut(newArr)
+       let returnArray = this.addPadding(25, anotherArray);
+       console.log(returnArray);
+       console.log(returnArray.toString());
+       this.reducedArr = returnArray;
+       return returnArray;
+   }
+
+   cutOut(array){
+     let top  = array.length;
+     let bottom = 0;
+     let left = array.length;
+     let right = 0;
+     // This part finds the margins of the box in order to cut it out
+     for(let i = 0; i < array.length; i++){
+       for(let j = 0; j < array[i].length; j++){
+         if(array[i][j] === 1){
+           if(i < top){
+             top = i;
+           }
+           if(i > bottom){
+             bottom = i;
+           }
+           if(j < left){
+             left = j;
+           }
+           if(j > right){
+             right = j
            }
          }
        }
-       let anotherArray = [];
-       for(let i = top; i < bottom; i++){
-         anotherArray.push(newArr[i])
+     }
+     let anotherArray = [];
+     for(let i = top; i < bottom; i++){
+       anotherArray.push(array[i])
+     }
+     for(let i = 0; i < anotherArray.length; i++){
+       for(let j = 0; j < left; j++){
+         anotherArray[i].shift();
        }
-       for(let i = 0; i < anotherArray.length; i++){
-         for(let j = 0; j < left; j++){
-           anotherArray[i].shift();
-         }
-         for(let k = right; k < 25; k++){
-           anotherArray[i].pop();
-         }
+       for(let k = right; k < 25; k++){
+         anotherArray[i].pop();
        }
-       let width = 25 - anotherArray[0].length;
-       let height = 25 - anotherArray.length;
-       this.addTopBottomPadding(height, anotherArray);
-       setTimeout(this.addRightLeftPadding(width, anotherArray), 10000);
-       console.log(anotherArray);
-       console.log(anotherArray.toString());
-       this.reducedArr = anotherArray;
-       return anotherArray;
+     }
+     return anotherArray;
+   }
+   addPadding(size, array){
+     let width = size - array[0].length;
+     let height = size - array.length;
+     let returnArray = this.addTopBottomPadding(height, JSON.parse(JSON.stringify(array)));
+     return this.addRightLeftPadding(width, JSON.parse(JSON.stringify(returnArray)));
    }
    addTopBottomPadding(height, array){
      let tempArray = [];
      for(let i = 0; i < array[0].length; i++){
        tempArray.push(0);
      }
-     if(height % 2 === 0){
-       let padding = Math.floor(height / 2);
-
-       for(let i = 0; i < padding; i++){
-         array.unshift(tempArray);
-         array.push(tempArray);
-       }
-     }else{
-       let paddingTop = Math.floor(height / 2);
-       let paddingBottom = Math.floor(height / 2) + 1;
-       for(let i = 0; i < paddingTop; i++){
-         array.unshift(tempArray);
-       }
-       for(let i = 0; i < paddingBottom; i++){
-         array.push(tempArray);
-       }
+     // In case of odd numbers, add extra padding to bottom.
+     if(height % 2 !== 0){
+      array.push(tempArray);
+     }
+     let padding = Math.floor(height / 2);
+     for(let i = 0; i < padding; i++){
+       array.unshift(tempArray);
+       array.push(tempArray);
      }
      return array;
    }
-
    addRightLeftPadding(width, array){
-     if(width % 2 === 0){
-        let padding = Math.floor(width / 2);
-        for(let i = 0; i < 25; i++){
-          for(let j = 0; j < padding; j++){
-            array[i].unshift(0);
-            array[i].push(0);
-          }
-        }
-     }else {
-       let paddingLeft = Math.floor(width / 2);
-       let paddingRight = Math.floor(width / 2) + 1;
+     // Add extra padding at end in case of odd numbers
+     if(width % 2 !== 0){
        for(let i = 0; i < 25; i++){
-         for(let j = 0; j < paddingLeft; j++){
-           if(array[i].length < 25){
-             array[i].unshift(0);
-           }
-         }
-         for(let j = 0; j < paddingRight; j++){
-           if(array[i].length < 25){
-             array[i].push(0);
-           }
-         }
+         array[i].push(0);
+       }
+     }
+     let padding = Math.floor(width / 2);
+     for(let i = 0; i < 25; i++){
+       for(let j = 0; j < padding; j++){
+         array[i].unshift(0);
+         array[i].push(0);
        }
      }
      return array;
