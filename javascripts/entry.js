@@ -100,6 +100,7 @@ class Canvas {
 
     return array;
   }
+
   draw(e){
     if(this.mousedown){
         const rect = this.canvas.getBoundingClientRect();
@@ -293,6 +294,7 @@ class Canvas {
      }
      return array;
    }
+
    addRightLeftPadding(width, array){
      if(width % 2 === 0){
         let padding = Math.floor(width / 2);

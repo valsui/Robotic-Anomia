@@ -1,15 +1,7 @@
-#canvas {
+canvas {
     border: 2px solid black;
-    height: 100px;
-    width: 100px;
-    margin-bottom: 30px;
 }
 
-body {
-    height: 100vh; 
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.training-canvas-div {
+    width: 100%;
 }
