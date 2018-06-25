@@ -31,7 +31,7 @@ class TestingCanvas extends React.Component {
         document.addEventListener("mouseup", this.mouseUp());
     }
 
-    componentDidUnMount() {
+    componentDidUnmount() {
         canvas.removeEventListener("mousedown", this.mouseDown());
         canvas.removeEventListener("mousemove", this.mouseMove());
         document.removeEventListener("mouseup", this.mouseUp());
