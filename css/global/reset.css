@@ -38,3 +38,8 @@ img {
 input {
   font-weight: 500;
 }
+
+.main-body {
+  display: flex;
+  flex-direction: column;
+}
