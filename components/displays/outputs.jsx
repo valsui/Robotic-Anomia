@@ -15,7 +15,7 @@ class Outputs extends React.Component {
                 <h1 className="percentages-header"> Percentages </h1>
                 <ul className="outputs-ul">
                     { outputs.map((output, i) => {
-                        return <OutputItem keys={i} output={output} letter={outputKeys[i]}/>
+                        return <OutputItem key={i} output={output} letter={outputKeys[i]}/>
                     })}
                 </ul>
             </div>
