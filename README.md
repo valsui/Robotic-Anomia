@@ -31,8 +31,8 @@ There will be five main modes of interaction on the webpage.  Users will be able
  ### Main Page 
  ![MainPage](/wireframes/prototype-for-main.png)
  ### Working with trained network
- ![PlayPage1](/wireframes/prototype-for-play-1.png)
- ![PlayPage2](/wireframes/prototype-for-play-2.png)
+ ![PlayPage1](/wireframes/prototype-for-play_1.png)
+ ![PlayPage2](/wireframes/prototype-for-play_2.png)
  ![PlayPage3](/wireframes/prototype-for-trained-set.png)
  ### Training own set
  ![LearnPage](/wireframes/prototype-for-learn.png)
