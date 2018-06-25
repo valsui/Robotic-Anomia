@@ -157,6 +157,7 @@ class TrainingCanvas extends React.Component {
     render() {
         return (
             <div className="training-canvas-div">
+                Training Canvas
                 <canvas ref="trainingCanvas" width={100} height={100} />
                 <input onChange={this.changeLetter} value={this.state.letter} />
                 <button onClick={this.sendData}>Add Data</button>
