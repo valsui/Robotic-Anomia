@@ -1,0 +1,8 @@
+.output-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.outputs-ul {
+    padding: 10px;
+}

@@ -1,0 +1,6 @@
+@import "./global/reset.css";
+@import "./global/variables.css";
+@import "./components/header.css";
+@import "./components/modal.css";
+@import "./components/canvas.css";
+@import "./components/outputs.css";

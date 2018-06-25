@@ -1,0 +1,47 @@
+.page-header {
+    height: 100px;
+    background-color: lavender;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    font-size: 20px;
+    box-sizing: border-box;
+}
+
+.title-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.page-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.header-icon-container {
+    display: flex;
+    flex-direction: row;
+    font-size: 50px;
+    width: 150px;
+    justify-content: space-between;
+}
+
+.header-icon-container i {
+    cursor: pointer;
+}
+
+.github-link {
+    color: black;
+    height: 50px;
+    width: 50px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 50px;
+}
+
