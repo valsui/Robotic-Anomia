@@ -3,6 +3,7 @@ import Modal from './modal/modal';
 import Header from './header/header';
 import TrainingCanvas from './canvas/training_canvas';
 import TestingCanvas from './canvas/testing_canvas';
+import Output from './displays/outputs';
 
 const App = () => {
     return (
@@ -11,6 +12,7 @@ const App = () => {
             <TrainingCanvas />
             <TestingCanvas />
             <Modal />
+            <Output />
         </div>
     )
 }
