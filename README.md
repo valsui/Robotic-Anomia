@@ -27,6 +27,16 @@ There will be five main modes of interaction on the webpage.  Users will be able
  * Disabling the ability to recognize a coherant input (text recognition impediment) will cause user inputs to propogate incorrectly through the neural network.
  * Disabling the ability to produce a coherant output will cause the modal to display its returned data in a confusing or incomprehensible way.
 
+ ## Wireframes
+ ### Main Page 
+ ![MainPage](/wireframes/prototype-for-main.png)
+ ### Working with trained network
+ ![PlayPage](/wireframes/prototype-for-trained-set.png)
+ ### Training own set
+ ![LearnPage](/wireframes/prototype-for-learn.png)
+### Playing with own trained network
+![PlayWithLearnedPage](/wireframes/prototype-for-learn-play.png)
+
 ## Timeline
  
 ### Monday 
