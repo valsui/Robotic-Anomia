@@ -35,6 +35,8 @@ class TrainingCanvas extends React.Component {
     }
 
     componentWillUnmount() {
+        const { canvas } = this.state;
+
         canvas.removeEventListener("mousedown", this.mouseDown());
         canvas.removeEventListener("mousemove", this.mouseMove());
         document.removeEventListener("mouseup", this.mouseUp());
