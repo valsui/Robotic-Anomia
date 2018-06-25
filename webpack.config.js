@@ -22,5 +22,6 @@ module.exports = {
     devtool: 'source-map',
     resolve: {
         extensions: [".js", ".jsx", "*"]
-    }
+    },
+    target: 'node'
 };
