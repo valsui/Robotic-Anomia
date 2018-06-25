@@ -16,10 +16,9 @@ export const createArray = () => {
 
 export const reduce = (array) => {
     let newArr = [];
-
+    // reduces size from 50 x 50 to 25 x 25
     for (let i = 0; i < array.length; i += 2) {
         let row = [];
-
         for (let j = 0; j < array[0].length; j += 2) {
             if (countNeighbors(array, i, j, 0) >= 2) {
                 row.push(1);
@@ -27,55 +26,64 @@ export const reduce = (array) => {
                 row.push(0);
             }
         }
-
         newArr.push(row);
     }
+    // cuts out the white space
+    let anotherArray = cutOut(newArr);
 
-    let top = 25;
-    let bottom = 0;
-    let left = 25;
-    let right = 0;
-
-    for (let i = 0; i < newArr.length; i++) {
-        for (let j = 0; j < newArr[i].length; j++) {
-            if (newArr[i][j] === 1) {
-                if (i < top) {
-                    top = i;
-                }
-                if (i > bottom) {
-                    bottom = i;
-                }
-                if (j < left) {
-                    left = j;
-                }
-                if (j > right) {
-                    right = j
-                }
-            }
-        }
-    }
-
-    let anotherArray = [];
-
-    for (let i = top; i < bottom; i++) {
-        anotherArray.push(newArr[i])
-    }
-
-    for (let i = 0; i < anotherArray.length; i++) {
-        for (let j = 0; j < left; j++) {
-            anotherArray[i].shift();
-        }
-        for (let k = right; k < 25; k++) {
-            anotherArray[i].pop();
-        }
-    }
 
     let width = 25 - anotherArray[0].length;
     let height = 25 - anotherArray.length;
     addTopBottomPadding(height, anotherArray);
     addRightLeftPadding(width, anotherArray);
+    let returnArray = this.addPadding(25, anotherArray);
+    return returnArray;
+}
 
-    return anotherArray;
+const cutOut = (array) => {
+  let top  = array.length;
+  let bottom = 0;
+  let left = array.length;
+  let right = 0;
+  // This part finds the margins of the box in order to cut it out
+  for(let i = 0; i < array.length; i++){
+    for(let j = 0; j < array[i].length; j++){
+      if(array[i][j] === 1){
+        if(i < top){
+          top = i;
+        }
+        if(i > bottom){
+          bottom = i;
+        }
+        if(j < left){
+          left = j;
+        }
+        if(j > right){
+          right = j
+        }
+      }
+    }
+  }
+  let anotherArray = [];
+  for(let i = top; i < bottom; i++){
+    anotherArray.push(array[i])
+  }
+  for(let i = 0; i < anotherArray.length; i++){
+    for(let j = 0; j < left; j++){
+      anotherArray[i].shift();
+    }
+    for(let k = right; k < 25; k++){
+      anotherArray[i].pop();
+    }
+  }
+  return anotherArray;
+}
+
+const addPadding = (size, array) => {
+  let width = size - array[0].length;
+  let height = size - array.length;
+  let returnArray = this.addTopBottomPadding(height, JSON.parse(JSON.stringify(array)));
+  return this.addRightLeftPadding(width, JSON.parse(JSON.stringify(returnArray)));
 }
 
 const addTopBottomPadding = (height, array) => {
