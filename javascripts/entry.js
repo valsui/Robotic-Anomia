@@ -44,8 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         data.push(JSON.stringify(dataPoint));
-        // debugger;
-        // writeDataToFile(dataPoint.toString());
     })
 
     let downloadButton = document.getElementById('download');
@@ -100,6 +98,7 @@ class Canvas {
 
     return array;
   }
+
   draw(e){
     if(this.mousedown){
         const rect = this.canvas.getBoundingClientRect();
@@ -293,6 +292,7 @@ class Canvas {
      }
      return array;
    }
+
    addRightLeftPadding(width, array){
      if(width % 2 === 0){
         let padding = Math.floor(width / 2);
