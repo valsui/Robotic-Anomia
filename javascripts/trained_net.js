@@ -12,7 +12,7 @@ let config = {
 
 const net = new brain.NeuralNetwork(config);
 
-net.train(testData);
-net.train(slicedTestData);
+net.trainAsync(testData).then(console.log("done!"));
+net.trainAsync(slicedTestData).then(console.log("done training!"));
 
 export default net;

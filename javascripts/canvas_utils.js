@@ -73,7 +73,7 @@ export const reduce = (array) => {
     let width = 25 - anotherArray[0].length;
     let height = 25 - anotherArray.length;
     addTopBottomPadding(height, anotherArray);
-    setTimeout(addRightLeftPadding(width, anotherArray), 10000);
+    addRightLeftPadding(width, anotherArray);
 
     return anotherArray;
 }
@@ -104,9 +104,6 @@ const addTopBottomPadding = (height, array) => {
 }
 
 const addRightLeftPadding = (width, array) => {
-    if ( array.length !== 25 ) {
-        return "error";
-    }
     if (width % 2 === 0) {
         let padding = Math.floor(width / 2);
         for (let i = 0; i < 25; i++) {

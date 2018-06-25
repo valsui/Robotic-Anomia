@@ -164,7 +164,7 @@ class TrainingCanvas extends React.Component {
                 <button onClick={this.trainData}>Download Data</button>
                 <form>
                     <input id="filename" type="text" name="name" value="data.txt"/>
-                    <input id="download" type="submit" value="Download"/>
+                    <input id="download" type="submit" />
                 </form>
             </div>
         )
