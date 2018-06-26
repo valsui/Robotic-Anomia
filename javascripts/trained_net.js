@@ -33,7 +33,7 @@ import { z } from '../training_data/data_z';
 let config = {
     iterations: 10000,
     learningRate: 0.3,
-    layers: [3]
+    layers: [4]
 }
 
 const net = new brain.NeuralNetwork(config);
@@ -42,28 +42,33 @@ const net = new brain.NeuralNetwork(config);
 let data = a.concat(b).concat(d).concat(c).concat(e).concat(f).concat(g).concat(h).concat(i).concat(j).concat(k).concat(l).concat(m).concat(n).concat(o).concat(p).concat(q).concat(r).concat(s).concat(t).concat(u).concat(v).concat(w).concat(x).concat(y).concat(z);
  
 // function to shuffle dataset
-const shuffleData = (data) => {
-    let currentIdx = data.length;
-    let tempVal, randomIdx;
+// const shuffleData = (data) => {
+//     let currentIdx = data.length;
+//     let tempVal, randomIdx;
     
-    while( 0!== currentIdx) {
-        //Pick random idx
-        randomIdx = Math.floor(Math.random() * currentIdx);
-        currentIdx -= 1;
+//     while( 0!== currentIdx) {
+//         //Pick random idx
+//         randomIdx = Math.floor(Math.random() * currentIdx);
+//         currentIdx -= 1;
         
-        //swap with current element
-        tempVal = data[currentIdx];
-        data[currentIdx] = data[randomIdx];
-        data[randomIdx] = tempVal;
-    }
-    return data
-}
+//         //swap with current element
+//         tempVal = data[currentIdx];
+//         data[currentIdx] = data[randomIdx];
+//         data[randomIdx] = tempVal;
+//     }
+//     return data
+// }
 
 //shuffle dataset to input into training model
-data = shuffleData(data);
-console.log(data);
+// data = shuffleData(data);
+// console.log(data);
 
+<<<<<<< HEAD
 // net.trainAsync(testData).then(() => console.log("done!"));
 net.trainAsync(data).then(() => console.log("done training!"));
+=======
+net.trainAsync(testData).then(() => console.log("done!"));
+// net.trainAsync(data).then(() => console.log("done training!"));
+>>>>>>> 721f637fd32b233c17fdcf7b3cdeddefb1840439
 
 export default net;
