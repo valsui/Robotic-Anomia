@@ -1,5 +1,6 @@
 import brain from 'brain.js';
 import { testData } from '../test_suite/brain_train';
+import { brainTrainThree } from '../test_suite/brain_train3';
 import { slicedTestData} from '../test_suite/sliced_brain_train';
 import { valTestData } from '../test_suite/valerie_brain_train';
 import { a } from '../training_data/data_a';
@@ -100,7 +101,7 @@ data = shuffleData(data);
 //
 // train(net, data, 0);
 
-net.trainAsync(testData).then(() => console.log("done!"));
+net.trainAsync(brainTrainThree).then(() => console.log("done!"));
 // net.trainAsync(data).then(() => console.log("done training!"));
 
 export default net;
