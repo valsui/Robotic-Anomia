@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createArray, doSimulationStep, reduce, download } from '../../javascripts/canvas_utils';
+import { createArray, doSimulationStep, reduce, download, outOfBounds } from '../../javascripts/canvas_utils';
 import { receiveTestData, resetTestData } from '../../actions/test_data_actions';
 
 class TrainingCanvas extends React.Component {
@@ -78,6 +78,12 @@ class TrainingCanvas extends React.Component {
             let y = Math.floor((event.clientY - rect.top));
             let arrX = Math.floor(x / 4);
             let arrY = Math.floor(y / 4);
+            if ( !outOfBounds(this.array, arrX - 1, arrY - 1) ) {
+                this.array[arrX - 1][arrY - 1];
+                this.array[arrX][arrY - 1];
+                this.array[arrX - 1][arrY];
+            }
+
             this.array[arrX][arrY] = 1;
             this.array[arrX][arrY + 1] = 1;
             this.array[arrX + 1][arrY] = 1;

@@ -6,7 +6,7 @@ import { slicedTestData} from '../test_suite/sliced_brain_train';
 let config = {
     iterations: 10000,
     learningRate: 0.3,
-    layers: [5]
+    layers: [3]
 }
 
 const net = new brain.NeuralNetwork(config);
