@@ -40,28 +40,65 @@ const net = new brain.NeuralNetwork(config);
 
 //data set containing around 1200 data points
 let data = a.concat(b).concat(d).concat(c).concat(e).concat(f).concat(g).concat(h).concat(i).concat(j).concat(k).concat(l).concat(m).concat(n).concat(o).concat(p).concat(q).concat(r).concat(s).concat(t).concat(u).concat(v).concat(w).concat(x).concat(y).concat(z);
- 
-// function to shuffle dataset
-// const shuffleData = (data) => {
-//     let currentIdx = data.length;
-//     let tempVal, randomIdx;
-    
-//     while( 0!== currentIdx) {
-//         //Pick random idx
-//         randomIdx = Math.floor(Math.random() * currentIdx);
-//         currentIdx -= 1;
-        
-//         //swap with current element
-//         tempVal = data[currentIdx];
-//         data[currentIdx] = data[randomIdx];
-//         data[randomIdx] = tempVal;
-//     }
-//     return data
-// }
 
+// function to shuffle dataset
+const shuffleData = (data) => {
+    let currentIdx = data.length;
+    let tempVal, randomIdx;
+
+    while( 0!== currentIdx) {
+        //Pick random idx
+        randomIdx = Math.floor(Math.random() * currentIdx);
+        currentIdx -= 1;
+
+        //swap with current element
+        tempVal = data[currentIdx];
+        data[currentIdx] = data[randomIdx];
+        data[randomIdx] = tempVal;
+    }
+    return data
+}
+
+const train = (net, data, iterator) => {
+  if(iterator === data.length){
+    // Done training data
+  }else {
+    asyncFunc(net, data, iterator)
+  }
+}
+
+const asyncFunc = (net, data, iterator) => {
+  net.trainAsync(data[iterator]).then( () => {
+
+    console.log(iterator);
+    console.log(revertToBox(data[iterator]));
+    console.log(revertToBox({input: net.weights[2][0]}));
+    // console.log(revertToBox(net.weights[2][0]));
+    // train(net, data, iterator + 1);
+  });
+}
+
+
+
+const revertToBox = (dataObject) => {
+  let box = []
+  let row = [];
+  for(let i = 0; i < dataObject.input.length; i++){
+    if(row.length === 25){
+      box.push(row);
+      row = [];
+    }
+    row.push(dataObject.input[i])
+  }
+  box.push(row);
+  return box;
+}
 //shuffle dataset to input into training model
-// data = shuffleData(data);
+data = shuffleData(data);
 // console.log(data);
+// let data = a;
+//
+// train(net, data, 0);
 
 net.trainAsync(testData).then(() => console.log("done!"));
 // net.trainAsync(data).then(() => console.log("done training!"));
