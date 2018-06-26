@@ -44,7 +44,7 @@ export const reduce = (array) => {
     for (let i = 0; i < array.length; i += 2) {
         let row = [];
         for (let j = 0; j < array[0].length; j += 2) {
-            if (countNeighbors(array, i, j, 0) >= 2) {
+            if (countNeighbors(array, i, j, 0) >= 1) {
                 row.push(1);
             } else {
                 row.push(0);
@@ -145,7 +145,7 @@ const addRightLeftPadding = (width, array) => {
 }
 
 export const doSimulationStep = (array) => {
-    const birthLimit = 3;
+    const birthLimit = 1;
     const deathLimit = 1;
     const newMap = [];
 
@@ -156,18 +156,23 @@ export const doSimulationStep = (array) => {
             let neighbors = countNeighbors(array, x, y);
             let row = newMap[x];
 
-            if (array[x][y] === 0) {
-                if (neighbors < deathLimit) {
-                    row.push(0);
-                } else {
-                    row.push(1);
-                }
+            if (array[x][y] === 1) {
+              if (neighbors < deathLimit) {
+                   row.push(0);
+               } else {
+                   row.push(1);
+               }
             } else {
-                row.push(1);
+               if ( neighbors > birthLimit ) {
+                 row.push(1)
+               } else {
+                 row.push(0);
+               }
             }
         }
     }
 
+    console.log(newMap);
     return newMap;
 }
 
@@ -192,7 +197,7 @@ const countNeighbors = (array, x, y, start = -1) => {
     return count;
 }
 
-const outOfBounds = (array, adjX, adjY) => {
+export const outOfBounds = (array, adjX, adjY) => {
 
     return adjX < 0 || adjX >= array.length || adjY < 0 || adjY >= array[0].length
 }
