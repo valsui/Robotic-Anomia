@@ -68,24 +68,6 @@ class TrainingCanvas extends React.Component {
         }
     }
 
-
-
-    createArray() {
-        let array = [];
-
-        for (let i = 0; i < 50; i++) {
-            let row = [];
-
-            for (let j = 0; j < 50; j++) {
-                row.push(0);
-            }
-
-            array.push(row);
-        }
-
-        return array;
-    }
-
     draw(event) {
         const that = this;
         const { ctx, canvas, array } = this.state;
@@ -94,9 +76,12 @@ class TrainingCanvas extends React.Component {
             const rect = canvas.getBoundingClientRect();
             let x = Math.floor((event.clientX - rect.left));
             let y = Math.floor((event.clientY - rect.top));
-            let arrX = Math.floor(x / 2);
-            let arrY = Math.floor(y / 2);
+            let arrX = Math.floor(x / 4);
+            let arrY = Math.floor(y / 4);
             this.array[arrX][arrY] = 1;
+            this.array[arrX][arrY + 1] = 1;
+            this.array[arrX + 1][arrY] = 1;
+            this.array[arrX + 1][arrY + 1] = 1;
             ctx.lineTo(x, y);
             ctx.stroke();
             ctx.strokeStyle = "black";
@@ -171,7 +156,7 @@ class TrainingCanvas extends React.Component {
         return (
             <div className="training-canvas-div">
                 Training Canvas
-                <canvas ref="trainingCanvas" width={100} height={100} />
+                <canvas ref="trainingCanvas" width={200} height={200} />
                 <input onChange={this.changeLetter} value={this.state.letter} />
                 <button onClick={this.sendData}>Add Data</button>
                 <button onClick={this.trainData}>Download Data</button>
