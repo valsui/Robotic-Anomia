@@ -39,8 +39,8 @@ let config = {
 const net = new brain.NeuralNetwork(config);
 
 //data set containing around 1200 data points
-// let data = a.concat(b).concat(d).concat(c).concat(e).concat(f).concat(g).concat(h).concat(i).concat(j).concat(k).concat(l).concat(m).concat(n).concat(o).concat(p).concat(q).concat(r).concat(s).concat(t).concat(u).concat(v).concat(w).concat(x).concat(y).concat(z);
-//
+let data = a.concat(b).concat(d).concat(c).concat(e).concat(f).concat(g).concat(h).concat(i).concat(j).concat(k).concat(l).concat(m).concat(n).concat(o).concat(p).concat(q).concat(r).concat(s).concat(t).concat(u).concat(v).concat(w).concat(x).concat(y).concat(z);
+
 // function to shuffle dataset
 const shuffleData = (data) => {
     let currentIdx = data.length;
@@ -72,10 +72,13 @@ const asyncFunc = (net, data, iterator) => {
 
     console.log(iterator);
     console.log(revertToBox(data[iterator]));
-    console.log(net.weights);
+    console.log(revertToBox({input: net.weights[2][0]}));
+    // console.log(revertToBox(net.weights[2][0]));
     // train(net, data, iterator + 1);
   });
 }
+
+
 
 const revertToBox = (dataObject) => {
   let box = []
@@ -91,11 +94,11 @@ const revertToBox = (dataObject) => {
   return box;
 }
 //shuffle dataset to input into training model
-// data = shuffleData(data);
+data = shuffleData(data);
 // console.log(data);
-let data = a;
-
-train(net, data, 0);
+// let data = a;
+//
+// train(net, data, 0);
 
 net.trainAsync(testData).then(() => console.log("done!"));
 // net.trainAsync(data).then(() => console.log("done training!"));

@@ -92,7 +92,7 @@ class TestingCanvas extends React.Component {
             let y = Math.floor((event.clientY - rect.top));
             let arrX = Math.floor(x / 4);
             let arrY = Math.floor(y / 4);
-        
+
             if (!outOfBounds(this.array, arrX - 1, arrY - 1)) this.array[arrX - 1][arrY - 1] = 1;
             if (!outOfBounds(this.array, arrX, arrY - 1)) this.array[arrX][arrY - 1] = 1;
             if (!outOfBounds(this.array, arrX - 1, arrY)) this.array[arrX - 1][arrY] = 1;
@@ -117,10 +117,11 @@ class TestingCanvas extends React.Component {
         e.preventDefault();
         let newArray = doSimulationStep(this.array);
         let tempArray = reduce(newArray);
+        console.log(tempArray);
         let newArr = [];
-     
 
-        newArr = tempArray.map( (subArray) => { 
+
+        newArr = tempArray.map( (subArray) => {
             let mapSubArray = [];
             for (let i = 0; i < subArray.length; i++) {
                 mapSubArray = mapSubArray.concat(subArray[i].slice(0, 25));
@@ -134,7 +135,6 @@ class TestingCanvas extends React.Component {
        newArr.forEach((array) => {
            outputArray.push(this.props.trainedNet.run(array))
        })
-
        this.props.receiveOutputData(outputArray);
 
         this.resetCanvas();

@@ -14,6 +14,15 @@ export const createArray = () => {
     return array;
 }
 
+const anyValue = (array) => {
+  for(let i = 0; i < array.length; i++){
+    if (array[i] !== 0){
+      return true;
+    }
+  }
+  return false;
+}
+
 const createBoxes = (array) => {
   let rowNumber = 0;
   let characterFound = 2;
@@ -22,31 +31,41 @@ const createBoxes = (array) => {
 
   while(rowNumber < array.length){
     if( characterFound < 2){
-      if(!array[rowNumber].includes(1)){
+      if(!anyValue(array[rowNumber])){
+        // white space detected
         characterFound += 1;
         if (characterFound === 2) {
           boxes.push(box);
           box = [];
         } else {
-        box.push(array[rowNumber]);
+          if(box.length >= 25){
+            // do nothing, skip due to too long width wise
+          }else{
+            box.push(array[rowNumber]);
+          }
         }
       } else {
-        box.push(array[rowNumber]);
+        // character detected
+        if(box.length >= 25){
+          // do nothing, just skipping due to too long width wise
+        }else {
+          box.push(array[rowNumber]);
+        }
       }
-    } else if(array[rowNumber].includes(1)){
+    } else if(anyValue(array[rowNumber])){
       characterFound = 0;
       box.push(array[rowNumber]);
     }
     rowNumber++;
   }
-  
+
   if ( box.length > 0 ) {
     boxes.push(box);
   }
 
   boxes = boxes.filter((box) => box.length > 3)
 
-  console.log(boxes);
+  // console.log(boxes);
   return boxes;
 }
 
@@ -70,7 +89,8 @@ export const reduce = (array) => {
     // cuts out the white space
     // let anotherArray = cutOut(JSON.parse(JSON.stringify(newArr)));
     let returnArray = boxes.map(box => {
-      return addPadding(25, box);
+      let cutOutBox = cutOut(JSON.parse(JSON.stringify(box)));
+      return addPadding(25, cutOutBox);
     })
     // let returnArray = addPadding(25, anotherArray);
     return returnArray;
@@ -104,15 +124,16 @@ const cutOut = (array) => {
   for(let i = top; i < bottom; i++){
     anotherArray.push(array[i])
   }
-  for(let i = 0; i < anotherArray.length; i++){
+  for(let i = 0; i < array.length; i++){
     for(let j = 0; j < left; j++){
-      anotherArray[i].shift();
+      array[i].shift();
     }
     for(let k = right; k < 25; k++){
-      anotherArray[i].pop();
+      array[i].pop();
     }
   }
-  return anotherArray;
+  // console.log(array);
+  return array;
 }
 
 const addPadding = (size, array) => {
@@ -184,7 +205,7 @@ export const doSimulationStep = (array) => {
         }
     }
 
-    console.log(newMap);
+    // console.log(newMap);
     return newMap;
 }
 
