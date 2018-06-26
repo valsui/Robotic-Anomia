@@ -8,7 +8,9 @@ class Outputs extends React.Component {
     }
     
     render () {
-        const { outputs, outputKeys } = this.props;
+        const { output } = this.props;
+        const outputs = Object.values(output);
+        const outputKeys = Object.keys(output);
 
         return (
             <div className="output-div">
@@ -23,12 +25,12 @@ class Outputs extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({
-    outputs: Object.values(state.entities.outputs),
-    outputKeys: Object.keys(state.entities.outputs)
-})
+// const mapStateToProps = state => ({
+//     outputs: Object.values(state.entities.outputs),
+//     outputKeys: Object.keys(state.entities.outputs)
+// })
 
 // const mapDispatchToProps = dispatch = ({
 // })
 
-export default (connect(mapStateToProps, null)(Outputs));
+export default Outputs;

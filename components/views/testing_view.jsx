@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import TestingCanvas from '../canvas/testing_canvas';
-import Outputs from '../displays/outputs';
+import OutputContainer from '../displays/outputs_container';
 
 class TestingView extends React.Component {
     constructor(props) {
@@ -12,7 +12,7 @@ class TestingView extends React.Component {
         return (
             <div className="training-canvas-div">
                 <TestingCanvas />
-                <Outputs />
+                <OutputContainer />
             </div>
         )
     }

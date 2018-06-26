@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createArray, doSimulationStep, reduce } from '../../javascripts/canvas_utils';
+import { doSimulationStep, reduce } from '../../javascripts/canvas_utils';
 import { receiveOutputData } from '../../actions/test_data_actions';
 
 class TestingCanvas extends React.Component {
@@ -13,7 +13,7 @@ class TestingCanvas extends React.Component {
             letter: ""
         }
 
-        this.array = createArray();
+        this.array = this.createArray();
         this.sendData = this.sendData.bind(this);
     }
 
@@ -44,7 +44,6 @@ class TestingCanvas extends React.Component {
         const that = this;
 
         return (event) => {
-            event.preventDefault();
             that.mousedown = true;
             that.draw(event);
         }
@@ -67,12 +66,10 @@ class TestingCanvas extends React.Component {
         }
     }
 
-
-
     createArray() {
         let array = [];
 
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 200; i++) {
             let row = [];
 
             for (let j = 0; j < 50; j++) {
@@ -87,15 +84,18 @@ class TestingCanvas extends React.Component {
 
     draw(event) {
         const that = this;
-        const { ctx, canvas, array } = this.state;
+        const { ctx, canvas } = this.state;
 
         if (that.mousedown) {
             const rect = canvas.getBoundingClientRect();
             let x = Math.floor((event.clientX - rect.left));
             let y = Math.floor((event.clientY - rect.top));
-            let arrX = Math.floor(x / 2);
-            let arrY = Math.floor(y / 2);
+            let arrX = Math.floor(x / 4);
+            let arrY = Math.floor(y / 4);
             this.array[arrX][arrY] = 1;
+            this.array[arrX + 1][arrY + 1] = 1;
+            this.array[arrX + 1][arrY] = 1;
+            this.array[arrX][arrY + 1] = 1;
             ctx.lineTo(x, y);
             ctx.stroke();
             ctx.strokeStyle = "black";
@@ -114,18 +114,46 @@ class TestingCanvas extends React.Component {
         let newArray = doSimulationStep(this.array);
         let tempArray = reduce(newArray);
         let newArr = [];
-        let consoleLogArray = [];
+     
 
+        newArr = tempArray.map( (subArray) => { 
+            let mapSubArray = [];
+            for (let i = 0; i < subArray.length; i++) {
+                mapSubArray = mapSubArray.concat(subArray[i].slice(0, 25));
+            }
 
-        for (let i = 0; i < tempArray.length; i++) {
-            newArr = newArr.concat(tempArray[i].slice(0, 25));
-            consoleLogArray.push(tempArray[i].slice(0, 25))
-        }
+            return mapSubArray
+        })
 
-        console.log(consoleLogArray);
-        this.props.receiveOutputData((this.props.trainedNet.run(newArr)));
+        let outputArray = [];
+
+       newArr.forEach((array) => {
+           outputArray.push(this.props.trainedNet.run(array))
+       })
+
+       this.props.receiveOutputData(outputArray);
 
         this.resetCanvas();
+    }
+
+    matrixify() {
+        const { ctx } = this.state;
+        const array = this.array;
+
+        for ( let i = 0; i < array.length; i++ ) {
+            for ( let j = 0; j < array[i].length; j++ ) {
+                if ( array[i][j] === 1 ) {
+                    console.log(array[i][j])
+                    ctx.font = "20px serif";
+                    ctx.fillStyle = "green";
+                    ctx.strokeText("1", i + 16, j + 16)
+                } else {
+                    ctx.font = "20px serif";
+                    ctx.fillStyle = "black";
+                    ctx.strokeText("0", i + 16, j + 16)
+                }
+            }
+        }
     }
 
     resetCanvas() {
@@ -133,14 +161,16 @@ class TestingCanvas extends React.Component {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = "white";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        this.array = createArray();
+        this.array = this.createArray();
     }
 
     render() {
         return (
             <div className="testing-canvas-div">
                 Testing Canvas
-                <canvas ref="testingCanvas" width={100} height={100} />
+                <div className="testing-canvas-container">
+                    <canvas ref="testingCanvas" width={800} height={200} />
+                </div>
                 <button onClick={this.sendData}>Test!</button>
             </div>
         )
