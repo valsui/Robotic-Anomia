@@ -38,9 +38,30 @@ let config = {
 
 const net = new brain.NeuralNetwork(config);
 
-let data = a.concat(b).concat(c).concat(d).concat(e).concat(f).concat(g).concat(h).concat(i).concat(j).concat(k).concat(l).concat(m).concat(n).concat(o).concat(p).concat(q).concat(r).concat(s).concat(t).concat(u).concat(v).concat(w).concat(x).concat(y).concat(z);
+//data set containing around 1200 data points
+let data = a.concat(b).concat(d).concat(c).concat(e).concat(f).concat(g).concat(h).concat(i).concat(j).concat(k).concat(l).concat(m).concat(n).concat(o).concat(p).concat(q).concat(r).concat(s).concat(t).concat(u).concat(v).concat(w).concat(x).concat(y).concat(z);
+ 
+// function to shuffle dataset
+const shuffleData = (data) => {
+    let currentIdx = data.length;
+    let tempVal, randomIdx;
+    
+    while( 0!== currentIdx) {
+        //Pick random idx
+        randomIdx = Math.floor(Math.random() * currentIdx);
+        currentIdx -= 1;
+        
+        //swap with current element
+        tempVal = data[currentIdx];
+        data[currentIdx] = data[randomIdx];
+        data[randomIdx] = tempVal;
+    }
+    return data
+}
 
-data = data.concat(testData).concat(slicedTestData).concat(valTestData);
+//shuffle dataset to input into training model
+data = shuffleData(data);
+console.log(data);
 
 // net.trainAsync(testData).then(console.log("done!"));
 net.trainAsync(data).then(console.log("done training!"));
