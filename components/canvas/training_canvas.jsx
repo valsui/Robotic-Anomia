@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createArray, doSimulationStep, reduce, download } from '../../javascripts/canvas_utils';
 import { receiveTestData, resetTestData } from '../../actions/test_data_actions';
-import { getTrainingData } from '../../javascripts/read_text_files';
 
 class TrainingCanvas extends React.Component {
     constructor(props) {
@@ -19,7 +18,6 @@ class TrainingCanvas extends React.Component {
         this.changeLetter = this.changeLetter.bind(this);
         this.trainData = this.trainData.bind(this);
     
-        getTrainingData('../../training_data');
     }
 
     componentDidMount() {

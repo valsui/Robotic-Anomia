@@ -1,27 +1,25 @@
-import fs from 'fs';
+const fs = require('fs');
 
 
-export const getTrainingData = (directory) => {
-    let data = [];
-    debugger;
+const getTrainingData = (directory) => {
+    let allData = [];
+    console.log(allData);
     fs.readdir(directory, (err, filenames) => {
-        if(err) {
-            onError(err);
-            return;
-        }
+        // console.log(directory);
+        // console.log(filenames)
         filenames.forEach((file) => {
-            fs.readFile(directory + file, 'utf-8', (err, content) => {
-                if (err) {
-                    onError(err);
-                    return;
-                }
-                debugger;
+            fs.readFile(directory + file, (err, content) => {
+                // debugger;
+                console.log(directory + "/" + file)
                 const letterData = [content];
-                let data = data.concat(letterData);
-                return data;
+                console.log(content);
+                allData = allData.concat(letterData);
             })
         })
     } )
-    return data;
+    return allData;
 }
 
+let data = getTrainingData('/Users/appacademyaccount/Desktop/RoboticAnomia/training_data');
+
+console.log(data);
