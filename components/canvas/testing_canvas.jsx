@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createArray, doSimulationStep, reduce } from '../../javascripts/canvas_utils';
 import { receiveOutputData } from '../../actions/test_data_actions';
+import matrixMode from './matrix_mode.jsx';
 
 class TestingCanvas extends React.Component {
     constructor(props) {
@@ -63,6 +64,7 @@ class TestingCanvas extends React.Component {
         return (event) => {
             that.mousedown = false;
             that.state.ctx.beginPath();
+            console.log(this.array);
         }
     }
 
@@ -92,9 +94,15 @@ class TestingCanvas extends React.Component {
             const rect = canvas.getBoundingClientRect();
             let x = Math.floor((event.clientX - rect.left));
             let y = Math.floor((event.clientY - rect.top));
-            let arrX = Math.floor(x / 2);
-            let arrY = Math.floor(y / 2);
+            let arrX = Math.floor(x / 4);
+            let arrY = Math.floor(y / 4);
             this.array[arrX][arrY] = 1;
+            // this.array[arrX+1][arrY+1] = 1;
+            this.array[arrX+1][arrY] = 1;
+            this.array[arrX][arrY+1] = 1;
+            // this.array[arrX-1][arrY-1] = 1;
+            this.array[arrX-1][arrY] = 1;
+            this.array[arrX][arrY-1] = 1;
             ctx.lineTo(x, y);
             ctx.stroke();
             ctx.strokeStyle = "black";
@@ -105,6 +113,7 @@ class TestingCanvas extends React.Component {
             canvas.style.cursor = "pointer";
             ctx.beginPath();
             ctx.moveTo(x, y);
+            matrixMode(this.state.canvas, this.state.ctx, this.array);
         }
     }
 
@@ -139,7 +148,7 @@ class TestingCanvas extends React.Component {
         return (
             <div className="testing-canvas-div">
                 Testing Canvas
-                <canvas ref="testingCanvas" width={100} height={100} />
+                <canvas ref="testingCanvas" width={200} height={200} />
                 <button onClick={this.sendData}>Test!</button>
             </div>
         )

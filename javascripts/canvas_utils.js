@@ -119,10 +119,6 @@ const addRightLeftPadding = (width, array) => {
   }
   return array;
 }
-<<<<<<< HEAD
-// }
-=======
->>>>>>> 83af0761b97fbe31b3c84b1fe7594e3ea29eaace
 
 export const doSimulationStep = (array) => {
     const birthLimit = 4;
