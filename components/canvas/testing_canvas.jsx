@@ -128,6 +128,26 @@ class TestingCanvas extends React.Component {
         this.resetCanvas();
     }
 
+    matrixify() {
+        const { ctx } = this.state;
+        const array = this.array;
+
+        for ( let i = 0; i < array.length; i++ ) {
+            for ( let j = 0; j < array[i].length; j++ ) {
+                if ( array[i][j] === 1 ) {
+                    console.log(array[i][j])
+                    ctx.font = "20px serif";
+                    ctx.fillStyle = "green";
+                    ctx.strokeText("1", i + 16, j + 16)
+                } else {
+                    ctx.font = "20px serif";
+                    ctx.fillStyle = "black";
+                    ctx.strokeText("0", i + 16, j + 16)
+                }
+            }
+        }
+    }
+
     resetCanvas() {
         const { ctx, canvas } = this.state;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
