@@ -22,18 +22,18 @@ const createBoxes = (array) => {
 
   while(rowNumber < array.length){
     if( characterFound < 2){
-      if(!array[rowNumber].includes(1)){
+      if (array[rowNumber].reduce((acc, val) => acc + val) === 0 ){
         characterFound += 1;
         if (characterFound === 2) {
           boxes.push(box);
           box = [];
-        } else {
+        } else if ( !(rowNumber !== array.length - 1)) {
         box.push(array[rowNumber]);
         }
       } else {
         box.push(array[rowNumber]);
       }
-    } else if(array[rowNumber].includes(1)){
+    } else if( array[rowNumber].reduce((acc, val) => acc + val) !== 0 ){
       characterFound = 0;
       box.push(array[rowNumber]);
     }
@@ -44,9 +44,10 @@ const createBoxes = (array) => {
     boxes.push(box);
   }
 
-  boxes = boxes.filter((box) => box.length > 3)
 
   console.log(boxes);
+  boxes = boxes.filter((box) => box.length > 4)
+
   return boxes;
 }
 
@@ -57,13 +58,25 @@ export const reduce = (array) => {
         let row = [];
         for (let j = 0; j < array[0].length; j += 2) {
             if (countNeighbors(array, i, j, 0) >= 1) {
-                row.push(1);
+                let one = array[i][j];
+                let two = array[i + 1] ? array[i + 1][j] : 0;
+                let three = array[i] ? array[i][j + 1] : 0;
+                let four = array[i +  1] ? array[i + 1][j + 1] : 0;
+                let five = array[i + 1] ? array[i + 1][j + 2] : 0;
+                let six = array[i + 2] ? array[i + 2][j + 2] : 0;
+                let seven = array[i]? array[i][j + 2] : 0;
+                let eight = array[i + 2] ? array[i + 2][j] : 0;
+                let nine = array[i + 2] ? array[i + 2][j + 1] : 0;
+
+                row.push( ( one + two + three + four + five + six + seven + eight + nine ) / 9);
             } else {
                 row.push(0);
             }
         }
         newArr.push(row);
     }
+
+    console.log(newArr);
 
 
     let boxes = createBoxes(newArr);
