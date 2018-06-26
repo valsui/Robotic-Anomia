@@ -44,7 +44,6 @@ class TestingCanvas extends React.Component {
         const that = this;
 
         return (event) => {
-            event.preventDefault();
             that.mousedown = true;
             that.draw(event);
         }
@@ -53,7 +52,7 @@ class TestingCanvas extends React.Component {
     mouseMove() {
         const that = this;
 
-        return (event) => {
+        return (event) => {   
             that.draw(event);
         }
     }
