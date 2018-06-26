@@ -14,6 +14,15 @@ export const createArray = () => {
     return array;
 }
 
+const anyValue = (array) => {
+  for(let i = 0; i < array.length; i++){
+    if (array[i] !== 0){
+      return true;
+    }
+  }
+  return false;
+}
+
 const createBoxes = (array) => {
   let rowNumber = 0;
   let characterFound = 2;
@@ -31,7 +40,12 @@ const createBoxes = (array) => {
         box.push(array[rowNumber]);
         }
       } else {
-        box.push(array[rowNumber]);
+        // character detected
+        if(box.length >= 25){
+          // do nothing, just skipping due to too long width wise
+        }else {
+          box.push(array[rowNumber]);
+        }
       }
     } else if( array[rowNumber].reduce((acc, val) => acc + val) !== 0 ){
       characterFound = 0;
@@ -39,7 +53,7 @@ const createBoxes = (array) => {
     }
     rowNumber++;
   }
-  
+
   if ( box.length > 0 ) {
     boxes.push(box);
   }
@@ -83,7 +97,8 @@ export const reduce = (array) => {
     // cuts out the white space
     // let anotherArray = cutOut(JSON.parse(JSON.stringify(newArr)));
     let returnArray = boxes.map(box => {
-      return addPadding(25, box);
+      let cutOutBox = cutOut(JSON.parse(JSON.stringify(box)));
+      return addPadding(25, cutOutBox);
     })
     // let returnArray = addPadding(25, anotherArray);
     return returnArray;
@@ -117,15 +132,16 @@ const cutOut = (array) => {
   for(let i = top; i < bottom; i++){
     anotherArray.push(array[i])
   }
-  for(let i = 0; i < anotherArray.length; i++){
+  for(let i = 0; i < array.length; i++){
     for(let j = 0; j < left; j++){
-      anotherArray[i].shift();
+      array[i].shift();
     }
     for(let k = right; k < 25; k++){
-      anotherArray[i].pop();
+      array[i].pop();
     }
   }
-  return anotherArray;
+  // console.log(array);
+  return array;
 }
 
 const addPadding = (size, array) => {
@@ -197,7 +213,7 @@ export const doSimulationStep = (array) => {
         }
     }
 
-    console.log(newMap);
+    // console.log(newMap);
     return newMap;
 }
 
