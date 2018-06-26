@@ -16,24 +16,36 @@ export const createArray = () => {
 
 const createBoxes = (array) => {
   let rowNumber = 0;
-  let characterFound = false;
+  let characterFound = 2;
   let boxes = [];
   let box = [];
+
   while(rowNumber < array.length){
-    if(characterFound){
+    if( characterFound < 2){
       if(!array[rowNumber].includes(1)){
-        characterFound = false;
-        boxes.push(box);
-        box = [];
-      }else {
+        characterFound += 1;
+        if (characterFound === 2) {
+          boxes.push(box);
+          box = [];
+        } else {
+        box.push(array[rowNumber]);
+        }
+      } else {
         box.push(array[rowNumber]);
       }
-    }else if(array[rowNumber].includes(1)){
-      characterFound = true;
+    } else if(array[rowNumber].includes(1)){
+      characterFound = 0;
       box.push(array[rowNumber]);
     }
     rowNumber++;
   }
+  
+  if ( box.length > 0 ) {
+    boxes.push(box);
+  }
+
+  boxes = boxes.filter((box) => box.length > 3)
+
   console.log(boxes);
   return boxes;
 }
