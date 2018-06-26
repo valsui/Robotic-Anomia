@@ -114,17 +114,46 @@ class TestingCanvas extends React.Component {
         let newArray = doSimulationStep(this.array);
         let tempArray = reduce(newArray);
         let newArr = [];
-        let consoleLogArray = [];
+     
 
+        newArr = tempArray.map( (subArray) => { 
+            let mapSubArray = [];
+            for (let i = 0; i < subArray.length; i++) {
+                mapSubArray = mapSubArray.concat(subArray[i].slice(0, 25));
+            }
 
-        for (let i = 0; i < tempArray.length; i++) {
-            newArr = newArr.concat(tempArray[i].slice(0, 25));
-            consoleLogArray.push(tempArray[i].slice(0, 25))
-        }
+            return mapSubArray
+        })
 
-        this.props.receiveOutputData((this.props.trainedNet.run(newArr)));
+        let outputArray = [];
+
+       newArr.forEach((array) => {
+           outputArray.push(this.props.trainedNet.run(array))
+       })
+
+       this.props.receiveOutputData(outputArray);
 
         this.resetCanvas();
+    }
+
+    matrixify() {
+        const { ctx } = this.state;
+        const array = this.array;
+
+        for ( let i = 0; i < array.length; i++ ) {
+            for ( let j = 0; j < array[i].length; j++ ) {
+                if ( array[i][j] === 1 ) {
+                    console.log(array[i][j])
+                    ctx.font = "20px serif";
+                    ctx.fillStyle = "green";
+                    ctx.strokeText("1", i + 16, j + 16)
+                } else {
+                    ctx.font = "20px serif";
+                    ctx.fillStyle = "black";
+                    ctx.strokeText("0", i + 16, j + 16)
+                }
+            }
+        }
     }
 
     resetCanvas() {

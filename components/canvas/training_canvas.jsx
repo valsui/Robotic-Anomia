@@ -107,7 +107,7 @@ class TrainingCanvas extends React.Component {
         }
 
         let newArray = doSimulationStep(this.array);
-        let tempArray = reduce(newArray);
+        let tempArray = reduce(newArray)[0];
         let newArr = [];
         let consoleLogArray = []
 
