@@ -33,7 +33,7 @@ import { z } from '../training_data/data_z';
 let config = {
     iterations: 10000,
     learningRate: 0.3,
-    layers: [5]
+    layers: [3]
 }
 
 const net = new brain.NeuralNetwork(config);
@@ -63,7 +63,7 @@ const shuffleData = (data) => {
 data = shuffleData(data);
 console.log(data);
 
-// net.trainAsync(testData).then(console.log("done!"));
-net.trainAsync(data).then(console.log("done training!"));
+// net.trainAsync(testData).then(() => console.log("done!"));
+net.trainAsync(data).then(() => console.log("done training!"));
 
 export default net;

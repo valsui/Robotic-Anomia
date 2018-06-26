@@ -126,7 +126,7 @@ class TestingCanvas extends React.Component {
         })
 
         let outputArray = [];
-
+        // console.log(newArr);
        newArr.forEach((array) => {
            outputArray.push(this.props.trainedNet.run(array))
        })
