@@ -17,6 +17,7 @@ class TrainingCanvas extends React.Component {
         this.sendData = this.sendData.bind(this);
         this.changeLetter = this.changeLetter.bind(this);
         this.trainData = this.trainData.bind(this);
+    
     }
 
     componentDidMount() {
