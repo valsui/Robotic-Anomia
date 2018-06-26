@@ -79,16 +79,14 @@ class TrainingCanvas extends React.Component {
             let y = Math.floor((event.clientY - rect.top));
             let arrX = Math.floor(x / 4);
             let arrY = Math.floor(y / 4);
-            if ( !outOfBounds(this.array, arrX - 1, arrY - 1) ) {
-                this.array[arrX - 1][arrY - 1];
-                this.array[arrX][arrY - 1];
-                this.array[arrX - 1][arrY];
-            }
 
-            this.array[arrX][arrY] = 1;
-            this.array[arrX][arrY + 1] = 1;
-            this.array[arrX + 1][arrY] = 1;
-            this.array[arrX + 1][arrY + 1] = 1;
+            if (!outOfBounds(this.array, arrX - 1, arrY - 1)) this.array[arrX - 1][arrY - 1] = 1;
+            if (!outOfBounds(this.array, arrX, arrY - 1)) this.array[arrX][arrY - 1] = 1;
+            if (!outOfBounds(this.array, arrX - 1, arrY)) this.array[arrX - 1][arrY] = 1;
+            if (!outOfBounds(this.array, arrX, arrY)) this.array[arrX][arrY] = 1;
+            if (!outOfBounds(this.array, arrX, arrY + 1)) this.array[arrX][arrY + 1] = 1;
+            if (!outOfBounds(this.array, arrX + 1, arrY)) this.array[arrX + 1][arrY] = 1;
+            if (!outOfBounds(this.array, arrX + 1, arrY + 1)) this.array[arrX + 1][arrY + 1] = 1;
             ctx.lineTo(x, y);
             ctx.stroke();
             ctx.strokeStyle = "black";
@@ -118,13 +116,11 @@ class TrainingCanvas extends React.Component {
         let newArr = [];
         let consoleLogArray = []
 
-    
         for ( let i = 0; i < tempArray.length; i++ ) {
              newArr = newArr.concat(tempArray[i].slice(0,25));
              consoleLogArray.push(tempArray[i].slice(0,25))
         }
         
-        console.log(consoleLogArray);
         let data = { input: newArr, output: {[this.state.letter]: 1} }
         
         this.props.receiveTestData(data);
