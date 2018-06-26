@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Modal from './modal/modal';
 import Header from './header/header';
 import TrainingView from './views/training_view';
@@ -14,7 +14,8 @@ const App = () => {
                 <Switch>
                     <Route exact path="/test" component={TestingView} />
                     <Route exact path="/train" component={TrainingView} />
-                    <Route path="/" component={Homepage} />
+                    <Route exact path="/" component={Homepage} />
+                    <Redirect to="/" />
                 </Switch>
             <Modal />
         </div>
