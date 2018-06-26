@@ -60,9 +60,13 @@ const createBoxes = (array) => {
 
 
   console.log(boxes);
-  boxes = boxes.filter((box) => box.length > 4)
+  // boxes = boxes.filter((box) => box.length > 4)
 
   return boxes;
+}
+
+const pointExists = (array, i, j) => {
+  return array[i] !== undefined ? (array[i][j] !== undefined ? array[i][j] : 0 ) : 0;
 }
 
 export const reduce = (array) => {
@@ -73,14 +77,14 @@ export const reduce = (array) => {
         for (let j = 0; j < array[0].length; j += 2) {
             if (countNeighbors(array, i, j, 0) >= 1) {
                 let one = array[i][j];
-                let two = array[i + 1] ? array[i + 1][j] : 0;
-                let three = array[i] ? array[i][j + 1] : 0;
-                let four = array[i +  1] ? array[i + 1][j + 1] : 0;
-                let five = array[i + 1] ? array[i + 1][j + 2] : 0;
-                let six = array[i + 2] ? array[i + 2][j + 2] : 0;
-                let seven = array[i]? array[i][j + 2] : 0;
-                let eight = array[i + 2] ? array[i + 2][j] : 0;
-                let nine = array[i + 2] ? array[i + 2][j + 1] : 0;
+                let two = pointExists(array, i + 1, j); 
+                let three = pointExists(array, i, j + 1);
+                let four = pointExists(array, i + 1, j + 1);
+                let five = pointExists(array, i + 1, j + 2);
+                let six = pointExists(array, i + 2, j + 2);
+                let seven = pointExists(array, i, j + 2);
+                let eight = pointExists(array, i + 2, j);
+                let nine = pointExists(array, i + 2, j + 1);
 
                 row.push( ( one + two + three + four + five + six + seven + eight + nine ) / 9);
             } else {

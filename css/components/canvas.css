@@ -22,3 +22,13 @@ canvas {
     height: 200px;
     display: block;
 }
+
+.training-canvas-view-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.testing-canvas-view-div {
+    display: flex;
+    flex-direction: column;
+}
