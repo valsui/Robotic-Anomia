@@ -1,0 +1,37 @@
+.homepage-div {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.text-info {
+    height: 500px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.homepage-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.homepage-button-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.homepage-button {
+    height: 100px;
+    width: 300px;
+    border: 1px solid black;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+}

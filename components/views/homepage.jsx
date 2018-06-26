@@ -20,15 +20,21 @@ class Homepage extends React.Component {
     render() {
         return(
             <div className="homepage-div">
-                <div className="text-info">
-                    Welcome to Robotic Anomia:
-                    Please choose a mode
-                </div>
-                <div className="homepage-button" onClick={this.linkTest}>
-                    Play with Robotic Anomia.
-                </div>
-                <div className="homepage-button" onClick={this.linkTrain}>
-                    Train Robotic Anomia.
+                <div className="homepage-content">
+                    <div className="homepage-content-center">
+                        <div className="text-info">
+                            Welcome to Robotic Anomia:
+                            Please choose a mode
+                        </div>
+                        <div className="homepage-button-div">
+                            <div className="homepage-button" onClick={this.linkTest}>
+                                Play with Robotic Anomia.
+                            </div>
+                            <div className="homepage-button" onClick={this.linkTrain}>
+                                Train Robotic Anomia.
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         )

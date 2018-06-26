@@ -6,4 +6,19 @@ canvas {
 .training-canvas-div {
     width: 100%;
     height: 200px;
+    display: flex;
+    flex-direction: row;
+}
+
+.testing-canvas-div {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.testing-canvas-container {
+    width: 200px;
+    height: 200px;
+    display: block;
 }

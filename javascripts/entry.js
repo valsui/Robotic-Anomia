@@ -43,9 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
             output: {[letter]: 1}
         };
 
-        data.push(JSON.stringify(dataPoint));
-        // debugger;
-        // writeDataToFile(dataPoint.toString());
+        data.push(JSON.stringify(dataPoint) + '\n');
+        console.log('data added to file')
     })
 
     let downloadButton = document.getElementById('download');
