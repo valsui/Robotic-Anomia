@@ -28,8 +28,11 @@ export const reduce = (array) => {
         }
         newArr.push(row);
     }
+
+
+    console.log(newArr)
     // cuts out the white space
-    let anotherArray = cutOut(newArr);
+    let anotherArray = cutOut(JSON.parse(JSON.stringify(newArr)));
 
 
     let width = 25 - anotherArray[0].length;
@@ -121,7 +124,7 @@ const addRightLeftPadding = (width, array) => {
 }
 
 export const doSimulationStep = (array) => {
-    const birthLimit = 4;
+    const birthLimit = 3;
     const deathLimit = 1;
     const newMap = [];
 
@@ -139,11 +142,7 @@ export const doSimulationStep = (array) => {
                     row.push(1);
                 }
             } else {
-                if (neighbors > birthLimit) {
-                    row.push(0);
-                } else {
-                    row.push(1);
-                }
+                row.push(1);
             }
         }
     }
@@ -174,7 +173,7 @@ const countNeighbors = (array, x, y, start = -1) => {
 
 const outOfBounds = (array, adjX, adjY) => {
 
-    return adjX < 0 || adjX >= array[0].length || adjY < 0 || adjY >= array.length
+    return adjX < 0 || adjX >= array.length || adjY < 0 || adjY >= array[0].length
 }
 
 export const download = (filename, text) => {
