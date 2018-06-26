@@ -52,7 +52,7 @@ class TestingCanvas extends React.Component {
     mouseMove() {
         const that = this;
 
-        return (event) => {   
+        return (event) => {
             that.draw(event);
         }
     }
@@ -122,7 +122,6 @@ class TestingCanvas extends React.Component {
             consoleLogArray.push(tempArray[i].slice(0, 25))
         }
 
-        console.log(consoleLogArray);
         this.props.receiveOutputData((this.props.trainedNet.run(newArr)));
 
         this.resetCanvas();
