@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { doSimulationStep, reduce, outOfBounds } from '../../javascripts/canvas_utils';
 import { receiveOutputData } from '../../actions/test_data_actions';
+import { imageToMatrix } from '../../javascripts/heatmap';
 
 class TestingCanvas extends React.Component {
     constructor(props) {
@@ -131,8 +132,10 @@ class TestingCanvas extends React.Component {
         })
 
         let outputArray = [];
-        // console.log(newArr);
-       newArr.forEach((array) => {
+        console.log('newArr:', newArr);
+        newArr.forEach((array) => {
+            console.log('array:',array);
+            console.log('matrixed:', imageToMatrix(array));
            outputArray.push(this.props.trainedNet.run(array))
        })
 
