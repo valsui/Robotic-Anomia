@@ -11,7 +11,9 @@
     "babel-preset-react": "^6.24.1",
     "brain.js": "^1.2.2",
     "d3": "^5.5.0",
+    "express": "^4.16.3",
     "fs": "0.0.1-security",
+    "node-fetch": "^2.1.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
@@ -22,11 +24,13 @@
     "webpack": "^4.12.0"
   },
   "devDependencies": {
+    "nodemon": "^1.17.5",
     "webpack-cli": "^3.0.8"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack -d -w"
+    "start": "webpack -d -w",
+    "dev": "nodemon server/server.js"
   },
   "repository": {
     "type": "git",

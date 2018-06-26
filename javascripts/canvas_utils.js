@@ -27,15 +27,18 @@ const createBoxes = (array) => {
   let rowNumber = 0;
   let characterFound = 2;
   let boxes = [];
-  let box = [];
+  let box = {};
 
   while(rowNumber < array.length){
     if( characterFound < 2){
-      if (array[rowNumber].reduce((acc, val) => acc + val) === 0 ){
+      if (!anyValue(array[rowNumber])){
         characterFound += 1;
         if (characterFound === 2) {
           boxes.push(box);
           box = [];
+          // draw the box
+          // right border x = rowNumber
+          // left border x = rowNumber - 25
         } else if ( !(rowNumber !== array.length - 1)) {
         box.push(array[rowNumber]);
         }
@@ -47,7 +50,7 @@ const createBoxes = (array) => {
           box.push(array[rowNumber]);
         }
       }
-    } else if( array[rowNumber].reduce((acc, val) => acc + val) !== 0 ){
+    } else if( anyValue(array[rowNumber])){
       characterFound = 0;
       box.push(array[rowNumber]);
     }
