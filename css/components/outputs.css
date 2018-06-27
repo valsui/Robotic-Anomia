@@ -6,11 +6,3 @@
 .outputs-ul {
     padding: 10px;
 }
-
-.memory-div-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 170px;
-}
-

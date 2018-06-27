@@ -1,9 +1,11 @@
 .homepage-div {
+    background-color: rgba(0,0,0,0);
     height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    z-index: 98;
 }
 
 .text-info {
@@ -30,6 +32,7 @@
 }
 
 .homepage-button {
+    background:  rgb(48,178,249,0.2);
     color: white;
     height: 3vw;
     width: 300px;

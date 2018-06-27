@@ -9,6 +9,7 @@
     box-sizing: border-box;
     flex-shrink: 0;
     box-shadow: 0px 3px 6px rgb(2,12,144,0.4);
+    z-index: 99;
 }
 
 .title-container {

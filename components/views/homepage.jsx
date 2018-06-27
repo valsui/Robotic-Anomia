@@ -9,6 +9,13 @@ class Homepage extends React.Component {
         this.linkTrain = this.linkTrain.bind(this);
     }
 
+    componentDidMount(){
+      let particles = document.getElementById('particles-js');
+      if ( particles.classList.contains('hidden')){
+        particles.classList.remove('hidden');
+      }
+    }
+
     linkTest() {
         this.props.history.push('/test');
     }
@@ -23,14 +30,14 @@ class Homepage extends React.Component {
                 <div className="homepage-content">
                     <div className="homepage-content-center">
                         <div className="text-info">
-        
+
                         </div>
                         <div className="homepage-button-div">
                             <div className="homepage-button" onClick={this.linkTest}>
-                                Play with Robotic Anomia.
+                                Play with Robotic Anomia
                             </div>
                             <div className="homepage-button" onClick={this.linkTrain}>
-                                Train Robotic Anomia.
+                                Train Robotic Anomia 🧠
                             </div>
                         </div>
                     </div>

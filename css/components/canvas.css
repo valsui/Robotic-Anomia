@@ -14,7 +14,6 @@ canvas:hover{
 
 .testing-canvas-view-div {
     margin-left: 21vw;
-    width: 100%;
     margin-top: 10vh;
     height: 65vh;
     display: flex;
@@ -60,7 +59,7 @@ canvas:hover{
 
 .training-canvas-view-div {
   margin-left: 23vw;
-  width: 100%;
+  /* width: 100%; */
   margin-top: 10vh;
   min-height: 200px;
   display: flex;
@@ -148,11 +147,12 @@ canvas:hover{
 
 .memory-div-container{
   /* margin-left: 1.5vw; */
-  width: 20vw;
+  width: 300px;
   align-items: center;
   display: grid;
   grid-template-columns: 33% 33% 33%;
   background-color: rgb(255,255,255,0.1);
+  margin-bottom: 1vw;
 }
 
 .memory-div-container li{
@@ -164,9 +164,8 @@ canvas:hover{
 .memory-li canvas{
   cursor: default !important;
   background-color: white;
-  padding: 20px;
-  margin: 0.7vw;
-  margin-left: 1vw;
+  padding: 0.3vw;
+  margin: 1vw;
   border-radius: 10vw;
   -webkit-transition: box-shadow 0.2s;
   transition: box-shadow 0.2s;

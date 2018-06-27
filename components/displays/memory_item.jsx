@@ -42,16 +42,28 @@ class MemoryItem extends React.Component {
             for ( let j = 0; j < drawArray[0].length; j++ ) {
                 if ( drawArray[i][j] === 1 ) {
                     ctx.beginPath();
-                    ctx.fillStyle = "red";
+                    ctx.fillStyle = "#ee66aa";
                     ctx.fillRect(2 * i,2 * j, 2, 2);
-                } else if (drawArray[i][j] > .5 && drawArray[i][j] < 1 ) {
+                    ctx.fillStyle = "#f49cc8";
+                    ctx.fillRect(2 * i,2 * j, 1, 1);
+                } else if (drawArray[i][j] > .75 && drawArray[i][j] < 1 ) {
                     ctx.beginPath();
-                    ctx.fillStyle = "orange";
+                    ctx.fillStyle = "#7166ee";
                     ctx.fillRect(2 * i, 2 * j, 2, 2);
-                } else if (drawArray[i][j] > 0 ) {
+                } else if (drawArray[i][j] > .5 && drawArray[i][j] < 0.75 ) {
                     ctx.beginPath();
-                    ctx.fillStyle = "yellow";
+                    ctx.fillStyle = "#66a1ee";
                     ctx.fillRect(2 * i, 2 * j, 2, 2);
+                } else if (drawArray[i][j] > 0.25 && drawArray[i][j] < 0.5) {
+                    ctx.beginPath();
+                    ctx.fillStyle = "#9ce5f4";
+                    ctx.fillRect(2 * i, 2 * j, 2, 2);
+                } else if (drawArray[i][j] > 0 && drawArray[i][j] < 0.25) {
+                    ctx.beginPath();
+                    ctx.fillStyle = "#66eece";
+                    ctx.fillRect(2 * i, 2 * j, 2, 2);
+                    ctx.fillStyle = "#f4f19c";
+                    ctx.fillRect(2 * i, 2 * j, 1, 1);
                 }
             }
         }

@@ -8,6 +8,13 @@ class TrainingView extends React.Component {
         super(props);
     }
 
+    componentDidMount(){
+      let particles = document.getElementById('particles-js');
+      if (!particles.classList.contains('hidden')){
+        particles.classList.add('hidden');
+      }
+    }
+
     render() {
         return (
             <div className="training-canvas-view-div">
