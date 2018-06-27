@@ -175,3 +175,8 @@ canvas:hover{
 .memory-li canvas:hover {
   cursor: default !important;
 }
+
+.testing-canvas-button-container {
+  display: flex;
+  flex-direction: column;
+}
