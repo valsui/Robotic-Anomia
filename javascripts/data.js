@@ -1,7 +1,6 @@
-import brain from 'brain.js';
-import { testData } from '../test_suite/brain_train';
-import { slicedTestData} from '../test_suite/sliced_brain_train';
-import { valTestData } from '../test_suite/valerie_brain_train';
+import * as tf from '@tensorflow/tfjs';
+
+//importing all the data 
 import { a } from '../training_data/data_a';
 import { b } from '../training_data/data_b';
 import { c } from '../training_data/data_c';
@@ -28,26 +27,16 @@ import { w } from '../training_data/data_w';
 import { x } from '../training_data/data_x';
 import { y } from '../training_data/data_y';
 import { z } from '../training_data/data_z';
-// This is our trained neural network.  It will be trained using the information stored on test data, which is what we need to train the neural network every time the page loads.
-
-let config = {
-    iterations: 10000,
-    learningRate: 0.3,
-    layers: 4
-    // hiddenLayers: [4]
-}
-
-const net = new brain.NeuralNetwork(config);
 
 //data set containing around 1200 data points
 let data = a.concat(b).concat(d).concat(c).concat(e).concat(f).concat(g).concat(h).concat(i).concat(j).concat(k).concat(l).concat(m).concat(n).concat(o).concat(p).concat(q).concat(r).concat(s).concat(t).concat(u).concat(v).concat(w).concat(x).concat(y).concat(z);
- 
+
 // function to shuffle dataset
 const shuffleData = (data) => {
     let currentIdx = data.length;
     let tempVal, randomIdx;
     
-    while( 0!== currentIdx) {
+    while (0 !== currentIdx) {
         //Pick random idx
         randomIdx = Math.floor(Math.random() * currentIdx);
         currentIdx -= 1;
@@ -64,7 +53,18 @@ const shuffleData = (data) => {
 data = shuffleData(data);
 // console.log(data);
 
-// net.trainAsync(testData).then(() => console.log("done!"));
-net.trainAsync(data).then(() => console.log("done training!"));
+const IMAGE_SIZE = 625;
+const NUM_CLASSES = 10;
+const NUM_DATASET_ELEMENTS = data.length;
 
-export default net;
+const TRAIN_TEST_RATIO = 4 / 5;
+const NUM_TRAIN_ELEMENTS = Math.floor(TRAIN_TEST_RATIO * NUM_DATASET_ELEMENTS);
+const NUM_TEST_ELEMENTS = NUM_DATASET_ELEMENTS - NUM_TRAIN_ELEMENTS;
+
+class LetterData {
+    constructor() {
+        this.shuffledTrainIndex = 0;
+        this.shuffledTestIndex = 0;
+    }
+
+}
