@@ -14,6 +14,15 @@ export const createArray = () => {
     return array;
 }
 
+const anyValue = (array) => {
+  for(let i = 0; i < array.length; i++){
+    if (array[i] !== 0){
+      return true;
+    }
+  }
+  return false;
+}
+
 const createBoxes = (array) => {
   let rowNumber = 0;
   let characterFound = 2;
@@ -22,32 +31,46 @@ const createBoxes = (array) => {
 
   while(rowNumber < array.length){
     if( characterFound < 2){
-      if(!array[rowNumber].includes(1)){
+      if (array[rowNumber].reduce((acc, val) => acc + val) === 0 ){
         characterFound += 1;
         if (characterFound === 2) {
           boxes.push(box);
           box = [];
-        } else {
+        } else if ( !(rowNumber !== array.length - 1)) {
         box.push(array[rowNumber]);
         }
       } else {
-        box.push(array[rowNumber]);
+        // character detected
+        if(box.length >= 25){
+          // do nothing, just skipping due to too long width wise
+        }else {
+          box.push(array[rowNumber]);
+        }
       }
-    } else if(array[rowNumber].includes(1)){
+    } else if( array[rowNumber].reduce((acc, val) => acc + val) !== 0 ){
       characterFound = 0;
       box.push(array[rowNumber]);
     }
     rowNumber++;
   }
-  
+
   if ( box.length > 0 ) {
     boxes.push(box);
   }
 
-  boxes = boxes.filter((box) => box.length > 3)
+  let ones = boxes[0].map((array) => {
+    return array.map((el) => {
+      return Math.ceil(el + 0)});
+  })
 
-  console.log(boxes);
+  console.log(ones);
+  // boxes = boxes.filter((box) => box.length > 4)
+
   return boxes;
+}
+
+const pointExists = (array, i, j) => {
+  return array[i] !== undefined ? (array[i][j] !== undefined ? array[i][j] : 0 ) : 0;
 }
 
 export const reduce = (array) => {
@@ -57,7 +80,17 @@ export const reduce = (array) => {
         let row = [];
         for (let j = 0; j < array[0].length; j += 2) {
             if (countNeighbors(array, i, j, 0) >= 1) {
-                row.push(1);
+                let one = array[i][j];
+                let two = pointExists(array, i + 1, j); 
+                let three = pointExists(array, i, j + 1);
+                let four = pointExists(array, i + 1, j + 1);
+                let five = pointExists(array, i + 1, j + 2);
+                let six = pointExists(array, i + 2, j + 2);
+                let seven = pointExists(array, i, j + 2);
+                let eight = pointExists(array, i + 2, j);
+                let nine = pointExists(array, i + 2, j + 1);
+
+                row.push( ( one + two + three + four + five + six + seven + eight + nine ) / 9);
             } else {
                 row.push(0);
             }
@@ -66,11 +99,13 @@ export const reduce = (array) => {
     }
 
 
+
     let boxes = createBoxes(newArr);
     // cuts out the white space
     // let anotherArray = cutOut(JSON.parse(JSON.stringify(newArr)));
     let returnArray = boxes.map(box => {
-      return addPadding(25, box);
+      let cutOutBox = cutOut(JSON.parse(JSON.stringify(box)));
+      return addPadding(25, cutOutBox);
     })
     // let returnArray = addPadding(25, anotherArray);
     return returnArray;
@@ -104,15 +139,16 @@ const cutOut = (array) => {
   for(let i = top; i < bottom; i++){
     anotherArray.push(array[i])
   }
-  for(let i = 0; i < anotherArray.length; i++){
+  for(let i = 0; i < array.length; i++){
     for(let j = 0; j < left; j++){
-      anotherArray[i].shift();
+      array[i].shift();
     }
     for(let k = right; k < 25; k++){
-      anotherArray[i].pop();
+      array[i].pop();
     }
   }
-  return anotherArray;
+  // console.log(array);
+  return array;
 }
 
 const addPadding = (size, array) => {
@@ -184,7 +220,7 @@ export const doSimulationStep = (array) => {
         }
     }
 
-    console.log(newMap);
+    // console.log(newMap);
     return newMap;
 }
 

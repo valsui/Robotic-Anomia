@@ -9,6 +9,8 @@ class Memory extends React.Component {
 
     render() {
         const { testData } = this.props;
+        const keys = Object.keys(testData);
+        const values = Object.values(testData);
 
         if ( testData === undefined ) {
             return <div className="memory-div">
@@ -19,8 +21,8 @@ class Memory extends React.Component {
                 <div className="memory-div">
                     <p> Memory </p>
                     <ul className="memory-div-container">
-                        { testData.map( (datum, i) => {
-                            return <MemoryItem key={i} datum={datum}/>
+                        { values.map( (datum, i) => {
+                            return <MemoryItem key={keys[i]} datum={datum} idx={keys[i]}/>
                         })}
                     </ul>
                 </div>

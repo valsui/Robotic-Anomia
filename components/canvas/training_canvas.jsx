@@ -26,7 +26,8 @@ class TrainingCanvas extends React.Component {
 
         this.setState({
             canvas: canvas,
-            ctx: ctx
+            ctx: ctx,
+            counter: 0
         })
 
 
@@ -37,6 +38,8 @@ class TrainingCanvas extends React.Component {
 
     componentWillUnmount() {
         const { canvas } = this.state;
+
+        this.props.resetTestData();
 
         canvas.removeEventListener("mousedown", this.mouseDown());
         canvas.removeEventListener("mousemove", this.mouseMove());
@@ -87,6 +90,8 @@ class TrainingCanvas extends React.Component {
             if (!outOfBounds(this.array, arrX, arrY + 1)) this.array[arrX][arrY + 1] = 1;
             if (!outOfBounds(this.array, arrX + 1, arrY)) this.array[arrX + 1][arrY] = 1;
             if (!outOfBounds(this.array, arrX + 1, arrY + 1)) this.array[arrX + 1][arrY + 1] = 1;
+            if (!outOfBounds(this.array, arrX - 1, arrY + 1)) this.array[arrX - 1][arrY + 1] = 1;
+            if (!outOfBounds(this.array, arrX + 1, arrY - 1)) this.array[arrX + 1][arrY - 1] = 1;
             ctx.lineTo(x, y);
             ctx.stroke();
             ctx.strokeStyle = "#30B2F9";
@@ -120,9 +125,19 @@ class TrainingCanvas extends React.Component {
              newArr = newArr.concat(tempArray[i].slice(0,25));
              consoleLogArray.push(tempArray[i].slice(0,25))
         }
+<<<<<<< HEAD
 
         let data = { input: newArr, output: {[this.state.letter]: 1} }
 
+=======
+        
+        let data = { [this.state.counter]: { input: newArr, output: {[this.state.letter]: 1} } }
+
+        this.setState({
+            counter: this.state.counter + 1
+        })
+        
+>>>>>>> 43a53fefb3ee3c78270b90d1f12a903afad9aab0
         this.props.receiveTestData(data);
         this.resetCanvas();
     }
@@ -158,7 +173,10 @@ class TrainingCanvas extends React.Component {
     render() {
         return (
             <div className="training-canvas-div">
+<<<<<<< HEAD
               <input onChange={this.changeLetter} value={this.state.letter} />
+=======
+>>>>>>> 43a53fefb3ee3c78270b90d1f12a903afad9aab0
                 <canvas ref="trainingCanvas" width={200} height={200} />
                 <button onClick={this.sendData}>Add to Memory</button>
 
@@ -173,7 +191,7 @@ class TrainingCanvas extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    data: state.entities.testData
+    data: Object.values(state.entities.testData)
 })
 
 const mapDispatchToProps = dispatch => ({

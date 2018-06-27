@@ -100,6 +100,8 @@ class TestingCanvas extends React.Component {
             if (!outOfBounds(this.array, arrX, arrY + 1)) this.array[arrX][arrY + 1] = 1;
             if (!outOfBounds(this.array, arrX + 1, arrY)) this.array[arrX + 1][arrY] = 1;
             if (!outOfBounds(this.array, arrX + 1, arrY + 1)) this.array[arrX + 1][arrY + 1] = 1;
+            if (!outOfBounds(this.array, arrX - 1, arrY + 1)) this.array[arrX - 1][arrY + 1] = 1;
+            if (!outOfBounds(this.array, arrX + 1, arrY - 1)) this.array[arrX + 1][arrY - 1] = 1;
             ctx.lineTo(x, y);
             ctx.stroke();
             ctx.strokeStyle = "#30B2F9";
@@ -132,9 +134,8 @@ class TestingCanvas extends React.Component {
         let outputArray = [];
 
        newArr.forEach((array) => {
-           outputArray.push(this.props.trainedNet.run(array))
+           outputArray.push(this.props.trainedNet.run(array));
        })
-
        this.props.receiveOutputData(outputArray);
         this.matrixify();
     }
