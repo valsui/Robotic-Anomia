@@ -31,6 +31,34 @@ import { z } from '../training_data/data_z';
 //data set containing around 1200 data points
 let data = a.concat(b).concat(d).concat(c).concat(e).concat(f).concat(g).concat(h).concat(i).concat(j).concat(k).concat(l).concat(m).concat(n).concat(o).concat(p).concat(q).concat(r).concat(s).concat(t).concat(u).concat(v).concat(w).concat(x).concat(y).concat(z);
 
+let dataA = a;
+export const aInput = () => {
+    let result = [];
+    dataA.forEach((dataPair) => {
+        result.push(dataPair.input)
+    });
+    return result;
+}
+
+export const aOutput = () => {
+    let result = [];
+    aOutput.forEach((dataPair) => {
+        let out = dataPair.output;
+        let letter = Object.keys(out)[0]
+        // result.push(ALPHABET.indexOf(letter));
+        result.push(letter);
+    })
+    return result;
+}
+
+export const aHotOnes = () => {
+    return aOutput().map((letter) => {
+        return [
+            letter === 'a' ? 1 : 0
+        ]
+    })
+}
+
 // function to shuffle dataset
 const shuffleData = (data) => {
     let currentIdx = data.length;
@@ -53,23 +81,43 @@ const shuffleData = (data) => {
 data = shuffleData(data);
 // console.log(data);
 
-let inputData = [];
-data.forEach((dataPair) => {
-    inputData.push(dataPair.input)
-});
-export const inputTFData = tf.tensor2d(inputData, [inputData.length, 625]);
-console.log('input')
-inputTFData.print();
-// console.log('input',inputTFData.print());
+export const inputData = () => {
+   let result = [];
+    data.forEach((dataPair) => {
+        result.push(dataPair.input)
+    });
+    return result;
+}   
 
-export const outputData = [];
-data.forEach((dataPair) => {
-    let out = dataPair.output;
-    let letter = Object.keys(out)[0]
-    outputData.push(letter);
+export const inputTFData625 = tf.tensor2d(inputData(), [inputData().length, 625]);
+
+export const inputTFData25Matrix = inputData().map((arr) => {
+    let j = 0;
+    let result = [];
+    while (j < 625) {
+        result.push(arr.slice(j, j + 25))
+        j += 25;
+    }
+    return result;
 })
 
-const hotOnes = outputData.map((letter) => {
+console.log('mtx:',inputTFData25Matrix);
+// console.log('input')
+// inputTFData.print();
+// console.log('input',inputTFData.print());
+// const ALPHABET = 'abcdefghijklmnopqrstuvwxyz'.split('');
+export const outputData = () => {
+    let result = [];
+    data.forEach((dataPair) => {
+        let out = dataPair.output;
+        let letter = Object.keys(out)[0]
+        // result.push(ALPHABET.indexOf(letter));
+        result.push(letter);
+    })
+    return result;
+}
+
+export const hotOnes = outputData().map((letter) => {
     return [
         letter === 'a' ? 1 : 0,
         letter === 'b' ? 1 : 0,
@@ -101,8 +149,8 @@ const hotOnes = outputData.map((letter) => {
 });
 
 export const outputTFData = tf.tensor2d( hotOnes, [hotOnes.length, 26]);
-console.log('out')
-outputTFData.print()
+// // console.log('out')
+// outputTFData.print()
 // const IMAGE_SIZE = 625;
 // const NUM_CLASSES = 26;
 // const NUM_DATASET_ELEMENTS = data.length;
