@@ -23,6 +23,8 @@ const anyValue = (array) => {
   return false;
 }
 
+
+
 const createBoxes = (array) => {
   let rowNumber = 0;
   let characterFound = 2;
@@ -68,16 +70,25 @@ const createBoxes = (array) => {
   if ( box.array.length > 0 ) {
     boxes.push(box);
   }
-
-  let ones = boxes[0].map((array) => {
+  let ones = boxes[0].array.map((array) => {
     return array.map((el) => {
       return Math.ceil(el + 0)});
   })
 
+  // console.log(boxes);
   console.log(ones);
   // boxes = boxes.filter((box) => box.length > 4)
 
   return boxes;
+}
+
+const findIndex = (array) =>{
+  for(let i = 0; i < array.length; i++){
+    if (array[i] !== 0){
+      return i;
+    }
+  }
+  return 0;
 }
 
 const pointExists = (array, i, j) => {
