@@ -7,11 +7,14 @@
 }
 
 .text-info {
+    display: none;
     height: 500px;
     width: 500px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    color: white;
+    font-weight: 100;
 }
 
 .homepage-content {
@@ -27,11 +30,25 @@
 }
 
 .homepage-button {
-    height: 100px;
+    color: white;
+    height: 3vw;
     width: 300px;
-    border: 1px solid black;
+    font-weight: 100;
+    border: 1px solid rgb(2,12,144, 0.4);
+    border-radius: 1.5vw;
+    box-shadow: 0vw 0.15vw 0.2vw rgb(2,12,144, 0.4);
+    margin-top: 1vw;
     text-align: center;
     flex-direction: column;
     justify-content: center;
     cursor: pointer;
+    -webkit-transition: background 0.4s;
+    transition: background 0.4s;
+    -webkit-transition: box-shadow 0.2s;
+    transition: box-shadow 0.2s;
+}
+
+.homepage-button:hover{
+  background:  rgb(48,178,249,0.6);
+  box-shadow: 0vw 0.3vw 0.2vw rgb(2,12,144, 0.4);
 }

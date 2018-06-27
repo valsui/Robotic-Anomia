@@ -23,8 +23,7 @@ class Homepage extends React.Component {
                 <div className="homepage-content">
                     <div className="homepage-content-center">
                         <div className="text-info">
-                            Welcome to Robotic Anomia:
-                            Please choose a mode
+        
                         </div>
                         <div className="homepage-button-div">
                             <div className="homepage-button" onClick={this.linkTest}>

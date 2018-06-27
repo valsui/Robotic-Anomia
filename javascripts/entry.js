@@ -138,7 +138,6 @@ class Canvas {
     // console.log(myImageData);
     // console.log(array);
     // this.array = array;
-    console.log(this.array);
   }
 
   doSimulationStep() {
@@ -220,8 +219,6 @@ class Canvas {
 
        let anotherArray = this.cutOut(newArr)
        let returnArray = this.addPadding(25, anotherArray);
-       console.log(returnArray);
-       console.log(returnArray.toString());
        this.reducedArr = returnArray;
        return returnArray;
    }

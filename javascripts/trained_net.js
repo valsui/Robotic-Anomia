@@ -34,7 +34,7 @@ import { z } from '../training_data/data_z';
 let config = {
     iterations: 10000,
     learningRate: 0.3,
-    layers: [4]
+    layers: [5]
 }
 
 const net = new brain.NeuralNetwork(config);
@@ -71,9 +71,6 @@ const train = (net, data, iterator) => {
 const asyncFunc = (net, data, iterator) => {
   net.trainAsync(data[iterator]).then( () => {
 
-    console.log(iterator);
-    console.log(revertToBox(data[iterator]));
-    console.log(revertToBox({input: net.weights[2][0]}));
     // console.log(revertToBox(net.weights[2][0]));
     // train(net, data, iterator + 1);
   });
