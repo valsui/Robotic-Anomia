@@ -31,7 +31,7 @@ class MemoryItem extends React.Component {
         ctx.clearRect(0, 0, 50, 50);
         ctx.fillStyle = "white";
         ctx.fillRect(0, 0, 50, 50);
-        
+
         while ( i < 625 ) {
             drawArray.push(tempArray.slice(i, i + 25))
 
@@ -61,7 +61,7 @@ class MemoryItem extends React.Component {
         e.preventDefault();
         const { idx, removeTestData } = this.props;
 
-        removeTestData(idx);        
+        removeTestData(idx);
     }
 
     render() {

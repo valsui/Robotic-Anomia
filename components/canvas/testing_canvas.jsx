@@ -104,10 +104,10 @@ class TestingCanvas extends React.Component {
             if (!outOfBounds(this.array, arrX + 1, arrY - 1)) this.array[arrX + 1][arrY - 1] = 1;
             ctx.lineTo(x, y);
             ctx.stroke();
-            ctx.strokeStyle = "black";
+            ctx.strokeStyle = "#30B2F9";
             ctx.lineWidth = 12;
             ctx.arc(x, y, 6, 0, Math.PI * 2);
-            ctx.fillStyle = "black";
+            ctx.fillStyle = "#30B2F9";
             ctx.fill();
             canvas.style.cursor = "pointer";
             ctx.beginPath();
@@ -137,26 +137,35 @@ class TestingCanvas extends React.Component {
            outputArray.push(this.props.trainedNet.run(array));
        })
        this.props.receiveOutputData(outputArray);
-
-        this.resetCanvas();
+        this.matrixify();
     }
 
     matrixify() {
-        const { ctx } = this.state;
+        const { canvas, ctx } = this.state;
         const array = this.array;
+        for (var x = 0; x <= canvas.width / 4; x += 4) {
+          var row = array[x];
+          for (var y = 0; y <= canvas.height / 4 ; y += 4) {
+            ctx.fillStyle = "rgba(255,255,255,0.25)";
+            ctx.textAlign = "center";
+            ctx.fillText("0",x * 4 + 8 ,y * 4);
+            ctx.fillStyle = "rgba(255,255,255,0.06)";
+            ctx.textAlign = "center";
+            ctx.fillText("0",x * 4 + 8 ,y * 4 + 8);
+            ctx.fillText("0",x * 4 ,y * 4 + 8);
+            ctx.fillText("0",x * 4 ,y * 4);
+          }
+        }
 
-        for ( let i = 0; i < array.length; i++ ) {
-            for ( let j = 0; j < array[i].length; j++ ) {
-                if ( array[i][j] === 1 ) {
-                    ctx.font = "20px serif";
-                    ctx.fillStyle = "green";
-                    ctx.strokeText("1", i + 16, j + 16)
-                } else {
-                    ctx.font = "20px serif";
-                    ctx.fillStyle = "black";
-                    ctx.strokeText("0", i + 16, j + 16)
-                }
+        for (var x = 0; x <= canvas.width / 4; x += 2) {
+          var row = array[x];
+          for (var y = 0; y <= canvas.height / 4 ; y += 2) {
+            if (array[x][y] === 1) {
+                ctx.fillStyle = "white";
+                ctx.textAlign = "center";
+                ctx.fillText("1",x * 4  ,y * 4 + 8);
             }
+          }
         }
     }
 
@@ -171,10 +180,11 @@ class TestingCanvas extends React.Component {
     render() {
         return (
             <div className="testing-canvas-div">
+
                 <div className="testing-canvas-container">
                     <canvas ref="testingCanvas" width={800} height={200} />
                 </div>
-                <button onClick={this.sendData}>Test!</button>
+                <button onClick={this.sendData} className="test-button">Read This</button>
             </div>
         )
     }

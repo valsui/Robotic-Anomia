@@ -19,7 +19,7 @@ class TrainingView extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    
+
 })
 
 const mapDispatchToProps = null;
