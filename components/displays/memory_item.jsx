@@ -24,9 +24,9 @@ class MemoryItem extends React.Component {
         let drawArray = [];
         let i = 0;
 
-        ctx.clearRect(0, 0, 25, 25);
+        ctx.clearRect(0, 0, 50, 50);
         ctx.fillStyle = "white";
-        ctx.fillRect(0, 0, 25, 25);
+        ctx.fillRect(0, 0, 50, 50);
         
         while ( i < 625 ) {
             drawArray.push(tempArray.slice(i, i + 25))
@@ -38,8 +38,16 @@ class MemoryItem extends React.Component {
             for ( let j = 0; j < drawArray[0].length; j++ ) {
                 if ( drawArray[i][j] === 1 ) {
                     ctx.beginPath();
-                    ctx.fillStyle = "black";
-                    ctx.fillRect(i,j, 1, 1);
+                    ctx.fillStyle = "red";
+                    ctx.fillRect(2 * i,2 * j, 2, 2);
+                } else if (drawArray[i][j] > .5 && drawArray[i][j] < 1 ) {
+                    ctx.beginPath();
+                    ctx.fillStyle = "orange";
+                    ctx.fillRect(2 * i, 2 * j, 2, 2);
+                } else if (drawArray[i][j] > 0 ) {
+                    ctx.beginPath();
+                    ctx.fillStyle = "yellow";
+                    ctx.fillRect(2 * i, 2 * j, 2, 2);
                 }
             }
         }
@@ -49,7 +57,7 @@ class MemoryItem extends React.Component {
     render() {
         return (
             <li className="memory-li">
-                <canvas ref="memoryCanvas" width={25} height={25}></canvas>
+                <canvas ref="memoryCanvas" width={50} height={50}></canvas>
             </li>
         )
     }

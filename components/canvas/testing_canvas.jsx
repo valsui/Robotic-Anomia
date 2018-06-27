@@ -93,7 +93,7 @@ class TestingCanvas extends React.Component {
             let y = Math.floor((event.clientY - rect.top));
             let arrX = Math.floor(x / 4);
             let arrY = Math.floor(y / 4);
-        
+
             if (!outOfBounds(this.array, arrX - 1, arrY - 1)) this.array[arrX - 1][arrY - 1] = 1;
             if (!outOfBounds(this.array, arrX, arrY - 1)) this.array[arrX][arrY - 1] = 1;
             if (!outOfBounds(this.array, arrX - 1, arrY)) this.array[arrX - 1][arrY] = 1;
@@ -118,10 +118,11 @@ class TestingCanvas extends React.Component {
         e.preventDefault();
         let newArray = doSimulationStep(this.array);
         let tempArray = reduce(newArray);
+        console.log(tempArray);
         let newArr = [];
-     
 
-        newArr = tempArray.map( (subArray) => { 
+
+        newArr = tempArray.map( (subArray) => {
             let mapSubArray = [];
             for (let i = 0; i < subArray.length; i++) {
                 mapSubArray = mapSubArray.concat(subArray[i].slice(0, 25));
@@ -131,13 +132,11 @@ class TestingCanvas extends React.Component {
         })
 
         let outputArray = [];
-        console.log('newArr:', newArr);
-        newArr.forEach((array) => {
-            console.log('array:',array);
-            console.log('matrixed:', imageToMatrix(array));
-           outputArray.push(this.props.trainedNet.run(array))
-       })
 
+       newArr.forEach((array) => {
+           console.log(array);
+           outputArray.push(this.props.trainedNet.run(array));
+       })
        this.props.receiveOutputData(outputArray);
 
         this.resetCanvas();
@@ -174,7 +173,6 @@ class TestingCanvas extends React.Component {
     render() {
         return (
             <div className="testing-canvas-div">
-                Testing Canvas
                 <div className="testing-canvas-container">
                     <canvas ref="testingCanvas" width={800} height={200} />
                 </div>

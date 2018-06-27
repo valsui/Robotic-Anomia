@@ -10,7 +10,7 @@ class TrainingView extends React.Component {
 
     render() {
         return (
-            <div className="training-canvas-div">
+            <div className="training-canvas-view-div">
                 <TrainingCanvas />
                 <Memory />
             </div>
