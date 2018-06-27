@@ -27,7 +27,7 @@ class MemoryItem extends React.Component {
         ctx.clearRect(0, 0, 25, 25);
         ctx.fillStyle = "white";
         ctx.fillRect(0, 0, 25, 25);
-        
+
         while ( i < 625 ) {
             drawArray.push(tempArray.slice(i, i + 25))
 
@@ -38,7 +38,7 @@ class MemoryItem extends React.Component {
             for ( let j = 0; j < drawArray[0].length; j++ ) {
                 if ( drawArray[i][j] === 1 ) {
                     ctx.beginPath();
-                    ctx.fillStyle = "black";
+                    ctx.fillStyle = "#30B2F9";
                     ctx.fillRect(i,j, 1, 1);
                 }
             }

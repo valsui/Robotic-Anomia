@@ -1,6 +1,5 @@
 .page-header {
-    height: 100px;
-    background-color: lavender;
+    height: 4vw;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -9,6 +8,7 @@
     font-size: 20px;
     box-sizing: border-box;
     flex-shrink: 0;
+    box-shadow: 0px 3px 6px rgb(2,12,144,0.4);
 }
 
 .title-container {
@@ -18,6 +18,10 @@
 }
 
 .page-title {
+    font-family: 'Russo One', sans-serif;
+    color: white;
+    text-shadow: 0.2vw 0.2vw 0.1vw rgb(2,12,144, 0.6);
+    font-size: 1vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -28,8 +32,9 @@
     display: flex;
     flex-direction: row;
     font-size: 50px;
-    width: 150px;
+    width: 6vw;
     justify-content: space-between;
+    margin-bottom: 10%;
 }
 
 .header-icon-container i {
@@ -37,13 +42,41 @@
 }
 
 .github-link {
-    color: black;
-    height: 50px;
-    width: 50px;
+    color: white;
+    height: 1vw;
+    width: 1vw;
     align-items: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     font-size: 50px;
+    margin-bottom: 0.3vw;
 }
 
+.fab:hover{
+  text-shadow: 0.2vw 0.2vw 0.1vw rgb(2,12,144, 0.6);
+}
+
+
+
+.fas {
+  color: white;
+  font-size: 2vw;
+  margin-bottom: 0.3vw;
+}
+
+.fas:hover {
+  text-shadow: 0.2vw 0.2vw 0.1vw rgb(2,12,144, 0.6);
+}
+
+.fab {
+  color: white;
+  height: 1vw;
+  width: 1vw;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 2vw;
+  /* margin-bottom: 0.4vw; */
+}
