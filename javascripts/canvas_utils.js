@@ -58,8 +58,12 @@ const createBoxes = (array) => {
     boxes.push(box);
   }
 
+  let ones = boxes[0].map((array) => {
+    return array.map((el) => {
+      return Math.ceil(el + 0)});
+  })
 
-  console.log(boxes);
+  console.log(ones);
   // boxes = boxes.filter((box) => box.length > 4)
 
   return boxes;
@@ -94,7 +98,6 @@ export const reduce = (array) => {
         newArr.push(row);
     }
 
-    console.log(newArr);
 
 
     let boxes = createBoxes(newArr);

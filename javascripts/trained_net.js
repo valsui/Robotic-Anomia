@@ -71,9 +71,6 @@ const train = (net, data, iterator) => {
 const asyncFunc = (net, data, iterator) => {
   net.trainAsync(data[iterator]).then( () => {
 
-    console.log(iterator);
-    console.log(revertToBox(data[iterator]));
-    console.log(revertToBox({input: net.weights[2][0]}));
     // console.log(revertToBox(net.weights[2][0]));
     // train(net, data, iterator + 1);
   });
