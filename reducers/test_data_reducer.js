@@ -1,7 +1,7 @@
 import { RECEIVE_TEST_DATA, RESET_TEST_DATA, REMOVE_TEST_DATA } from '../actions/test_data_actions';
 
 
-const testDataReducer = (state = [], action) => {
+const testDataReducer = (state = {} , action) => {
     Object.freeze(state);
 
     switch (action.type) {

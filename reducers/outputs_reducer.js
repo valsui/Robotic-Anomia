@@ -1,4 +1,4 @@
-import { RECEIVE_OUTPUT_DATA } from '../actions/test_data_actions';
+import { RECEIVE_OUTPUT_DATA, RESET_OUTPUT_DATA } from '../actions/test_data_actions';
 
 
 const outputsReducer = (state = [], action) => {
@@ -7,6 +7,8 @@ const outputsReducer = (state = [], action) => {
     switch (action.type) {
         case RECEIVE_OUTPUT_DATA:
             return [].concat(action.data);
+        case RESET_OUTPUT_DATA:
+            return [];
         default:
             return state;
     }
