@@ -17,7 +17,7 @@ class TrainingCanvas extends React.Component {
         this.sendData = this.sendData.bind(this);
         this.changeLetter = this.changeLetter.bind(this);
         this.trainData = this.trainData.bind(this);
-    
+
     }
 
     componentDidMount() {
@@ -26,7 +26,8 @@ class TrainingCanvas extends React.Component {
 
         this.setState({
             canvas: canvas,
-            ctx: ctx
+            ctx: ctx,
+            counter: 0
         })
 
 
@@ -37,6 +38,8 @@ class TrainingCanvas extends React.Component {
 
     componentWillUnmount() {
         const { canvas } = this.state;
+
+        this.props.resetTestData();
 
         canvas.removeEventListener("mousedown", this.mouseDown());
         canvas.removeEventListener("mousemove", this.mouseMove());
@@ -91,10 +94,10 @@ class TrainingCanvas extends React.Component {
             if (!outOfBounds(this.array, arrX + 1, arrY - 1)) this.array[arrX + 1][arrY - 1] = 1;
             ctx.lineTo(x, y);
             ctx.stroke();
-            ctx.strokeStyle = "black";
+            ctx.strokeStyle = "#30B2F9";
             ctx.lineWidth = 12;
             ctx.arc(x, y, 6, 0, Math.PI * 2);
-            ctx.fillStyle = "black";
+            ctx.fillStyle = "#30B2F9";
             ctx.fill();
             canvas.style.cursor = "pointer";
             ctx.beginPath();
@@ -123,7 +126,11 @@ class TrainingCanvas extends React.Component {
              consoleLogArray.push(tempArray[i].slice(0,25))
         }
         
-        let data = { input: newArr, output: {[this.state.letter]: 1} }
+        let data = { [this.state.counter]: { input: newArr, output: {[this.state.letter]: 1} } }
+
+        this.setState({
+            counter: this.state.counter + 1
+        })
         
         this.props.receiveTestData(data);
         this.resetCanvas();
@@ -132,14 +139,14 @@ class TrainingCanvas extends React.Component {
     resetCanvas() {
         const { ctx, canvas } = this.state;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "white";
+        ctx.fillStyle = "rgb(255,255,255,0)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         this.array = createArray();
     }
 
     changeLetter(e) {
         e.preventDefault();
-        
+
         this.setState({
             letter: e.currentTarget.value
         })
@@ -147,7 +154,7 @@ class TrainingCanvas extends React.Component {
 
     trainData(e) {
         e.preventDefault();
-        
+
         let data = [];
         this.props.data.forEach ((datum) => {
             data.push(JSON.stringify(datum))
@@ -160,11 +167,13 @@ class TrainingCanvas extends React.Component {
     render() {
         return (
             <div className="training-canvas-div">
+              <input onChange={this.changeLetter} value={this.state.letter} />
                 <canvas ref="trainingCanvas" width={200} height={200} />
-                <input onChange={this.changeLetter} value={this.state.letter} />
-                <button onClick={this.sendData}>Add Data</button>
-                <button onClick={this.trainData}>Download Data</button>
+                <button onClick={this.sendData}>Add to Memory</button>
+                <button onClick={(e) => {e.preventDefault(); this.resetCanvas()}}>Clear Canvas</button>
+
                 <form>
+                    <button onClick={this.trainData}>Download Data</button>
                     <input id="filename" type="text" name="name" value="data.txt"/>
                     <input id="download" type="submit" />
                 </form>
@@ -174,7 +183,7 @@ class TrainingCanvas extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    data: state.entities.testData
+    data: Object.values(state.entities.testData)
 })
 
 const mapDispatchToProps = dispatch => ({

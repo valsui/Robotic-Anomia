@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { removeTestData } from '../../actions/test_data_actions';
 
 class MemoryItem extends React.Component {
     constructor(props) {
@@ -7,6 +9,8 @@ class MemoryItem extends React.Component {
         this.state = {
             datum: props.datum
         }
+
+        this.removeItem = this.removeItem.bind(this);
     }
 
     componentDidMount() {
@@ -27,7 +31,7 @@ class MemoryItem extends React.Component {
         ctx.clearRect(0, 0, 50, 50);
         ctx.fillStyle = "white";
         ctx.fillRect(0, 0, 50, 50);
-        
+
         while ( i < 625 ) {
             drawArray.push(tempArray.slice(i, i + 25))
 
@@ -53,14 +57,24 @@ class MemoryItem extends React.Component {
         }
     }
 
+    removeItem(e) {
+        e.preventDefault();
+        const { idx, removeTestData } = this.props;
+
+        removeTestData(idx);
+    }
 
     render() {
         return (
-            <li className="memory-li">
+            <li className="memory-li" onClick={this.removeItem}>
                 <canvas ref="memoryCanvas" width={50} height={50}></canvas>
             </li>
         )
     }
 }
 
-export default MemoryItem;
+const mapDispatchToProps = dispatch => ({
+    removeTestData: (id) => dispatch(removeTestData(id))
+})
+
+export default (connect(null, mapDispatchToProps)(MemoryItem));
