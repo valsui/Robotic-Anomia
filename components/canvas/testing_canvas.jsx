@@ -181,7 +181,6 @@ class TestingCanvas extends React.Component {
     render() {
         return (
             <div className="testing-canvas-div">
-
                 <div className="testing-canvas-container">
                     <canvas ref="testingCanvas" width={800} height={200} />
                 </div>
@@ -189,6 +188,7 @@ class TestingCanvas extends React.Component {
             </div>
         )
     }
+
 }
 
 const mapStateToProps = state => ({

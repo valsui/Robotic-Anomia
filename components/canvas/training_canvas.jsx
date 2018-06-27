@@ -125,11 +125,6 @@ class TrainingCanvas extends React.Component {
              newArr = newArr.concat(tempArray[i].slice(0,25));
              consoleLogArray.push(tempArray[i].slice(0,25))
         }
-<<<<<<< HEAD
-
-        let data = { input: newArr, output: {[this.state.letter]: 1} }
-
-=======
         
         let data = { [this.state.counter]: { input: newArr, output: {[this.state.letter]: 1} } }
 
@@ -137,7 +132,6 @@ class TrainingCanvas extends React.Component {
             counter: this.state.counter + 1
         })
         
->>>>>>> 43a53fefb3ee3c78270b90d1f12a903afad9aab0
         this.props.receiveTestData(data);
         this.resetCanvas();
     }
@@ -173,10 +167,7 @@ class TrainingCanvas extends React.Component {
     render() {
         return (
             <div className="training-canvas-div">
-<<<<<<< HEAD
               <input onChange={this.changeLetter} value={this.state.letter} />
-=======
->>>>>>> 43a53fefb3ee3c78270b90d1f12a903afad9aab0
                 <canvas ref="trainingCanvas" width={200} height={200} />
                 <button onClick={this.sendData}>Add to Memory</button>
 

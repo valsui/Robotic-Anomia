@@ -10,11 +10,7 @@ class TestingView extends React.Component {
 
     render() {
         return (
-<<<<<<< HEAD
             <div className="testing-canvas-view-div">
-=======
-            <div className="training-canvas-view-div">
->>>>>>> 43a53fefb3ee3c78270b90d1f12a903afad9aab0
                 <TestingCanvas />
                 <OutputContainer />
             </div>
