@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import OutputItem from './output_item';
 
 class Outputs extends React.Component {
@@ -9,7 +8,6 @@ class Outputs extends React.Component {
     
     render () {
         const { output } = this.props;
-        debugger;
 
         if ( output === null ) {
             return null;
@@ -28,13 +26,5 @@ class Outputs extends React.Component {
         )
     }
 }
-
-// const mapStateToProps = state => ({
-//     outputs: Object.values(state.entities.outputs),
-//     outputKeys: Object.keys(state.entities.outputs)
-// })
-
-// const mapDispatchToProps = dispatch = ({
-// })
 
 export default Outputs;
