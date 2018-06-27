@@ -101,6 +101,8 @@ class TestingCanvas extends React.Component {
             if (!outOfBounds(this.array, arrX, arrY + 1)) this.array[arrX][arrY + 1] = 1;
             if (!outOfBounds(this.array, arrX + 1, arrY)) this.array[arrX + 1][arrY] = 1;
             if (!outOfBounds(this.array, arrX + 1, arrY + 1)) this.array[arrX + 1][arrY + 1] = 1;
+            if (!outOfBounds(this.array, arrX - 1, arrY + 1)) this.array[arrX - 1][arrY + 1] = 1;
+            if (!outOfBounds(this.array, arrX + 1, arrY - 1)) this.array[arrX + 1][arrY - 1] = 1;
             ctx.lineTo(x, y);
             ctx.stroke();
             ctx.strokeStyle = "black";
@@ -118,7 +120,6 @@ class TestingCanvas extends React.Component {
         e.preventDefault();
         let newArray = doSimulationStep(this.array);
         let tempArray = reduce(newArray);
-        console.log(tempArray);
         let newArr = [];
 
 
@@ -134,7 +135,6 @@ class TestingCanvas extends React.Component {
         let outputArray = [];
 
        newArr.forEach((array) => {
-           console.log(array);
            outputArray.push(this.props.trainedNet.run(array));
        })
        this.props.receiveOutputData(outputArray);
@@ -149,7 +149,6 @@ class TestingCanvas extends React.Component {
         for ( let i = 0; i < array.length; i++ ) {
             for ( let j = 0; j < array[i].length; j++ ) {
                 if ( array[i][j] === 1 ) {
-                    console.log(array[i][j])
                     ctx.font = "20px serif";
                     ctx.fillStyle = "green";
                     ctx.strokeText("1", i + 16, j + 16)

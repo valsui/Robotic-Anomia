@@ -53,18 +53,79 @@ const shuffleData = (data) => {
 data = shuffleData(data);
 // console.log(data);
 
-const IMAGE_SIZE = 625;
-const NUM_CLASSES = 10;
-const NUM_DATASET_ELEMENTS = data.length;
+let inputData = [];
+data.forEach((dataPair) => {
+    inputData.push(dataPair.input)
+});
+export const inputTFData = tf.tensor2d(inputData, [inputData.length, 625]);
+console.log('input')
+inputTFData.print();
+// console.log('input',inputTFData.print());
 
-const TRAIN_TEST_RATIO = 4 / 5;
-const NUM_TRAIN_ELEMENTS = Math.floor(TRAIN_TEST_RATIO * NUM_DATASET_ELEMENTS);
-const NUM_TEST_ELEMENTS = NUM_DATASET_ELEMENTS - NUM_TRAIN_ELEMENTS;
+export const outputData = [];
+data.forEach((dataPair) => {
+    let out = dataPair.output;
+    let letter = Object.keys(out)[0]
+    outputData.push(letter);
+})
 
-class LetterData {
-    constructor() {
-        this.shuffledTrainIndex = 0;
-        this.shuffledTestIndex = 0;
-    }
+const hotOnes = outputData.map((letter) => {
+    return [
+        letter === 'a' ? 1 : 0,
+        letter === 'b' ? 1 : 0,
+        letter === 'c' ? 1 : 0,
+        letter === 'd' ? 1 : 0,
+        letter === 'e' ? 1 : 0,
+        letter === 'f' ? 1 : 0,
+        letter === 'g' ? 1 : 0,
+        letter === 'h' ? 1 : 0,
+        letter === 'i' ? 1 : 0,
+        letter === 'j' ? 1 : 0,
+        letter === 'k' ? 1 : 0,
+        letter === 'l' ? 1 : 0,
+        letter === 'm' ? 1 : 0,
+        letter === 'n' ? 1 : 0,
+        letter === 'o' ? 1 : 0,
+        letter === 'p' ? 1 : 0,
+        letter === 'q' ? 1 : 0,
+        letter === 'r' ? 1 : 0,
+        letter === 's' ? 1 : 0,
+        letter === 't' ? 1 : 0,
+        letter === 'u' ? 1 : 0,
+        letter === 'v' ? 1 : 0,
+        letter === 'w' ? 1 : 0,
+        letter === 'x' ? 1 : 0,
+        letter === 'y' ? 1 : 0,
+        letter === 'z' ? 1 : 0
+    ]
+});
 
-}
+export const outputTFData = tf.tensor2d( hotOnes, [hotOnes.length, 26]);
+console.log('out')
+outputTFData.print()
+// const IMAGE_SIZE = 625;
+// const NUM_CLASSES = 26;
+// const NUM_DATASET_ELEMENTS = data.length;
+
+// const TRAIN_TEST_RATIO = 4 / 5;
+// const NUM_TRAIN_ELEMENTS = Math.floor(TRAIN_TEST_RATIO * NUM_DATASET_ELEMENTS);
+// const NUM_TEST_ELEMENTS = NUM_DATASET_ELEMENTS - NUM_TRAIN_ELEMENTS;
+
+// class LetterData {
+//     constructor() {
+//         this.shuffledTrainIndex = 0;
+//         this.shuffledTestIndex = 0;
+//     }
+    
+    
+
+//     // getTrainIndices(){
+//     //     this.trainIndices = tf.util.createShuffledIndices(NUM_TRAIN_ELEMENTS);
+//     // }
+
+//     // getTestIndices(){
+//     //     tf.util.createShuffledIndices(NUM_TEST_ELEMENTS)
+//     // };
+
+
+// }
