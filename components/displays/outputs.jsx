@@ -6,15 +6,6 @@ class Outputs extends React.Component {
     constructor(props) {
         super(props);
     }
-
-    //function to sort output by letter
-    sortKeysByLetter(output) {
-        let keys = Object.keys(output);
-        keys.sort();
-        return keys.reduce((sortedObj, k) => {
-            sortedObj[k] = output[k];
-        }, {})
-    }
     
     render () {
         const { output } = this.props;
