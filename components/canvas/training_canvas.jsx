@@ -26,7 +26,8 @@ class TrainingCanvas extends React.Component {
 
         this.setState({
             canvas: canvas,
-            ctx: ctx
+            ctx: ctx,
+            counter: 0
         })
 
 
@@ -37,6 +38,8 @@ class TrainingCanvas extends React.Component {
 
     componentWillUnmount() {
         const { canvas } = this.state;
+
+        this.props.resetTestData();
 
         canvas.removeEventListener("mousedown", this.mouseDown());
         canvas.removeEventListener("mousemove", this.mouseMove());
@@ -123,7 +126,11 @@ class TrainingCanvas extends React.Component {
              consoleLogArray.push(tempArray[i].slice(0,25))
         }
         
-        let data = { input: newArr, output: {[this.state.letter]: 1} }
+        let data = { [this.state.counter]: { input: newArr, output: {[this.state.letter]: 1} } }
+
+        this.setState({
+            counter: this.state.counter + 1
+        })
         
         this.props.receiveTestData(data);
         this.resetCanvas();
@@ -174,7 +181,7 @@ class TrainingCanvas extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    data: state.entities.testData
+    data: Object.values(state.entities.testData)
 })
 
 const mapDispatchToProps = dispatch => ({
