@@ -101,7 +101,7 @@ data = shuffleData(data);
 //
 // train(net, data, 0);
 
-// net.trainAsync(brainTrainThree).then(() => console.log("done!"));
-net.trainAsync(data).then(() => console.log("done training!"));
+net.trainAsync(brainTrainThree).then(() => console.log("done!"));
+// net.trainAsync(data).then(() => console.log("done training!"));
 
 export default net;
