@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { doSimulationStep, reduce, outOfBounds } from '../../javascripts/canvas_utils';
 import { receiveOutputData, receiveArrayShapes } from '../../actions/test_data_actions';
+import d3 from 'd3';
 
 class TestingCanvas extends React.Component {
     constructor(props) {
@@ -188,6 +189,7 @@ class TestingCanvas extends React.Component {
         ctx.fillStyle = "rgb(255,255,255,0)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         this.array = this.createArray();
+        d3.selectAll("svg > *").remove();
     }
 
     render() {

@@ -26,31 +26,36 @@ class OutputContainer extends React.Component {
         }
 
         d3.selectAll("svg > *").remove();
+        console.log(percentages);
 
-        // const svg = d3.selectAll("svg")
-        //     .append('g')
-        //         .attr('transform', 'translate(30,30)')
+        const svg = d3.selectAll("svg")
+            .append('g')
+                .attr('transform', 'translate(30,30)')
         
-        // const circle = svg.selectAll("circle")
-        //     .data(percentages)
-        // const g = circle.enter().append("g")
-        //     g.append("circle")
-        //     .attr('r', 40)
-        //     .attr('cy', Math.random() * 200)
-        //     .attr('cx', (d) => d.percent * 800 )
-        //     .text((d) => d[0])
-        //     .attr('class', 'node')
-        //     .style('fill', 'white')
-        //     .style('stroke-width', '5px')
-        //     .style('stroke', "blue")
+        const circle = svg.selectAll("circle")
+            .data(percentages)
+        const g = circle.enter().append("g")
+            g.append("circle")
+            .attr('r', 40)
+            .attr('cy', (d) => d.percent/d.string.length * 200 )
+            .attr('cx', (d) => d.percent/d.string.length * 800 )
+            .attr('class', 'node')
+            .style('fill', 'white')
+            .style('stroke-width', '5px')
+            .style('stroke', "blue")
 
+        g.append("text")
+            .text((d) => d.string)
+            .attr('y', (d) => d.percent / d.string.length * 200 + 5)
+            .attr('x', (d) => d.percent / d.string.length * 800 - 10)
         // const texts = g.selectAll("text")
         //     .data(percentages)
         //     .enter().append('text')
         //     .style("fill", "black")
         //     .text((d) => d.string)
-        //     .attr("x", (d) => d.x)
-        //     .attr("y", (d) => d.y)
+        //     .attr('dx', (d) => -20)
+            // .attr("x", (d) => d.x)
+            // .attr("y", (d) => d.y)
 
          
     }
