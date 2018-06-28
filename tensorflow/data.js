@@ -60,7 +60,7 @@ export const aHotOnes = () => {
 }
 
 // function to shuffle dataset
-const shuffleData = (data) => {
+export const shuffleData = (data) => {
     let currentIdx = data.length;
     let tempVal, randomIdx;
     

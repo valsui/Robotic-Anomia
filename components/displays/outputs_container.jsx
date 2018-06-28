@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Outputs from './outputs';
 import * as d3 from "d3";
+import { shuffleData } from '../../tensorflow/data';
 
 class OutputContainer extends React.Component {
     constructor(props) {
@@ -25,20 +26,21 @@ class OutputContainer extends React.Component {
             return;
         }
 
+        const radiusScale = d3.scaleSqrt().domain([0, percentages[0].percent]).range([20,70]);
+
+        const shuffledPercentages = shuffleData(percentages);
+
         d3.selectAll("svg > *").remove();
-        console.log(percentages);
 
         const svg = d3.selectAll("svg")
-            .append('g')
-                .attr('transform', 'translate(30,30)')
         
         const circle = svg.selectAll("circle")
-            .data(percentages)
+            .data(shuffledPercentages)
+            
+
         const g = circle.enter().append("g")
             g.append("circle")
-            .attr('r', 40)
-            .attr('cy', (d) => d.percent/d.string.length * 200 )
-            .attr('cx', (d) => d.percent/d.string.length * 800 )
+            .attr('r', (d) => radiusScale(d.percent))
             .attr('class', 'node')
             .style('fill', 'white')
             .style('stroke-width', '5px')
@@ -46,16 +48,26 @@ class OutputContainer extends React.Component {
 
         g.append("text")
             .text((d) => d.string)
-            .attr('y', (d) => d.percent / d.string.length * 200 + 5)
-            .attr('x', (d) => d.percent / d.string.length * 800 - 10)
-        // const texts = g.selectAll("text")
-        //     .data(percentages)
-        //     .enter().append('text')
-        //     .style("fill", "black")
-        //     .text((d) => d.string)
-        //     .attr('dx', (d) => -20)
-            // .attr("x", (d) => d.x)
-            // .attr("y", (d) => d.y)
+            .attr('y', (d) => d.y)
+            .attr('x', (d) => d.x)
+
+        const width = 800;
+        const height = 800;
+        const simulation = d3.forceSimulation()
+            .force("x", d3.forceX(width/2).strength(.005))
+            .force("y", d3.forceY(height/2).strength(.01))
+            .force("center", d3.forceCenter().x(width * .5).y(height * .5))
+            .force("charge", d3.forceManyBody().strength(-15))
+            .force("collide", d3.forceCollide((d) => radiusScale(d.percent)).strength(.5))
+        
+
+        simulation
+            .nodes(shuffledPercentages)
+            .on("tick", () => {
+                g
+                .attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+            });
 
          
     }
@@ -149,9 +161,8 @@ class OutputContainer extends React.Component {
         return (
             <div>
                 <svg id="svg" ref={node => this.node = node}
-                    width={800} height={500}>
+                    width={800} height={800}>
                 </svg>
-                <Outputs output={percentages} />
             </div>
         )
     }

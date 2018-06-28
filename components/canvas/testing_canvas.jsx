@@ -189,7 +189,7 @@ class TestingCanvas extends React.Component {
         ctx.fillStyle = "rgb(255,255,255,0)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         this.array = this.createArray();
-        d3.selectAll("svg > *").remove();
+        // d3.selectAll("svg > *").remove();
     }
 
     render() {
