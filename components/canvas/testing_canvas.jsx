@@ -115,20 +115,27 @@ class TestingCanvas extends React.Component {
         }
     }
 
+    drawBox(box) {
+      const { ctx } = this.state;
+      ctx.beginPath();
+      ctx.rect(box.left, box.top, box.right - box.left, box.bottom - box.top);
+      ctx.lineWidth = 7;
+      ctx.strokeStyle = 'black';
+      ctx.stroke();
+    }
     sendData(e) {
         e.preventDefault();
         let newArray = doSimulationStep(this.array);
         let tempArray = reduce(newArray);
         let newArr = [];
 
-
-        newArr = tempArray.map( (subArray) => {
+        newArr = tempArray.map( (object) => {
+            this.drawBox(object);
             let mapSubArray = [];
-            for (let i = 0; i < subArray.length; i++) {
-                mapSubArray = mapSubArray.concat(subArray[i].slice(0, 25));
+            for (let i = 0; i < object.array.length; i++) {
+                mapSubArray = mapSubArray.concat(object.array[i].slice(0, 25));
             }
-
-            return mapSubArray
+            return mapSubArray;
         })
 
         let outputArray = [];
