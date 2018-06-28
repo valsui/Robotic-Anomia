@@ -1,10 +1,58 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Outputs from './outputs';
+import * as d3 from "d3";
 
 class OutputContainer extends React.Component {
     constructor(props) {
         super(props);
+    }
+
+    componentDidMount() {
+        this.createOutputD3();
+    }
+
+    componentDidUpdate() {
+        this.createOutputD3();
+    }
+
+    createOutputD3() {
+        const node = this.node;
+        const words = this.getPercentages();
+        const percentages = this.parsePercentages(words);
+
+        if ( percentages === null ) {
+            return;
+        }
+
+        d3.selectAll("svg > *").remove();
+
+        // const svg = d3.selectAll("svg")
+        //     .append('g')
+        //         .attr('transform', 'translate(30,30)')
+        
+        // const circle = svg.selectAll("circle")
+        //     .data(percentages)
+        // const g = circle.enter().append("g")
+        //     g.append("circle")
+        //     .attr('r', 40)
+        //     .attr('cy', Math.random() * 200)
+        //     .attr('cx', (d) => d.percent * 800 )
+        //     .text((d) => d[0])
+        //     .attr('class', 'node')
+        //     .style('fill', 'white')
+        //     .style('stroke-width', '5px')
+        //     .style('stroke', "blue")
+
+        // const texts = g.selectAll("text")
+        //     .data(percentages)
+        //     .enter().append('text')
+        //     .style("fill", "black")
+        //     .text((d) => d.string)
+        //     .attr("x", (d) => d.x)
+        //     .attr("y", (d) => d.y)
+
+         
     }
 
     getPercentages() {
@@ -30,7 +78,8 @@ class OutputContainer extends React.Component {
     }
 
     parsePercentages(words) {
-        let percents = {}
+        // let percents = {}
+        let percentsArray = [];
 
         if ( words.length === 0 ) {
             return null;
@@ -44,11 +93,20 @@ class OutputContainer extends React.Component {
 
         allWords = allWords.slice(0,11);
 
+        // allWords.forEach((word) => {
+        //     percents[word[0].join("")] = word[1]
+        // })
+
         allWords.forEach((word) => {
-            percents[word[0].join("")] = word[1]
+            percentsArray.push({
+                string: word[0].join(""),
+                percent: word[1]
+            })
         })
 
-        return percents;
+        return percentsArray;
+
+        // return percents;
     }
 
     // recursive parse adds all the string combinations together along with their weight percentage and returns them in an array.
@@ -77,9 +135,18 @@ class OutputContainer extends React.Component {
         const words = this.getPercentages();
         const percentages = this.parsePercentages(words);
 
+        // return (
+        //     <div className="output-wrapper">
+        //        <Outputs output={percentages} />
+        //     </div>
+        // )
+
         return (
-            <div className="output-wrapper">
-               <Outputs output={percentages} />
+            <div>
+                <svg id="svg" ref={node => this.node = node}
+                    width={800} height={500}>
+                </svg>
+                <Outputs output={percentages} />
             </div>
         )
     }
