@@ -32,14 +32,15 @@
 }
 
 .homepage-button {
-    background:  rgb(48,178,249,0.2);
+
+    background:  rgba(11,93,228,0.6);
     color: white;
     height: 3vw;
     width: 300px;
     font-weight: 100;
-    border: 1px solid rgb(2,12,144, 0.4);
+    border: 1px solid rgba(2,12,144, 0.4);
     border-radius: 1.5vw;
-    box-shadow: 0vw 0.15vw 0.2vw rgb(2,12,144, 0.4);
+    box-shadow: 0vw 0.15vw 0.2vw rgba(2,12,144, 0.4);
     margin-top: 1vw;
     text-align: center;
     flex-direction: column;
@@ -52,6 +53,6 @@
 }
 
 .homepage-button:hover{
-  background:  rgb(48,178,249,0.6);
-  box-shadow: 0vw 0.3vw 0.2vw rgb(2,12,144, 0.4);
+  background:  rgba(48,178,249,0.6);
+  box-shadow: 0vw 0.3vw 0.2vw rgba(2,12,144, 0.4);
 }

@@ -1,15 +1,15 @@
 canvas {
-    border: 2px solid rgb(255,255,255,0.3);
+    border: 2px solid rgba(255,255,255,0.3);
     cursor: crosshair !important;
-    background: rgb(255,255,255,0.1);
+    background: rgba(255,255,255,0.1);
     border-radius: 8px;
     -webkit-transition: background 0.4s;
     transition: background 0.4s;
 }
 
 canvas:hover{
-  background: rgb(255,255,255,1);
-  box-shadow: 0vw 0.5vw 1vw rgb(2,12,144,0.4);
+  background: rgba(255,255,255,1);
+  box-shadow: 0vw 0.5vw 1vw rgba(2,12,144,0.4);
 }
 
 .testing-canvas-view-div {
@@ -37,9 +37,9 @@ canvas:hover{
 
   color: white;
   font-weight: 100;
-  border: 1px solid rgb(2,12,144, 0.4);
+  border: 1px solid rgba(2,12,144, 0.4);
   border-radius: 1.5vw;
-  box-shadow: 0vw 0.15vw 0.2vw rgb(2,12,144, 0.4);
+  box-shadow: 0vw 0.15vw 0.2vw rgba(2,12,144, 0.4);
   cursor: pointer;
   -webkit-transition: background 0.2s;
   transition: background 0.2s;
@@ -53,7 +53,7 @@ canvas:hover{
 }
 
 .test-button:hover {
-  background:  rgb(48,178,249,0.6);
+  background:  rgba(48,178,249,0.6);
   box-shadow: 0vw 0.3vw 0.2vw rgb(2,12,144, 0.4);
 }
 
@@ -173,4 +173,9 @@ canvas:hover{
 
 .memory-li canvas:hover {
   cursor: default !important;
+}
+
+.testing-canvas-button-container {
+  display: flex;
+  flex-direction: column;
 }

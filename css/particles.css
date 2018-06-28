@@ -4,18 +4,39 @@
 /* ---- particles.js container ---- */
 
 #particles-js{
-  display: none;
+  /* display: none; */
   width: 100%;
   height: 100%;
   position: fixed;
   z-index: 0;
+  background: none;
 }
 
 #particles-js canvas{
-  background-color: rgba{0,0,0,0};
+  /* background-color: red; */
+  -webkit-animation-name: opacity-animate; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 6s; /* Safari 4.0 - 8.0 */
+  animation-name: opacity-animate;
+  animation-duration: 6s;
+
+  background-color: rgba(0,0,0,0);
   border: none;
   cursor: default !important;
   border-radius: none;
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes opacity-animate {
+    0% {opacity: 0; background-color: rgba(0,0,0,0);}
+    65% {opacity: 0; background-color: none;}
+    100% {opacity: 1; }
+}
+
+/* Standard syntax */
+@keyframes opacity-animate {
+  0% {opacity: 0; background-color: rgba(0,0,0,1);}
+  65% {opacity: 0; background-color: none;}
+  100% {opacity: 1; }
 }
 
 #particles-js canvas:hover{

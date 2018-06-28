@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { doSimulationStep, reduce, outOfBounds } from '../../javascripts/canvas_utils';
-import { receiveOutputData } from '../../actions/test_data_actions';
+import { receiveOutputData, receiveArrayShapes } from '../../actions/test_data_actions';
 
 class TestingCanvas extends React.Component {
     constructor(props) {
@@ -113,20 +113,28 @@ class TestingCanvas extends React.Component {
         }
     }
 
+    drawBox(box) {
+      const { ctx } = this.state;
+      ctx.beginPath();
+      ctx.setLineDash([5, 10]);
+      ctx.rect(box.left, box.top + 30, box.right - box.left, box.bottom - box.top - 50);
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'white';
+      ctx.stroke();
+    }
     sendData(e) {
         e.preventDefault();
         let newArray = doSimulationStep(this.array);
         let tempArray = reduce(newArray);
         let newArr = [];
 
-
-        newArr = tempArray.map( (subArray) => {
+        newArr = tempArray.map( (object) => {
+            this.drawBox(object);
             let mapSubArray = [];
-            for (let i = 0; i < subArray.length; i++) {
-                mapSubArray = mapSubArray.concat(subArray[i].slice(0, 25));
+            for (let i = 0; i < object.array.length; i++) {
+                mapSubArray = mapSubArray.concat(object.array[i].slice(0, 25));
             }
-
-            return mapSubArray
+            return mapSubArray;
         })
 
         let outputArray = [];
@@ -135,18 +143,19 @@ class TestingCanvas extends React.Component {
            outputArray.push(this.props.trainedNet.run(array))
        })
 
+       this.props.receiveArrayShapes(newArr);
        this.props.receiveOutputData(outputArray);
-        this.matrixify();
+       this.matrixify();
+
+       // window.setTimeout(this.resetCanvas.bind(this), 2000);
     }
 
     matrixify() {
         const { canvas, ctx } = this.state;
         const array = this.array;
-
-
-        for (var x = 0; x <= canvas.width / 4; x += 4) {
+        for (var x = 0; x < canvas.width / 4; x += 4) {
           var row = array[x];
-          for (var y = 0; y <= canvas.height / 4 ; y += 4) {
+          for (var y = 0; y < canvas.height / 4 ; y += 4) {
             ctx.fillStyle = "rgba(255,255,255,0.25)";
             ctx.textAlign = "center";
             ctx.fillText("0",x * 4 + 8 ,y * 4);
@@ -158,9 +167,9 @@ class TestingCanvas extends React.Component {
           }
         }
 
-        for (var x = 0; x <= canvas.width / 4; x += 2) {
+        for (var x = 0; x < canvas.width / 4; x += 2) {
           var row = array[x];
-          for (var y = 0; y <= canvas.height / 4 ; y += 2) {
+          for (var y = 0; y < canvas.height / 4 ; y += 2) {
             if (array[x][y] === 1) {
                 ctx.fillStyle = "white";
                 ctx.textAlign = "center";
@@ -173,7 +182,7 @@ class TestingCanvas extends React.Component {
     resetCanvas() {
         const { ctx, canvas } = this.state;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "white";
+        ctx.fillStyle = "rgb(255,255,255,0)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         this.array = this.createArray();
     }
@@ -184,7 +193,10 @@ class TestingCanvas extends React.Component {
                 <div className="testing-canvas-container">
                     <canvas ref="testingCanvas" width={800} height={200} />
                 </div>
-                <button onClick={this.sendData} className="test-button">Read This</button>
+                <div className="testing-canvas-button-container">
+                    <button onClick={this.sendData} className="test-button">Read This</button>
+                    <button className="test-button" onClick={(e) => {e.preventDefault(); this.resetCanvas()}}>Clear Canvas</button>
+                </div>
             </div>
         )
     }
@@ -196,7 +208,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    receiveOutputData: (data) => dispatch(receiveOutputData(data))
+    receiveOutputData: (data) => dispatch(receiveOutputData(data)),
+    receiveArrayShapes: (data) => dispatch(receiveArrayShapes(data))
 })
 
 export default (connect(mapStateToProps, mapDispatchToProps)(TestingCanvas));

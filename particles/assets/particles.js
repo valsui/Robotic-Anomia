@@ -11,10 +11,6 @@ var pJS = function(tag_id, params){
 
   var canvas_el = document.querySelector('#'+tag_id+' > .particles-js-canvas-el');
 
-
-  var items = ['https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png', 'https://d2mdtefgnbhwfs.cloudfront.net/images/social/social-twitter-white.png']
-
-
   /* particles.js variables with default values */
   this.pJS = {
     canvas: {
@@ -24,7 +20,7 @@ var pJS = function(tag_id, params){
     },
     particles: {
       number: {
-        value:100,
+        value: 100,
         density: {
           enable: true,
           value_area: 800
@@ -43,9 +39,9 @@ var pJS = function(tag_id, params){
           nb_sides: 5
         },
         image: {
-          src: 'https://applecoach.nl/wp-content/uploads/2022/02/emoji-robot-apple.png',
-          width: 200,
-          height: 200
+          src: '',
+          width: 100,
+          height: 100
         }
       },
       opacity: {
@@ -59,7 +55,7 @@ var pJS = function(tag_id, params){
         }
       },
       size: {
-          value: 3,
+        value: 20,
         random: false,
         anim: {
           enable: false,
@@ -381,7 +377,8 @@ var pJS = function(tag_id, params){
       this.shape = shape_type;
     }
 
-    if(this.shape == 'image'){
+    var substring = this.shape.substring(0, 5);
+    if(substring == 'image'){
       var sh = pJS.particles.shape;
       this.img = {
         src: sh.image.src,
@@ -395,15 +392,22 @@ var pJS = function(tag_id, params){
         }
       }
     }
-
-
-
   };
 
 
   pJS.fn.particle.prototype.draw = function() {
 
     var p = this;
+
+    function draw() {
+      pJS.canvas.ctx.drawImage(
+        img_obj,
+        p.x-radius,
+        p.y-radius,
+        radius*2,
+        radius*2 / p.img.ratio
+      );
+    }
 
     if(p.radius_bubble != undefined){
       var radius = p.radius_bubble;
@@ -462,17 +466,31 @@ var pJS = function(tag_id, params){
         );
       break;
 
-      case 'image':
+      // case 'image':
 
-        function draw(){
-          pJS.canvas.ctx.drawImage(
-            img_obj,
-            p.x-radius,
-            p.y-radius,
-            radius*2,
-            radius*2 / p.img.ratio
-          );
-        }
+      //   function draw(){
+      //     pJS.canvas.ctx.drawImage(
+      //       img_obj,
+      //       p.x-radius,
+      //       p.y-radius,
+      //       radius*2,
+      //       radius*2 / p.img.ratio
+      //     );
+      //   }
+
+      //   if(pJS.tmp.img_type == 'svg'){
+      //     var img_obj = p.img.obj;
+      //   }else{
+      //     var img_obj = pJS.tmp.img_obj;
+      //   }
+
+      //   if(img_obj){
+      //     draw();
+      //   }
+
+      // break;
+
+      case 'image':
 
         if(pJS.tmp.img_type == 'svg'){
           var img_obj = p.img.obj;
@@ -484,6 +502,136 @@ var pJS = function(tag_id, params){
           draw();
         }
 
+      break;
+
+      case 'image2':
+
+        if(pJS.tmp.img_type == 'svg'){
+          var img_obj = p.img.obj;
+        }else{
+          var img_obj = pJS.tmp.img_obj;
+        }
+        var element = document.createElement('img');
+        element.src = 'particles/assets/image2.svg';
+        img_obj = element;
+
+        if(img_obj){
+          draw();
+        }
+
+        break;
+
+      case 'image3':
+
+        if(pJS.tmp.img_type == 'svg'){
+          var img_obj = p.img.obj;
+        }else{
+          var img_obj = pJS.tmp.img_obj;
+        }
+        var element = document.createElement('img');
+        element.src = 'particles/assets/image3.svg';
+        img_obj = element;
+
+        if(img_obj){
+          draw();
+        }
+      break;
+
+      case 'image4':
+
+        if(pJS.tmp.img_type == 'svg'){
+          var img_obj = p.img.obj;
+        }else{
+          var img_obj = pJS.tmp.img_obj;
+        }
+        var element = document.createElement('img');
+        element.src = 'particles/assets/image4.svg';
+        img_obj = element;
+
+        if(img_obj){
+          draw();
+        }
+      break;
+
+      case 'image5':
+
+        if(pJS.tmp.img_type == 'svg'){
+          var img_obj = p.img.obj;
+        }else{
+          var img_obj = pJS.tmp.img_obj;
+        }
+        var element = document.createElement('img');
+        element.src = 'particles/assets/image5.svg';
+        img_obj = element;
+
+        if(img_obj){
+          draw();
+        }
+      break;
+
+      case 'image6':
+
+        if(pJS.tmp.img_type == 'svg'){
+          var img_obj = p.img.obj;
+        }else{
+          var img_obj = pJS.tmp.img_obj;
+        }
+        var element = document.createElement('img');
+        element.src = 'particles/assets/image6.svg';
+        img_obj = element;
+
+        if(img_obj){
+          draw();
+        }
+      break;
+
+
+      case 'image7':
+
+        if(pJS.tmp.img_type == 'svg'){
+          var img_obj = p.img.obj;
+        }else{
+          var img_obj = pJS.tmp.img_obj;
+        }
+        var element = document.createElement('img');
+        element.src = 'particles/assets/image7.svg';
+        img_obj = element;
+
+        if(img_obj){
+          draw();
+        }
+      break;
+
+      case 'image8':
+
+        if(pJS.tmp.img_type == 'svg'){
+          var img_obj = p.img.obj;
+        }else{
+          var img_obj = pJS.tmp.img_obj;
+        }
+        var element = document.createElement('img');
+        element.src = 'particles/assets/image8.svg';
+        img_obj = element;
+
+        if(img_obj){
+          draw();
+        }
+      break;
+
+      case 'image9':
+
+        if(pJS.tmp.img_type == 'svg'){
+          var img_obj = p.img.obj;
+        }else{
+          var img_obj = pJS.tmp.img_obj;
+        }
+        var element = document.createElement('img');
+        element.src = 'particles/assets/image9.svg';
+        img_obj = element;
+
+        if(img_obj){
+          draw();
+        }
       break;
 
     }

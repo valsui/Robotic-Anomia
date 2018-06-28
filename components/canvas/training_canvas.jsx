@@ -139,7 +139,7 @@ class TrainingCanvas extends React.Component {
     resetCanvas() {
         const { ctx, canvas } = this.state;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "white";
+        ctx.fillStyle = "rgb(255,255,255,0)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         this.array = createArray();
     }
@@ -170,6 +170,7 @@ class TrainingCanvas extends React.Component {
               <input onChange={this.changeLetter} value={this.state.letter} />
                 <canvas ref="trainingCanvas" width={200} height={200} />
                 <button onClick={this.sendData}>Add to Memory</button>
+                <button onClick={(e) => {e.preventDefault(); this.resetCanvas()}}>Clear Canvas</button>
 
                 <form>
                     <button onClick={this.trainData}>Download Data</button>
