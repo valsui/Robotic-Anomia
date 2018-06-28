@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { resetOutputData } from '../../actions/test_data_actions';
+import * as d3 from "d3";
 
 class OutputItem extends React.Component {
     constructor(props) {
@@ -24,6 +25,38 @@ class OutputItem extends React.Component {
 
             this.trainingData.push(obj);
         })
+
+        const svg = d3.select("svg");
+        console.log("svg", svg);
+
+        let node = {
+            string: output,
+            x: Math.random() * 800,
+            y: Math.random() * 200,
+        }
+
+        let nodeArray = [];
+
+        nodeArray.push(node);
+
+        svg.append("g")
+            .attr('transform', 'translate(30,30)')
+        
+        const circle = svg.selectAll("circle")
+            .data(node)
+        const g = circle.enter().append("g")
+            g.append("circle")
+            .attr('r', 40)
+            .attr('cy', (d) => d.y )
+            .attr('cx', (d) => d.x )
+            .attr('class', 'node')
+            .style('fill', 'white')
+            .style('stroke-width', '5px')
+            .style('stroke', "blue")
+        
+
+        
+
     }
 
     handleClick() {
@@ -41,7 +74,8 @@ class OutputItem extends React.Component {
         const { output, letter } = this.props;
         
         return (
-            <li onClick={this.handleClick} className="output-percentage"> {letter} : {output}  </li>
+            // <li onClick={this.handleClick} className="output-percentage"> {letter} : {output}  </li>
+            <div></div>
         )
     }
 }

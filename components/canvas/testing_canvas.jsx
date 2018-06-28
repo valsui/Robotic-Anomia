@@ -141,7 +141,7 @@ class TestingCanvas extends React.Component {
        this.props.receiveOutputData(outputArray);
        this.matrixify();
     
-       window.setTimeout(this.resetCanvas.bind(this), 2000);
+    //    window.setTimeout(this.resetCanvas.bind(this), 2000);
     }
 
     matrixify() {
@@ -150,6 +150,7 @@ class TestingCanvas extends React.Component {
         for (var x = 0; x < canvas.width / 4; x += 4) {
           var row = array[x];
           for (var y = 0; y < canvas.height / 4 ; y += 4) {
+            ctx.fontSize = "14px"
             ctx.fillStyle = "rgba(255,255,255,0.25)";
             ctx.textAlign = "center";
             ctx.fillText("0",x * 4 + 8 ,y * 4);
@@ -165,9 +166,10 @@ class TestingCanvas extends React.Component {
           var row = array[x];
           for (var y = 0; y < canvas.height / 4 ; y += 2) {
             if (array[x][y] === 1) {
+                ctx.fontSize = "20px";
                 ctx.fillStyle = "white";
                 ctx.textAlign = "center";
-                ctx.fillText("1",x * 4  ,y * 4 + 8);
+                ctx.fillText("1", x * 4, y * 4 + 4)
             }
           }
         }
