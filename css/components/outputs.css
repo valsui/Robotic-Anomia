@@ -14,3 +14,11 @@
     width: 170px;
 }
 
+svg {
+    z-index: 2;
+}
+
+.node {
+    color: black;
+    font-size: 14px;
+}
