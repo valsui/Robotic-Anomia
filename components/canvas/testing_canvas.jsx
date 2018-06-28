@@ -26,18 +26,22 @@ class TestingCanvas extends React.Component {
             ctx: ctx
         })
 
+        this.mousedownFunc = this.mouseDown();
+        this.mousemove = this.mouseMove();
+        this.mouseup = this.mouseUp();
 
-        canvas.addEventListener("mousedown", this.mouseDown());
-        canvas.addEventListener("mousemove", this.mouseMove());
-        document.addEventListener("mouseup", this.mouseUp());
+
+        canvas.addEventListener("mousedown", this.mousedownFunc);
+        canvas.addEventListener("mousemove", this.mousemove);
+        document.addEventListener("mouseup", this.mouseup);
     }
 
     componentWillUnmount() {
         const { canvas } = this.state;
 
-        canvas.removeEventListener("mousedown", this.mouseDown());
-        canvas.removeEventListener("mousemove", this.mouseMove());
-        document.removeEventListener("mouseup", this.mouseUp());
+        canvas.removeEventListener("mousedown", this.mousedownFunc);
+        canvas.removeEventListener("mousemove", this.mousemove);
+        document.removeEventListener("mouseup", this.mouseup);
     }
 
     mouseDown() {
@@ -120,6 +124,7 @@ class TestingCanvas extends React.Component {
         let newArray = doSimulationStep(this.array);
         let tempArray = reduce(newArray);
         let newArr = [];
+        const { canvas } = this.state;
 
 
         newArr = tempArray.map( (subArray) => {
@@ -140,8 +145,16 @@ class TestingCanvas extends React.Component {
        this.props.receiveArrayShapes(newArr);
        this.props.receiveOutputData(outputArray);
        this.matrixify();
+
+        canvas.removeEventListener("mousedown", this.mousedownFunc);
+        canvas.removeEventListener("mousemove", this.mousemove);
+
+        this.mousedownFunc = this.mouseDown();
+        this.mousemove = this.mouseMove();
     
-    //    window.setTimeout(this.resetCanvas.bind(this), 2000);
+       window.setTimeout(this.resetCanvas.bind(this), 2000);
+       window.setTimeout(() => canvas.addEventListener("mousedown", this.mousedownFunc), 2000);
+       window.setTimeout(() => canvas.addEventListener("mousemove", this.mousemove), 2000);
     }
 
     matrixify() {

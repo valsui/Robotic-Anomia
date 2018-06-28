@@ -14,7 +14,7 @@ class OutputItem extends React.Component {
 
     componentDidMount() {
         const { arrayShapes, output } = this.props;
-        const letters = output.split("");
+        const letters = output.string.split("");
         
         arrayShapes.forEach((array, i) => {
             let obj = {};
@@ -26,14 +26,24 @@ class OutputItem extends React.Component {
             this.trainingData.push(obj);
         })
 
-        const svg = d3.select("svg");
+        console.log("trainingData", this.trainingData);
+        this.drawSelf();
+    }
+
+    componentDidUpdate() {
+        this.drawSelf();
+    }
+
+    drawSelf() {
+        const { output } = this.props
+
+        const svg = d3.selectAll("svg");
         console.log("svg", svg);
 
-        let node = {
-            string: output,
-            x: Math.random() * 800,
-            y: Math.random() * 200,
-        }
+        let node = output;
+
+        node.x = Math.random() * 800;
+        node.y = Math.random() * 200;
 
         let nodeArray = [];
 
@@ -41,22 +51,18 @@ class OutputItem extends React.Component {
 
         svg.append("g")
             .attr('transform', 'translate(30,30)')
-        
+
         const circle = svg.selectAll("circle")
-            .data(node)
+            .data(nodeArray)
         const g = circle.enter().append("g")
             g.append("circle")
             .attr('r', 40)
-            .attr('cy', (d) => d.y )
-            .attr('cx', (d) => d.x )
+            .attr('cy', (d) => d.y)
+            .attr('cx', (d) => d.x)
             .attr('class', 'node')
             .style('fill', 'white')
             .style('stroke-width', '5px')
             .style('stroke', "blue")
-        
-
-        
-
     }
 
     handleClick() {
