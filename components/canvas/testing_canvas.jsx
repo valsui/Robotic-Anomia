@@ -1,12 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { doSimulationStep, reduce, outOfBounds } from '../../javascripts/canvas_utils';
-<<<<<<< HEAD
-import { receiveOutputData } from '../../actions/test_data_actions';
-import { imageToMatrix } from '../../javascripts/heatmap';
-=======
 import { receiveOutputData, receiveArrayShapes } from '../../actions/test_data_actions';
->>>>>>> ee8577105d4597ed065debbe89dc2be061118077
 
 class TestingCanvas extends React.Component {
     constructor(props) {
