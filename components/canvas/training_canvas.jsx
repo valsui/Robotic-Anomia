@@ -30,10 +30,14 @@ class TrainingCanvas extends React.Component {
             counter: 0
         })
 
+        this.mousedownFunc = this.mouseDown();
+        this.mousemove = this.mouseMove();
+        this.mouseup = this.mouseUp();
 
-        canvas.addEventListener("mousedown", this.mouseDown());
-        canvas.addEventListener("mousemove", this.mouseMove());
-        document.addEventListener("mouseup", this.mouseUp());
+
+        canvas.addEventListener("mousedown", this.mousedownFunc );
+        canvas.addEventListener("mousemove", this.mousemove );
+        document.addEventListener("mouseup", this.mouseup );
     }
 
     componentWillUnmount() {
@@ -41,9 +45,9 @@ class TrainingCanvas extends React.Component {
 
         this.props.resetTestData();
 
-        canvas.removeEventListener("mousedown", this.mouseDown());
-        canvas.removeEventListener("mousemove", this.mouseMove());
-        document.removeEventListener("mouseup", this.mouseUp());
+        canvas.removeEventListener("mousedown", this.mousedownFunc );
+        canvas.removeEventListener("mousemove", this.mousemove );
+        document.removeEventListener("mouseup", this.mouseup );
     }
 
     mouseDown() {

@@ -12,28 +12,38 @@ class OutputItem extends React.Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    componentDidMount() {
-        const { arrayShapes, output } = this.props;
-        const letters = output.split("");
+    // componentDidMount() {
+    //     const { arrayShapes, output } = this.props;
+    //     const letters = output.string.split("");
         
-        arrayShapes.forEach((array, i) => {
-            let obj = {};
-            obj["input"] = array;
-            obj["output"] = {
-                [letters[i]]: 1
-            }
+    //     arrayShapes.forEach((array, i) => {
+    //         let obj = {};
+    //         obj["input"] = array;
+    //         obj["output"] = {
+    //             [letters[i]]: 1
+    //         }
 
-            this.trainingData.push(obj);
-        })
+    //         this.trainingData.push(obj);
+    //     })
 
-        // const svg = d3.select("svg");
-        // console.log("svg", svg);
+    //     console.log("trainingData", this.trainingData);
+    //     this.drawSelf();
+    // }
 
-        // let node = {
-        //     string: output,
-        //     x: Math.random() * 800,
-        //     y: Math.random() * 200,
-        // }
+    // componentDidUpdate() {
+    //     this.drawSelf();
+    // }
+
+    // drawSelf() {
+    //     const { output } = this.props
+
+    //     const svg = d3.selectAll("svg");
+    //     console.log("svg", svg);
+
+    //     let node = output;
+
+    //     node.x = Math.random() * 800;
+    //     node.y = Math.random() * 200;
 
         // let nodeArray = [];
 
@@ -57,7 +67,7 @@ class OutputItem extends React.Component {
 
         
 
-    }
+    // }
 
     handleClick() {
         const { net } = this.props;
