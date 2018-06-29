@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { resetCurrentNetwork } from '../../actions/neural_network_actions';
 
 class Homepage extends React.Component {
     constructor(props) {
@@ -8,6 +9,10 @@ class Homepage extends React.Component {
         this.linkTest = this.linkTest.bind(this);
         this.linkTrain = this.linkTrain.bind(this);
     }
+
+    // componentDidMount() {
+    //     this.props.resetCurrentNetwork();
+    // }
 
     linkTest() {
         this.props.history.push('/test');
@@ -43,6 +48,8 @@ class Homepage extends React.Component {
 const mapStateToProps = (state, ownProps) => ({
 })
 
-const mapDispatchToProps = null;
+const mapDispatchToProps = dispatch => ({
+    resetCurrentNetwork: () => dispatch(resetCurrentNetwork())
+})
 
 export default (connect(mapStateToProps, mapDispatchToProps)(Homepage))

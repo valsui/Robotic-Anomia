@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { openModal } from '../../actions/modal_actions';
 import { withRouter } from 'react-router-dom';
+import NetworkSelector from './network_selector';
 
 class Header extends React.Component {
     constructor(props) {
@@ -22,6 +23,7 @@ class Header extends React.Component {
             <header className="page-header">
                 <div className="title-container">
                     <h1 className="page-title" onClick={this.returnHome} > 🤖 Robotic Anomia 🧠</h1>
+                    <NetworkSelector />
                     <div className="header-icon-container">
                         <a className="github-link" href="https://github.com/valsui/Robotic-Anomia">
                             <i className="fab fa-github-square"></i>
