@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { doSimulationStep, reduce, outOfBounds } from '../../javascripts/canvas_utils';
 import { receiveOutputData, receiveArrayShapes } from '../../actions/test_data_actions';
+import d3 from 'd3';
 
 class TestingCanvas extends React.Component {
     constructor(props) {
@@ -119,6 +120,14 @@ class TestingCanvas extends React.Component {
         }
     }
 
+    drawBox(box) {
+      const { ctx } = this.state;
+      ctx.beginPath();
+      ctx.rect(box.left, box.top, box.right - box.left, box.bottom - box.top);
+      ctx.lineWidth = 7;
+      ctx.strokeStyle = 'black';
+      ctx.stroke();
+    }
     sendData(e) {
         e.preventDefault();
         let newArray = doSimulationStep(this.array);
@@ -127,14 +136,13 @@ class TestingCanvas extends React.Component {
         const { canvas } = this.state;
         const { trainedNet, dumbNet, currentNetwork } = this.props;
 
-
-        newArr = tempArray.map( (subArray) => {
+        newArr = tempArray.map( (object) => {
+            // this.drawBox(object);
             let mapSubArray = [];
-            for (let i = 0; i < subArray.length; i++) {
-                mapSubArray = mapSubArray.concat(subArray[i].slice(0, 25));
+            for (let i = 0; i < object.array.length; i++) {
+                mapSubArray = mapSubArray.concat(object.array[i].slice(0, 25));
             }
-
-            return mapSubArray
+            return mapSubArray;
         })
 
         let outputArray = [];
@@ -199,6 +207,7 @@ class TestingCanvas extends React.Component {
         ctx.fillStyle = "rgb(255,255,255,0)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         this.array = this.createArray();
+        // d3.selectAll("svg > *").remove();
     }
 
     render() {
