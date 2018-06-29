@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createArray, doSimulationStep, reduce, download, outOfBounds } from '../../javascripts/canvas_utils';
 import { receiveTestData, resetTestData } from '../../actions/test_data_actions';
+import { openModal, receiveText } from '../../actions/modal_actions';
 
 class TrainingCanvas extends React.Component {
     constructor(props) {
@@ -172,18 +173,20 @@ class TrainingCanvas extends React.Component {
     trainData(e) {
         e.preventDefault();
 
-        if ( this.props.currentNetwork === "trainedNet" ) {
-            debugger
-            this.props.trainedNet.trainAsync(this.props.data).then( () => {
-                console.log("done tarining!")
-            })
+        if ( this.props.data.length === 0 ) {
+            this.props.receiveText("Please enter at least one data set.")
         } else {
-            this.props.dumbNet.trainAsync(this.props.data).then( () => {
-                console.log("doneeeee");
-            })
-        }
-        
-        this.props.resetTestData();
+            if (this.props.currentNetwork === "trainedNet") {
+                this.props.trainedNet.trainAsync(this.props.data).then(() => {
+                    this.props.openModal("doneTraining");
+                })
+            } else {
+                this.props.dumbNet.trainAsync(this.props.data).then(() => {
+                    this.props.openModal("doneTraining");
+                })
+            }
+            this.props.resetTestData();
+        } 
     }
 
     render() {
@@ -213,7 +216,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     receiveTestData: (data) => dispatch(receiveTestData(data)),
-    resetTestData: () => dispatch(resetTestData())
+    resetTestData: () => dispatch(resetTestData()),
+    openModal: (modal) => dispatch(openModal(modal)),
+    receiveText: (text) => dispatch(receiveText(text))
 })
 
 export default (connect(mapStateToProps, mapDispatchToProps)(TrainingCanvas));
