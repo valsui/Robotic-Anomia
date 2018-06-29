@@ -23,50 +23,72 @@ const anyValue = (array) => {
   return false;
 }
 
+
+
 const createBoxes = (array) => {
   let rowNumber = 0;
   let characterFound = 2;
   let boxes = [];
-  let box = [];
+  let box = {};
+  box.array = [];
 
   while(rowNumber < array.length){
     if( characterFound < 2){
-      if (array[rowNumber].reduce((acc, val) => acc + val) === 0 ){
+      if (!anyValue(array[rowNumber])){
         characterFound += 1;
         if (characterFound === 2) {
           boxes.push(box);
-          box = [];
+          box = Object.assign({});
+          box.array = [];
+          // draw the box
+          // right border x = rowNumber
+          // left border x = rowNumber - 25
         } else if ( !(rowNumber !== array.length - 1)) {
-        box.push(array[rowNumber]);
+        box.array.push(array[rowNumber]);
         }
       } else {
         // character detected
-        if(box.length >= 25){
+        if(box.array.length >= 25){
           // do nothing, just skipping due to too long width wise
         }else {
-          box.push(array[rowNumber]);
+          box.array.push(array[rowNumber]);
         }
       }
-    } else if( array[rowNumber].reduce((acc, val) => acc + val) !== 0 ){
+    } else if(anyValue(array[rowNumber])){
       characterFound = 0;
-      box.push(array[rowNumber]);
+      box.array.push(array[rowNumber]);
+      box.left = rowNumber * 8;
+      box.right = rowNumber * 8 + 100;
+      let index = findIndex(array[rowNumber]);
+      box.bottom = 200;
+      // box.top = index * 4;
+      box.top = 0;
     }
     rowNumber++;
   }
 
-  if ( box.length > 0 ) {
+  if ( box.array.length > 0 ) {
     boxes.push(box);
   }
-
-  let ones = boxes[0].map((array) => {
+  let ones = boxes[0].array.map((array) => {
     return array.map((el) => {
       return Math.ceil(el + 0)});
   })
 
+  // console.log(boxes);
   console.log(ones);
   // boxes = boxes.filter((box) => box.length > 4)
 
   return boxes;
+}
+
+const findIndex = (array) =>{
+  for(let i = 0; i < array.length; i++){
+    if (array[i] !== 0){
+      return i;
+    }
+  }
+  return 0;
 }
 
 const pointExists = (array, i, j) => {
@@ -81,7 +103,7 @@ export const reduce = (array) => {
         for (let j = 0; j < array[0].length; j += 2) {
             if (countNeighbors(array, i, j, 0) >= 1) {
                 let one = array[i][j];
-                let two = pointExists(array, i + 1, j); 
+                let two = pointExists(array, i + 1, j);
                 let three = pointExists(array, i, j + 1);
                 let four = pointExists(array, i + 1, j + 1);
                 let five = pointExists(array, i + 1, j + 2);
@@ -104,14 +126,16 @@ export const reduce = (array) => {
     // cuts out the white space
     // let anotherArray = cutOut(JSON.parse(JSON.stringify(newArr)));
     let returnArray = boxes.map(box => {
-      let cutOutBox = cutOut(JSON.parse(JSON.stringify(box)));
-      return addPadding(25, cutOutBox);
+      let cutOutBox = cutOut(box, JSON.parse(JSON.stringify(box.array)));
+      let returnObject = Object.assign({}, box);
+      returnObject.array = addPadding(25, cutOutBox, box);
+      return returnObject;
     })
     // let returnArray = addPadding(25, anotherArray);
     return returnArray;
 }
 
-const cutOut = (array) => {
+const cutOut = (box, array) => {
   let top  = array.length;
   let bottom = 0;
   let left = array.length;
@@ -135,6 +159,8 @@ const cutOut = (array) => {
       }
     }
   }
+  // box.top = box.top + top * 8;
+  // box.bottom = box.bottom - (25 - (bottom - top));
   let anotherArray = [];
   for(let i = top; i < bottom; i++){
     anotherArray.push(array[i])
@@ -151,14 +177,14 @@ const cutOut = (array) => {
   return array;
 }
 
-const addPadding = (size, array) => {
+const addPadding = (size, array, box) => {
   let width = size - array[0].length;
   let height = size - array.length;
-  let returnArray = addTopBottomPadding(height, JSON.parse(JSON.stringify(array)));
+  let returnArray = addTopBottomPadding(box, height, JSON.parse(JSON.stringify(array)));
   return addRightLeftPadding(width, JSON.parse(JSON.stringify(returnArray)));
 }
 
-const addTopBottomPadding = (height, array) => {
+const addTopBottomPadding = (box, height, array) => {
   let tempArray = [];
   for(let i = 0; i < array[0].length; i++){
     tempArray.push(0);
@@ -168,6 +194,8 @@ const addTopBottomPadding = (height, array) => {
    array.push(tempArray);
   }
   let padding = Math.floor(height / 2);
+  // box.top = box.top - padding * 4;
+  // box.bottom = box.bottom + padding * 4;
   for(let i = 0; i < padding; i++){
     array.unshift(tempArray);
     array.push(tempArray);

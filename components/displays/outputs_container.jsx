@@ -2,10 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Outputs from './outputs';
 import * as d3 from "d3";
+import { shuffleData } from '../../tensorflow/data';
+import { resetOutputData } from '../../actions/test_data_actions';
 
 class OutputContainer extends React.Component {
     constructor(props) {
         super(props);
+
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidMount() {
@@ -25,39 +29,92 @@ class OutputContainer extends React.Component {
             return;
         }
 
+        const radiusScale = d3.scaleSqrt().domain([0, percentages[0].percent]).range([20,70]);
+
+        const shuffledPercentages = shuffleData(percentages);
+
         d3.selectAll("svg > *").remove();
 
-        // const svg = d3.selectAll("svg")
-        //     .append('g')
-        //         .attr('transform', 'translate(30,30)')
+        const svg = d3.selectAll("svg")
+            .append("g")
         
-        // const circle = svg.selectAll("circle")
-        //     .data(percentages)
-        // const g = circle.enter().append("g")
-        //     g.append("circle")
-        //     .attr('r', 40)
-        //     .attr('cy', Math.random() * 200)
-        //     .attr('cx', (d) => d.percent * 800 )
-        //     .text((d) => d[0])
-        //     .attr('class', 'node')
-        //     .style('fill', 'white')
-        //     .style('stroke-width', '5px')
-        //     .style('stroke', "blue")
+        const circle = svg.selectAll("circle")
+            .data(shuffledPercentages)
+            
 
-        // const texts = g.selectAll("text")
-        //     .data(percentages)
-        //     .enter().append('text')
-        //     .style("fill", "black")
-        //     .text((d) => d.string)
-        //     .attr("x", (d) => d.x)
-        //     .attr("y", (d) => d.y)
+        const g = circle.enter().append("g")
+            g.append("circle")
+            .attr('r', (d) => radiusScale(d.percent))
+            .attr('class', 'node')
+            .style('fill', 'white')
+            .style('stroke-width', '5px')
+            .style('stroke', "blue")
+
+        g.append("text")
+            .text((d) => d.string)
+            .attr('y', (d) => d.y)
+            .attr('x', (d) => d.x)
+            
+
+        g.on('click', (d) => this.handleClick(d))
+
+        const width = 800;
+        const height = 800;
+        const simulation = d3.forceSimulation()
+            .force("x", d3.forceX(width/2).strength(.005))
+            .force("y", d3.forceY(height/2).strength(.01))
+            .force("center", d3.forceCenter().x(width * .5).y(height * .5))
+            .force("charge", d3.forceManyBody().strength(-15))
+            .force("collide", d3.forceCollide((d) => radiusScale(d.percent)+ 5).strength(.5))
+        
+
+        simulation
+            .nodes(shuffledPercentages)
+            .on("tick", () => {
+                g
+                .attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+            });
 
          
     }
 
+    addLettersToTraining(d){
+        const { arrayShapes} = this.props;
+        const letters = d.string.split("");
+
+        let trainingData = [];
+
+        arrayShapes.forEach((array, i) => {
+            let obj = {};
+            obj["input"] = array;
+            obj["output"] = {
+                [letters[i]]: 1
+            }
+
+            trainingData.push(obj);
+        })
+
+        return trainingData;
+        // console.log("trainingData", this.trainingData);
+    }
+
+    handleClick(d) {
+        const { net } = this.props;
+
+        let trainingData = this.addLettersToTraining(d);
+        console.log(trainingData);
+        net.trainAsync(trainingData).then(() => {
+            resetOutputData()
+            console.log("done training!");
+            d3.selectAll("svg > *").remove();
+        });
+    }
+
+
     getPercentages() {
         const { outputs } = this.props;
-        console.log(outputs);
+        // console.log(outputs);
 
         let outputArray = outputs.map (( output ) => { 
             let subArray = [];
@@ -144,16 +201,21 @@ class OutputContainer extends React.Component {
         return (
             <div>
                 <svg id="svg" ref={node => this.node = node}
-                    width={800} height={500}>
+                    width={800} height={800}>
                 </svg>
-                <Outputs output={percentages} />
             </div>
         )
     }
 }
 
 const mapStateToProps = state => ({
-    outputs: state.entities.outputs
+    outputs: state.entities.outputs,
+    arrayShapes: state.entities.arrayShapes,
+    net: state.entities.neuralNetworks.trainedNet
 })
+
+// const mapDispatchToProps = dispatch => ({
+//     resetOutputData: () => dispatch(resetOutputData())
+// })
 
 export default (connect(mapStateToProps, null)(OutputContainer));
