@@ -34,7 +34,6 @@ import { z } from '../training_data/data_z';
 let config = {
     iterations: 10000,
     learningRate: 0.3,
-    layers: [5]
 }
 
 const net = new brain.NeuralNetwork(config);
@@ -46,12 +45,10 @@ let data = a.concat(b).concat(d).concat(c).concat(e).concat(f).concat(g).concat(
 const shuffleData = (data) => {
     let currentIdx = data.length;
     let tempVal, randomIdx;
-
     while( 0!== currentIdx) {
         //Pick random idx
         randomIdx = Math.floor(Math.random() * currentIdx);
         currentIdx -= 1;
-
         //swap with current element
         tempVal = data[currentIdx];
         data[currentIdx] = data[randomIdx];

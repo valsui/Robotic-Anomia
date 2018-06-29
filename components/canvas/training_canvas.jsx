@@ -10,14 +10,15 @@ class TrainingCanvas extends React.Component {
         this.state = {
             canvas: null,
             ctx: null,
-            letter: ""
+            letter: "a"
         }
 
         this.array = createArray();
         this.sendData = this.sendData.bind(this);
         this.changeLetter = this.changeLetter.bind(this);
         this.trainData = this.trainData.bind(this);
-
+        this.downloadData = this.downloadData.bind(this);
+        this.handleScroll = this.handleScroll.bind(this);
     }
 
     componentDidMount() {
@@ -30,10 +31,14 @@ class TrainingCanvas extends React.Component {
             counter: 0
         })
 
+        this.mousedownFunc = this.mouseDown();
+        this.mousemove = this.mouseMove();
+        this.mouseup = this.mouseUp();
 
-        canvas.addEventListener("mousedown", this.mouseDown());
-        canvas.addEventListener("mousemove", this.mouseMove());
-        document.addEventListener("mouseup", this.mouseUp());
+
+        canvas.addEventListener("mousedown", this.mousedownFunc );
+        canvas.addEventListener("mousemove", this.mousemove );
+        document.addEventListener("mouseup", this.mouseup );
     }
 
     componentWillUnmount() {
@@ -41,9 +46,9 @@ class TrainingCanvas extends React.Component {
 
         this.props.resetTestData();
 
-        canvas.removeEventListener("mousedown", this.mouseDown());
-        canvas.removeEventListener("mousemove", this.mouseMove());
-        document.removeEventListener("mouseup", this.mouseUp());
+        canvas.removeEventListener("mousedown", this.mousedownFunc );
+        canvas.removeEventListener("mousemove", this.mousemove );
+        document.removeEventListener("mouseup", this.mouseup );
     }
 
     mouseDown() {
@@ -120,6 +125,7 @@ class TrainingCanvas extends React.Component {
         let tempArray = reduce(newArray)[0];
         let newArr = [];
         let consoleLogArray = []
+        tempArray = tempArray.array;
 
         for ( let i = 0; i < tempArray.length; i++ ) {
              newArr = newArr.concat(tempArray[i].slice(0,25));
@@ -144,15 +150,16 @@ class TrainingCanvas extends React.Component {
         this.array = createArray();
     }
 
-    changeLetter(e) {
-        e.preventDefault();
-
-        this.setState({
-            letter: e.currentTarget.value
-        })
+    changeLetter(letter) {
+        // e.preventDefault();
+        return (e) => {
+          this.setState({
+            letter: letter
+          })
+        }
     }
 
-    trainData(e) {
+    downloadData(e) {
         e.preventDefault();
 
         let data = [];
@@ -164,26 +171,83 @@ class TrainingCanvas extends React.Component {
         this.props.resetTestData();
     }
 
+    trainData(e) {
+        e.preventDefault();
+
+        if ( this.props.currentNetwork === "trainedNet" ) {
+            debugger
+            this.props.trainedNet.trainAsync(this.props.data).then( () => {
+                console.log("done tarining!")
+            })
+        } else {
+            this.props.dumbNet.trainAsync(this.props.data).then( () => {
+                console.log("doneeeee");
+            })
+        }
+
+        this.props.resetTestData();
+    }
+
+    handleScroll(e){
+      // console.log(e.target.scrollTop);
+      console.log(Math.floor(e.target.scrollTop));
+      let scrollY = e.target.scrollTop;
+      // this part is to make it slightly more fluid
+      // let idx = Math.floor(scrollY / 29);
+      // let bias = Math.floor(idx / 6);
+      // idx = idx - bias;
+      let idx = Math.floor(scrollY / 35);
+      let letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+      let letter = letters[idx];
+      if(this.state.letter !== letter){
+        this.setState({
+          letter: letter
+        })
+      }
+    }
+
     render() {
+        let letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' ', ' '];
         return (
             <div className="training-canvas-div">
-              <input onChange={this.changeLetter} value={this.state.letter} />
                 <canvas ref="trainingCanvas" width={200} height={200} />
+                <div className="hide-scroll">
+                <div className="scrollable" onScroll={this.handleScroll}>
+                  <div className="buffer"></div>
+                  <ul>
+                    {
+                      letters.map( (letter, idx) => {
+                        if(this.state.letter === letter){
+                          return(
+                            <div className='selected select-letter' key={idx}>
+                              <li onClick={this.changeLetter(letter)}>{letter}</li>
+                            </div>
+                          )
+                        }else{
+                          return(
+                            <div className='select-letter' key={idx}>
+                            </div>
+                          )
+                        }
+                      })
+                    }
+                  </ul>
+                </div>
+              </div>
                 <button onClick={this.sendData}>Add to Memory</button>
                 <button onClick={(e) => {e.preventDefault(); this.resetCanvas()}}>Clear Canvas</button>
+                <button onClick={this.trainData}>Train Network</button>
 
-                <form>
-                    <button onClick={this.trainData}>Download Data</button>
-                    <input id="filename" type="text" name="name" value="data.txt"/>
-                    <input id="download" type="submit" />
-                </form>
             </div>
         )
     }
 }
 
 const mapStateToProps = state => ({
-    data: Object.values(state.entities.testData)
+    data: Object.values(state.entities.testData),
+    trainedNet: state.entities.neuralNetworks.trainedNet,
+    dumbNet: state.entities.neuralNetworks.dumbNet,
+    currentNetwork: state.ui.currentNetwork
 })
 
 const mapDispatchToProps = dispatch => ({

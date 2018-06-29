@@ -12,7 +12,9 @@ class Outputs extends React.Component {
         if ( output === null ) {
             return null;
         }
-        const outputs = Object.keys(output);
+
+        console.log("outputs", output)
+        const outputs = Object.values(output);
 
         return (
             // <div className="output-div">

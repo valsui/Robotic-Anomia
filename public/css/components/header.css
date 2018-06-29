@@ -80,3 +80,7 @@
   font-size: 2vw;
   /* margin-bottom: 0.4vw; */
 }
+
+.selected-network {
+    background-color: red;
+}
