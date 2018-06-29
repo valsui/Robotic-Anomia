@@ -60,7 +60,7 @@ canvas:hover{
 }
 
 .training-canvas-view-div {
-  margin-left: 23vw;
+  margin-left:33vw;
   /* width: 100%; */
   margin-top: 10vh;
   min-height: 200px;
@@ -121,6 +121,11 @@ canvas:hover{
   box-shadow: 0vw 0.3vw 0.2vw rgb(2,12,144, 0.4);
 }
 
+
+.training-canvas-div form {
+  display: none;
+}
+
 .memory-div{
   margin-left: 6vw;
   box-shadow: 0vw 0.25vw 0.3vw rgb(2,12,144, 0.4);
@@ -168,18 +173,35 @@ canvas:hover{
    align-items: center;
 }
 
+.memory-li {
+  position: relative;
+}
+
+.memory-li #talkbubble {
+  position: absolute;
+  display: none;
+  color: white;
+  text-shadow: 0 0 2px rgba(0,0,0,0.3);
+}
+
+.memory-li:hover #talkbubble {
+  display: block;
+}
+
 .memory-li canvas{
   cursor: default !important;
   background-color: white;
   padding: 0.3vw;
   margin: 1vw;
   border-radius: 10vw;
-  -webkit-transition: box-shadow 0.2s;
-  transition: box-shadow 0.2s;
+  -webkit-transition: box-shadow 0.1s;
+  transition: box-shadow 0.1s;
 }
 
-.memory-li canvas:hover {
+.memory-li:hover canvas {
   cursor: default !important;
+  background-color: rgba(0,0,0,0.4);
+  border: 2px solid rgba(255,255,255,0);
 }
 
 .testing-canvas-button-container {

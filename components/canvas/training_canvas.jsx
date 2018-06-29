@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createArray, doSimulationStep, reduce, download, outOfBounds } from '../../javascripts/canvas_utils';
 import { receiveTestData, resetTestData } from '../../actions/test_data_actions';
+import { openModal, receiveText } from '../../actions/modal_actions';
 
 class TrainingCanvas extends React.Component {
     constructor(props) {
@@ -17,7 +18,7 @@ class TrainingCanvas extends React.Component {
         this.sendData = this.sendData.bind(this);
         this.changeLetter = this.changeLetter.bind(this);
         this.trainData = this.trainData.bind(this);
-
+        this.downloadData = this.downloadData.bind(this);
     }
 
     componentDidMount() {
@@ -125,6 +126,11 @@ class TrainingCanvas extends React.Component {
         let newArr = [];
         let consoleLogArray = []
 
+        if ( tempArray === undefined ) {
+            this.props.receiveText("Please draw something on the canvas.")
+            return;
+        }
+
         tempArray = tempArray.array;
 
         for ( let i = 0; i < tempArray.length; i++ ) {
@@ -160,7 +166,7 @@ class TrainingCanvas extends React.Component {
         })
     }
 
-    trainData(e) {
+    downloadData(e) {
         e.preventDefault();
 
         let data = [];
@@ -172,6 +178,25 @@ class TrainingCanvas extends React.Component {
         this.props.resetTestData();
     }
 
+    trainData(e) {
+        e.preventDefault();
+
+        if ( this.props.data.length === 0 ) {
+            this.props.receiveText("Please enter at least one data set.")
+        } else {
+            if (this.props.currentNetwork === "trainedNet") {
+                this.props.trainedNet.trainAsync(this.props.data).then(() => {
+                    this.props.openModal("doneTraining");
+                })
+            } else {
+                this.props.dumbNet.trainAsync(this.props.data).then(() => {
+                    this.props.openModal("doneTraining");
+                })
+            }
+            this.props.resetTestData();
+        }
+    }
+
     render() {
         return (
             <div className="training-canvas-div">
@@ -179,9 +204,9 @@ class TrainingCanvas extends React.Component {
                 <canvas ref="trainingCanvas" width={200} height={200} />
                 <button onClick={this.sendData}>Add to Memory</button>
                 <button onClick={(e) => {e.preventDefault(); this.resetCanvas()}}>Clear Canvas</button>
-
+                <button onClick={this.trainData}>Train Network</button>
                 <form>
-                    <button onClick={this.trainData}>Download Data</button>
+                    <button onClick={this.downloadData}>Download Data</button>
                     <input id="filename" type="text" name="name" value="data.txt"/>
                     <input id="download" type="submit" />
                 </form>
@@ -191,12 +216,17 @@ class TrainingCanvas extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    data: Object.values(state.entities.testData)
+    data: Object.values(state.entities.testData),
+    trainedNet: state.entities.neuralNetworks.trainedNet,
+    dumbNet: state.entities.neuralNetworks.dumbNet,
+    currentNetwork: state.ui.currentNetwork
 })
 
 const mapDispatchToProps = dispatch => ({
     receiveTestData: (data) => dispatch(receiveTestData(data)),
-    resetTestData: () => dispatch(resetTestData())
+    resetTestData: () => dispatch(resetTestData()),
+    openModal: (modal) => dispatch(openModal(modal)),
+    receiveText: (text) => dispatch(receiveText(text))
 })
 
 export default (connect(mapStateToProps, mapDispatchToProps)(TrainingCanvas));

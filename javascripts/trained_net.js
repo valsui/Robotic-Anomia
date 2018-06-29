@@ -1,6 +1,6 @@
 import brain from 'brain.js';
 import { testData } from '../test_suite/brain_train';
-import { brainTrainThree } from '../test_suite/brain_train3';
+import { brainTrainFour } from '../test_suite/brain_train4';
 import { slicedTestData} from '../test_suite/sliced_brain_train';
 import { valTestData } from '../test_suite/valerie_brain_train';
 import { a } from '../training_data/data_a';
@@ -34,6 +34,7 @@ import { z } from '../training_data/data_z';
 let config = {
     iterations: 10000,
     learningRate: 0.3,
+    hiddenLayers: [312, 312]
 }
 
 const net = new brain.NeuralNetwork(config);
@@ -45,12 +46,10 @@ let data = a.concat(b).concat(d).concat(c).concat(e).concat(f).concat(g).concat(
 const shuffleData = (data) => {
     let currentIdx = data.length;
     let tempVal, randomIdx;
-
     while( 0!== currentIdx) {
         //Pick random idx
         randomIdx = Math.floor(Math.random() * currentIdx);
         currentIdx -= 1;
-
         //swap with current element
         tempVal = data[currentIdx];
         data[currentIdx] = data[randomIdx];
@@ -97,7 +96,7 @@ data = shuffleData(data);
 //
 // train(net, data, 0);
 
-net.trainAsync(brainTrainThree).then(() => console.log("done!"));
+net.trainAsync(brainTrainFour).then(() => console.log("done!"));
 // net.trainAsync(data).then(() => console.log("done training!"));
 
 export default net;

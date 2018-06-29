@@ -27,43 +27,46 @@ class OutputItem extends React.Component {
         })
 
         console.log("trainingData", this.trainingData);
-        this.drawSelf();
     }
 
-    componentDidUpdate() {
-        this.drawSelf();
-    }
+    // componentDidUpdate() {
+    //     this.drawSelf();
+    // }
 
-    drawSelf() {
-        const { output } = this.props
+    // drawSelf() {
+    //     const { output } = this.props
 
-        const svg = d3.selectAll("svg");
-        console.log("svg", svg);
+    //     const svg = d3.selectAll("svg");
+    //     console.log("svg", svg);
 
-        let node = output;
+    //     let node = output;
 
-        node.x = Math.random() * 800;
-        node.y = Math.random() * 200;
+    //     node.x = Math.random() * 800;
+    //     node.y = Math.random() * 200;
 
-        let nodeArray = [];
+        // let nodeArray = [];
 
-        nodeArray.push(node);
+        // nodeArray.push(node);
 
-        svg.append("g")
-            .attr('transform', 'translate(30,30)')
+        // svg.append("g")
+        //     .attr('transform', 'translate(30,30)')
+        
+        // const circle = svg.selectAll("circle")
+        //     .data(node)
+        // const g = circle.enter().append("g")
+        //     g.append("circle")
+        //     .attr('r', 40)
+        //     .attr('cy', (d) => d.y )
+        //     .attr('cx', (d) => d.x )
+        //     .attr('class', 'node')
+        //     .style('fill', 'white')
+        //     .style('stroke-width', '5px')
+        //     .style('stroke', "blue")
+        
 
-        const circle = svg.selectAll("circle")
-            .data(nodeArray)
-        const g = circle.enter().append("g")
-            g.append("circle")
-            .attr('r', 40)
-            .attr('cy', (d) => d.y)
-            .attr('cx', (d) => d.x)
-            .attr('class', 'node')
-            .style('fill', 'white')
-            .style('stroke-width', '5px')
-            .style('stroke', "blue")
-    }
+        
+
+    // }
 
     handleClick() {
         const { net } = this.props;

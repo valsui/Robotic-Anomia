@@ -132,6 +132,7 @@ class TestingCanvas extends React.Component {
         let tempArray = reduce(newArray);
         let newArr = [];
         const { canvas } = this.state;
+        const { trainedNet, dumbNet, currentNetwork } = this.props;
 
         newArr = tempArray.map( (object) => {
             // this.drawBox(object);
@@ -145,7 +146,11 @@ class TestingCanvas extends React.Component {
         let outputArray = [];
 
        newArr.forEach((array) => {
-           outputArray.push(this.props.trainedNet.run(array))
+           if ( currentNetwork === "trainedNet" ) {
+               outputArray.push(trainedNet.run(array));
+           } else if ( currentNetwork === "dumbNet" ) {
+               outputArray.push(dumbNet.run(array))
+           }
        })
 
        this.props.receiveArrayShapes(newArr);
@@ -200,6 +205,7 @@ class TestingCanvas extends React.Component {
         ctx.fillStyle = "rgb(255,255,255,0)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         this.array = this.createArray();
+        // d3.selectAll("svg > *").remove();
     }
 
     render() {
@@ -219,7 +225,9 @@ class TestingCanvas extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    trainedNet: state.entities.neuralNetworks.trainedNet
+    trainedNet: state.entities.neuralNetworks.trainedNet,
+    dumbNet: state.entities.neuralNetworks.dumbNet,
+    currentNetwork: state.ui.currentNetwork
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -29,7 +29,7 @@ class MemoryItem extends React.Component {
         let i = 0;
 
         ctx.clearRect(0, 0, 50, 50);
-        ctx.fillStyle = "white";
+        ctx.fillStyle = "rgba(0,0,0,0)";
         ctx.fillRect(0, 0, 50, 50);
 
         while ( i < 625 ) {
@@ -80,6 +80,7 @@ class MemoryItem extends React.Component {
         return (
             <li className="memory-li" onClick={this.removeItem}>
                 <canvas ref="memoryCanvas" width={50} height={50}></canvas>
+                <div id="talkbubble">Delete</div>
             </li>
         )
     }
