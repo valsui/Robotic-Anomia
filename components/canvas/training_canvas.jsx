@@ -125,17 +125,21 @@ class TrainingCanvas extends React.Component {
         let newArr = [];
         let consoleLogArray = []
 
+        tempArray = tempArray.array;
+
         for ( let i = 0; i < tempArray.length; i++ ) {
              newArr = newArr.concat(tempArray[i].slice(0,25));
              consoleLogArray.push(tempArray[i].slice(0,25))
         }
-        
+
+
+
         let data = { [this.state.counter]: { input: newArr, output: {[this.state.letter]: 1} } }
 
         this.setState({
             counter: this.state.counter + 1
         })
-        
+
         this.props.receiveTestData(data);
         this.resetCanvas();
     }

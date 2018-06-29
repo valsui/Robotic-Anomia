@@ -134,7 +134,7 @@ class TestingCanvas extends React.Component {
         const { canvas } = this.state;
 
         newArr = tempArray.map( (object) => {
-            this.drawBox(object);
+            // this.drawBox(object);
             let mapSubArray = [];
             for (let i = 0; i < object.array.length; i++) {
                 mapSubArray = mapSubArray.concat(object.array[i].slice(0, 25));
@@ -157,7 +157,7 @@ class TestingCanvas extends React.Component {
 
         this.mousedownFunc = this.mouseDown();
         this.mousemove = this.mouseMove();
-    
+
        window.setTimeout(this.resetCanvas.bind(this), 2000);
        window.setTimeout(() => canvas.addEventListener("mousedown", this.mousedownFunc), 2000);
        window.setTimeout(() => canvas.addEventListener("mousemove", this.mousemove), 2000);
