@@ -124,6 +124,7 @@ class TrainingCanvas extends React.Component {
         let tempArray = reduce(newArray)[0];
         let newArr = [];
         let consoleLogArray = []
+        tempArray = tempArray.array;
 
         for ( let i = 0; i < tempArray.length; i++ ) {
              newArr = newArr.concat(tempArray[i].slice(0,25));

@@ -101,15 +101,23 @@ class OutputContainer extends React.Component {
     }
 
     handleClick(d) {
-        const { net } = this.props;
+        const { net, dumbNet, currentNetwork, resetOutputData } = this.props;
 
         let trainingData = this.addLettersToTraining(d);
-        console.log(trainingData);
-        net.trainAsync(trainingData).then(() => {
-            resetOutputData()
-            console.log("done training!");
-            d3.selectAll("svg > *").remove();
-        });
+        
+        if ( currentNetwork === "trainedNet" ) {
+            net.trainAsync(trainingData).then(() => {
+                resetOutputData();
+                console.log("done training!");
+                d3.selectAll("svg > *").remove();
+            });
+        } else {
+            dumbNet.trainAsync(trainingData).then(() => {
+                resetOutputData();
+                console.log("done training dumbnet!");
+                d3.selectAll("svg > *").remove();
+            })
+        }
     }
 
 
@@ -212,11 +220,13 @@ class OutputContainer extends React.Component {
 const mapStateToProps = state => ({
     outputs: state.entities.outputs,
     arrayShapes: state.entities.arrayShapes,
-    net: state.entities.neuralNetworks.trainedNet
+    net: state.entities.neuralNetworks.trainedNet,
+    dumbNet: state.entities.neuralNetworks.dumbNet,
+    currentNetwork: state.ui.currentNetwork
 })
 
-// const mapDispatchToProps = dispatch => ({
-//     resetOutputData: () => dispatch(resetOutputData())
-// })
+const mapDispatchToProps = dispatch => ({
+    resetOutputData: () => dispatch(resetOutputData())
+})
 
-export default (connect(mapStateToProps, null)(OutputContainer));
+export default (connect(mapStateToProps, mapDispatchToProps)(OutputContainer));

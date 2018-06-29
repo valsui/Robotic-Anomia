@@ -3,6 +3,7 @@ import { NeuralNetwork } from "brain.js";
 const config = {
     iterations: 10000,
     learningRate: 0.3,
+    hiddenLayers: [312, 312],
 }
 
 const dumbNet = new NeuralNetwork(config);
