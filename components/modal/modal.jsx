@@ -2,6 +2,8 @@ import React from 'react';
 import { closeModal } from '../../actions/modal_actions';
 import { connect } from 'react-redux';
 import DevBios from "./dev_bios";
+import DoneTraining from './done_training';
+import Text from './text';
 
 class Modal extends React.Component {
     constructor(props) {
@@ -33,13 +35,19 @@ class Modal extends React.Component {
             case "devBios":
                 this.component = <DevBios />;
                 break;
+            case "doneTraining":
+                this.component = <DoneTraining />;
+                break;
+            case "text":
+                this.component = <Text />
+                break;
             default: 
                 return null;
         }
 
         return ( 
             <div id="modal-div" className="modal-background" onClick={closeModal}>
-                <div className="modal-child" onClick={(e) => e.stopPropogation()}>
+                <div className="modal-child" onClick={(e) => e.stopPropagation()}>
                     { this.component }
                 </div>
             </div>

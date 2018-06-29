@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { doSimulationStep, reduce, outOfBounds } from '../../javascripts/canvas_utils';
 import { receiveOutputData, receiveArrayShapes } from '../../actions/test_data_actions';
-import d3 from 'd3';
 
 class TestingCanvas extends React.Component {
     constructor(props) {
