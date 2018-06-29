@@ -213,7 +213,6 @@ class TrainingCanvas extends React.Component {
                 <canvas ref="trainingCanvas" width={200} height={200} />
                 <div className="hide-scroll">
                 <div className="scrollable" onScroll={this.handleScroll}>
-                  <div className="buffer"></div>
                   <ul>
                     {
                       letters.map( (letter, idx) => {
