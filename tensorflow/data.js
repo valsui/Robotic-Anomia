@@ -101,7 +101,7 @@ export const inputTFData25Matrix = inputData().map((arr) => {
     return result;
 })
 
-console.log('mtx:',inputTFData25Matrix);
+// console.log('mtx:',inputTFData25Matrix);
 // console.log('input')
 // inputTFData.print();
 // console.log('input',inputTFData.print());

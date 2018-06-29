@@ -136,7 +136,7 @@ class TestingCanvas extends React.Component {
         const { canvas } = this.state;
 
         newArr = tempArray.map( (object) => {
-            this.drawBox(object);
+            // this.drawBox(object);
             let mapSubArray = [];
             for (let i = 0; i < object.array.length; i++) {
                 mapSubArray = mapSubArray.concat(object.array[i].slice(0, 25));

@@ -12,23 +12,22 @@ class OutputItem extends React.Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    // componentDidMount() {
-    //     const { arrayShapes, output } = this.props;
-    //     const letters = output.string.split("");
+    componentDidMount() {
+        const { arrayShapes, output } = this.props;
+        const letters = output.string.split("");
         
-    //     arrayShapes.forEach((array, i) => {
-    //         let obj = {};
-    //         obj["input"] = array;
-    //         obj["output"] = {
-    //             [letters[i]]: 1
-    //         }
+        arrayShapes.forEach((array, i) => {
+            let obj = {};
+            obj["input"] = array;
+            obj["output"] = {
+                [letters[i]]: 1
+            }
 
-    //         this.trainingData.push(obj);
-    //     })
+            this.trainingData.push(obj);
+        })
 
-    //     console.log("trainingData", this.trainingData);
-    //     this.drawSelf();
-    // }
+        console.log("trainingData", this.trainingData);
+    }
 
     // componentDidUpdate() {
     //     this.drawSelf();
