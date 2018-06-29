@@ -119,12 +119,18 @@ class TrainingCanvas extends React.Component {
         } else if ( this.state.letter.length > 1 ) {
             console.log("please only enter one letter");
             return;
-        }
+        } 
 
         let newArray = doSimulationStep(this.array);
         let tempArray = reduce(newArray)[0];
         let newArr = [];
         let consoleLogArray = []
+
+        if ( tempArray === undefined ) {
+            this.props.receiveText("Please draw something on the canvas.")
+            return;
+        }
+
         tempArray = tempArray.array;
 
         for ( let i = 0; i < tempArray.length; i++ ) {
