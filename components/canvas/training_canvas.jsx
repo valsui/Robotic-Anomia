@@ -17,7 +17,7 @@ class TrainingCanvas extends React.Component {
         this.sendData = this.sendData.bind(this);
         this.changeLetter = this.changeLetter.bind(this);
         this.trainData = this.trainData.bind(this);
-
+        this.downloadData = this.downloadData.bind(this);
     }
 
     componentDidMount() {
@@ -30,10 +30,14 @@ class TrainingCanvas extends React.Component {
             counter: 0
         })
 
+        this.mousedownFunc = this.mouseDown();
+        this.mousemove = this.mouseMove();
+        this.mouseup = this.mouseUp();
 
-        canvas.addEventListener("mousedown", this.mouseDown());
-        canvas.addEventListener("mousemove", this.mouseMove());
-        document.addEventListener("mouseup", this.mouseUp());
+
+        canvas.addEventListener("mousedown", this.mousedownFunc );
+        canvas.addEventListener("mousemove", this.mousemove );
+        document.addEventListener("mouseup", this.mouseup );
     }
 
     componentWillUnmount() {
@@ -41,9 +45,9 @@ class TrainingCanvas extends React.Component {
 
         this.props.resetTestData();
 
-        canvas.removeEventListener("mousedown", this.mouseDown());
-        canvas.removeEventListener("mousemove", this.mouseMove());
-        document.removeEventListener("mouseup", this.mouseUp());
+        canvas.removeEventListener("mousedown", this.mousedownFunc );
+        canvas.removeEventListener("mousemove", this.mousemove );
+        document.removeEventListener("mouseup", this.mouseup );
     }
 
     mouseDown() {
@@ -120,6 +124,7 @@ class TrainingCanvas extends React.Component {
         let tempArray = reduce(newArray)[0];
         let newArr = [];
         let consoleLogArray = []
+        tempArray = tempArray.array;
 
         for ( let i = 0; i < tempArray.length; i++ ) {
              newArr = newArr.concat(tempArray[i].slice(0,25));
@@ -152,7 +157,7 @@ class TrainingCanvas extends React.Component {
         })
     }
 
-    trainData(e) {
+    downloadData(e) {
         e.preventDefault();
 
         let data = [];
@@ -164,6 +169,23 @@ class TrainingCanvas extends React.Component {
         this.props.resetTestData();
     }
 
+    trainData(e) {
+        e.preventDefault();
+
+        if ( this.props.currentNetwork === "trainedNet" ) {
+            debugger
+            this.props.trainedNet.trainAsync(this.props.data).then( () => {
+                console.log("done tarining!")
+            })
+        } else {
+            this.props.dumbNet.trainAsync(this.props.data).then( () => {
+                console.log("doneeeee");
+            })
+        }
+        
+        this.props.resetTestData();
+    }
+
     render() {
         return (
             <div className="training-canvas-div">
@@ -171,9 +193,9 @@ class TrainingCanvas extends React.Component {
                 <canvas ref="trainingCanvas" width={200} height={200} />
                 <button onClick={this.sendData}>Add to Memory</button>
                 <button onClick={(e) => {e.preventDefault(); this.resetCanvas()}}>Clear Canvas</button>
-
+                <button onClick={this.trainData}>Train Network</button>
                 <form>
-                    <button onClick={this.trainData}>Download Data</button>
+                    <button onClick={this.downloadData}>Download Data</button>
                     <input id="filename" type="text" name="name" value="data.txt"/>
                     <input id="download" type="submit" />
                 </form>
@@ -183,7 +205,10 @@ class TrainingCanvas extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    data: Object.values(state.entities.testData)
+    data: Object.values(state.entities.testData),
+    trainedNet: state.entities.neuralNetworks.trainedNet,
+    dumbNet: state.entities.neuralNetworks.dumbNet,
+    currentNetwork: state.ui.currentNetwork
 })
 
 const mapDispatchToProps = dispatch => ({

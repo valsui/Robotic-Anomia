@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { doSimulationStep, reduce, outOfBounds } from '../../javascripts/canvas_utils';
 import { receiveOutputData, receiveArrayShapes } from '../../actions/test_data_actions';
+import d3 from 'd3';
 
 class TestingCanvas extends React.Component {
     constructor(props) {
@@ -26,18 +27,22 @@ class TestingCanvas extends React.Component {
             ctx: ctx
         })
 
+        this.mousedownFunc = this.mouseDown();
+        this.mousemove = this.mouseMove();
+        this.mouseup = this.mouseUp();
 
-        canvas.addEventListener("mousedown", this.mouseDown());
-        canvas.addEventListener("mousemove", this.mouseMove());
-        document.addEventListener("mouseup", this.mouseUp());
+
+        canvas.addEventListener("mousedown", this.mousedownFunc);
+        canvas.addEventListener("mousemove", this.mousemove);
+        document.addEventListener("mouseup", this.mouseup);
     }
 
     componentWillUnmount() {
         const { canvas } = this.state;
 
-        canvas.removeEventListener("mousedown", this.mouseDown());
-        canvas.removeEventListener("mousemove", this.mouseMove());
-        document.removeEventListener("mouseup", this.mouseUp());
+        canvas.removeEventListener("mousedown", this.mousedownFunc);
+        canvas.removeEventListener("mousemove", this.mousemove);
+        document.removeEventListener("mouseup", this.mouseup);
     }
 
     mouseDown() {
@@ -128,9 +133,11 @@ class TestingCanvas extends React.Component {
         let newArray = doSimulationStep(this.array);
         let tempArray = reduce(newArray);
         let newArr = [];
+        const { canvas } = this.state;
+        const { trainedNet, dumbNet, currentNetwork } = this.props;
 
         newArr = tempArray.map( (object) => {
-            this.drawBox(object);
+            // this.drawBox(object);
             let mapSubArray = [];
             for (let i = 0; i < object.array.length; i++) {
                 mapSubArray = mapSubArray.concat(object.array[i].slice(0, 25));
@@ -141,14 +148,26 @@ class TestingCanvas extends React.Component {
         let outputArray = [];
 
        newArr.forEach((array) => {
-           outputArray.push(this.props.trainedNet.run(array));
+           if ( currentNetwork === "trainedNet" ) { 
+               outputArray.push(trainedNet.run(array));
+           } else if ( currentNetwork === "dumbNet" ) {
+               outputArray.push(dumbNet.run(array))
+           }
        })
 
        this.props.receiveArrayShapes(newArr);
        this.props.receiveOutputData(outputArray);
        this.matrixify();
+
+        canvas.removeEventListener("mousedown", this.mousedownFunc);
+        canvas.removeEventListener("mousemove", this.mousemove);
+
+        this.mousedownFunc = this.mouseDown();
+        this.mousemove = this.mouseMove();
     
-    //    window.setTimeout(this.resetCanvas.bind(this), 2000);
+       window.setTimeout(this.resetCanvas.bind(this), 2000);
+       window.setTimeout(() => canvas.addEventListener("mousedown", this.mousedownFunc), 2000);
+       window.setTimeout(() => canvas.addEventListener("mousemove", this.mousemove), 2000);
     }
 
     matrixify() {
@@ -188,6 +207,7 @@ class TestingCanvas extends React.Component {
         ctx.fillStyle = "rgb(255,255,255,0)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         this.array = this.createArray();
+        // d3.selectAll("svg > *").remove();
     }
 
     render() {
@@ -207,7 +227,9 @@ class TestingCanvas extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    trainedNet: state.entities.neuralNetworks.trainedNet
+    trainedNet: state.entities.neuralNetworks.trainedNet,
+    dumbNet: state.entities.neuralNetworks.dumbNet,
+    currentNetwork: state.ui.currentNetwork
 })
 
 const mapDispatchToProps = dispatch => ({
