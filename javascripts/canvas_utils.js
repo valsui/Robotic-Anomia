@@ -70,13 +70,13 @@ const createBoxes = (array) => {
   if ( box.array.length > 0 ) {
     boxes.push(box);
   }
-  let ones = boxes[0].array.map((array) => {
-    return array.map((el) => {
-      return Math.ceil(el + 0)});
-  })
+  // let ones = boxes[0].array.map((array) => {
+  //   return array.map((el) => {
+  //     return Math.ceil(el + 0)});
+  // })
 
   // console.log(boxes);
-  console.log(ones);
+  // console.log(ones);
   // boxes = boxes.filter((box) => box.length > 4)
 
   return boxes;
