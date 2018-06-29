@@ -15,9 +15,9 @@
 #particles-js canvas{
   /* background-color: red; */
   -webkit-animation-name: opacity-animate; /* Safari 4.0 - 8.0 */
-  -webkit-animation-duration: 6s; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 2.2s; /* Safari 4.0 - 8.0 */
   animation-name: opacity-animate;
-  animation-duration: 6s;
+  animation-duration: 2.2s;
 
   background-color: rgba(0,0,0,0);
   border: none;

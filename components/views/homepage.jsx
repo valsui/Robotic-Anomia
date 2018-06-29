@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { resetCurrentNetwork } from '../../actions/neural_network_actions';
+import TypeWriter from '../displays/typewriter';
 
 class Homepage extends React.Component {
     constructor(props) {
@@ -7,6 +9,7 @@ class Homepage extends React.Component {
 
         this.linkTest = this.linkTest.bind(this);
         this.linkTrain = this.linkTrain.bind(this);
+        this.good = "good";
     }
 
     componentDidMount(){
@@ -14,6 +17,8 @@ class Homepage extends React.Component {
       if ( particles.classList.contains('hidden')){
         particles.classList.remove('hidden');
       }
+
+      let testInfo = document.getElementById('text-info');
     }
 
     linkTest() {
@@ -22,7 +27,8 @@ class Homepage extends React.Component {
 
     linkTrain() {
         this.props.history.push('/train');
-    }
+    };
+
 
     render() {
         return(
@@ -30,7 +36,7 @@ class Homepage extends React.Component {
                 <div className="homepage-content">
                     <div className="homepage-content-center">
                         <div className="text-info">
-
+                          <TypeWriter />
                         </div>
                         <div className="homepage-button-div">
                             <div className="homepage-button" onClick={this.linkTest}>
@@ -50,6 +56,8 @@ class Homepage extends React.Component {
 const mapStateToProps = (state, ownProps) => ({
 })
 
-const mapDispatchToProps = null;
+const mapDispatchToProps = dispatch => ({
+    resetCurrentNetwork: () => dispatch(resetCurrentNetwork())
+})
 
 export default (connect(mapStateToProps, mapDispatchToProps)(Homepage))

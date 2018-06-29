@@ -17,12 +17,32 @@
     justify-content: center;
     color: white;
     font-weight: 100;
+    margin-right: 5vw;
 }
+
+#typing-text {
+  font-size: 6vw;
+  text-shadow: 0.3vw 0.3vw 0.2vw rgba(2,12,144, 0.3);
+}
+
+span {
+  border-right: 2px solid;
+
+  animation: caret 0.5s steps(1) infinite;
+}
+
+@keyframes caret {
+  50% {
+    border-color: transparent;
+  }
+}
+
 
 .homepage-content {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    background-color: none;
 }
 
 .homepage-button-div {
@@ -36,10 +56,11 @@
     background:  rgba(11,93,228,0.6);
     color: white;
     height: 3vw;
+    min-height: 45px;
     width: 300px;
     font-weight: 100;
     border: 1px solid rgba(2,12,144, 0.4);
-    border-radius: 1.5vw;
+    border-radius: 100px;
     box-shadow: 0vw 0.15vw 0.2vw rgba(2,12,144, 0.4);
     margin-top: 1vw;
     text-align: center;

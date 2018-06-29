@@ -24,6 +24,10 @@ span, article, footer, time, small {
   user-select: none;
 }
 
+html {
+  background: rgb(11,93,228);
+}
+
 input {
   border: 1px solid black;
 }
@@ -61,6 +65,7 @@ input {
 main {
   height: 100vh;
   width: 100vw;
+  min-width: 1400px;
   background: rgb(11,93,228);
   -webkit-animation-name: color-change; /* Safari 4.0 - 8.0 */
   -webkit-animation-duration: 5s; /* Safari 4.0 - 8.0 */
@@ -70,14 +75,14 @@ main {
 
 
 @-webkit-keyframes color-change {
-    0% { background-color: #232741;}
-    40% { background-color: #232741;}
+    0% { background-color: #4030e8;}
+    /* 40% { background-color: #1b1091;} */
     70% { background-color: rgb(11,93,228);}
 }
 
 /* Standard syntax */
 @keyframes color-change {
-  0% {background-color: #232741;}
-  40% { background-color: #232741;}
+  0% {background-color: #4030e8;}
+  /* 40% { background-color: #1b1091;} */
   70% {background-color: rgb(11,93,228);}
 }

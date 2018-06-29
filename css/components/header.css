@@ -1,6 +1,6 @@
 .page-header {
     height: 4vw;
-    min-height: 60px;
+    min-height: 80px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -23,7 +23,7 @@
     font-family: 'Russo One', sans-serif;
     color: white;
     text-shadow: 0.2vw 0.2vw 0.1vw rgba(2,12,144, 0.6);
-    font-size: 1vw;
+    /* font-size: 1vw; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -63,7 +63,7 @@
 
 .fas {
   color: white;
-  font-size: 2vw;
+  font-size: 32px;
   margin-bottom: 0.3vw;
 }
 
@@ -72,6 +72,7 @@
 }
 
 .fab {
+  /* margin-right: 15px; */
   color: white;
   height: 1vw;
   width: 1vw;
@@ -79,6 +80,37 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  font-size: 2vw;
+  font-size: 32px;
   /* margin-bottom: 0.4vw; */
+}
+
+.selected-network {
+    background-color: rgba(0,0,0,0.3);
+    /* font-size: 0.7vw; */
+    color: white;
+    border-radius: 6px;
+    border:none;
+}
+
+
+.network-selector-container {
+  font-size: 10px;
+  min-height: 25px;
+  box-sizing: content-box;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 6px;
+  text-align: center;
+  color: rgba(255,255,255,0.3);
+}
+
+.trained-net-button {
+  width: 9vw;
+  min-width: 80px;
+  padding: 0.5vw;
+}
+
+.new-net-button {
+  width: 9vw;
+  min-width: 80px;
+  padding: 0.5vw;
 }

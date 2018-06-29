@@ -38,18 +38,20 @@ canvas:hover{
   color: white;
   font-weight: 100;
   border: 1px solid rgba(2,12,144, 0.4);
-  border-radius: 1.5vw;
+  border-radius: 60px;
   box-shadow: 0vw 0.15vw 0.2vw rgba(2,12,144, 0.4);
   cursor: pointer;
   -webkit-transition: background 0.2s;
   transition: background 0.2s;
   border: 2px solid white;
   width: 12vw;
+  min-width: 180px;
   text-align: center;
 
   height: 3vw;
+  min-height: 50px;
   margin-left: 5vw;
-  margin-top: 80px;
+  margin-top: 25px;
 }
 
 .test-button:hover {
@@ -90,15 +92,18 @@ canvas:hover{
 
 .training-canvas-div button {
   color: white;
+  font-size: 15px;
   font-weight: 100;
   border: 1px solid rgb(2,12,144, 0.4);
-  border-radius: 1.5vw;
+  border-radius: 60px;
+  min-height: 50px;
   box-shadow: 0vw 0.15vw 0.2vw rgb(2,12,144, 0.4);
   cursor: pointer;
   -webkit-transition: background 0.2s;
   transition: background 0.2s;
   border: 2px solid white;
   width: 12vw;
+  min-width: 180px;
   text-align: center;
 
   height: 3vw;
@@ -123,6 +128,7 @@ canvas:hover{
   padding-top: 10px;
   padding-bottom: 10px;
   width: 20vw;
+  min-width: 320px;
   box-sizing: content-box;
   min-height: 10vw;
   max-height: 85vh;
@@ -140,7 +146,7 @@ canvas:hover{
 .memory-div p {
   margin: 1vw;
   color: white;
-  font-size: 2vw;
+  font-size: 30px;
   font-weight: 100;
   align-items: center;
 }
@@ -153,6 +159,7 @@ canvas:hover{
   grid-template-columns: 33% 33% 33%;
   background-color: rgb(255,255,255,0.1);
   margin-bottom: 1vw;
+  border-radius: 10px;
 }
 
 .memory-div-container li{
