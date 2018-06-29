@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { doSimulationStep, reduce, outOfBounds } from '../../javascripts/canvas_utils';
 import { receiveOutputData, receiveArrayShapes } from '../../actions/test_data_actions';
+import d3 from 'd3';
+import { createMachine } from '../../javascripts/api_utils';
 
 class TestingCanvas extends React.Component {
     constructor(props) {
@@ -20,7 +22,8 @@ class TestingCanvas extends React.Component {
     componentDidMount() {
         const canvas = this.refs.testingCanvas;
         const ctx = canvas.getContext("2d");
-
+        // console.log(this.props);
+        // this.readTextFromFile("http://localhost:8000/machine.txt");
         this.setState({
             canvas: canvas,
             ctx: ctx
@@ -42,6 +45,22 @@ class TestingCanvas extends React.Component {
         canvas.removeEventListener("mousedown", this.mousedownFunc);
         canvas.removeEventListener("mousemove", this.mousemove);
         document.removeEventListener("mouseup", this.mouseup);
+    }
+
+    readTextFromFile(file){
+      let rawFile = new XMLHttpRequest();
+      console.log(this.props);
+      rawFile.open("GET", file, true);
+      rawFile.onreadystatechange = () => {
+        if(rawFile.readyState === 4){
+          if(rawFile.status === 200 || rawFile.status == 0){
+            this.setState({
+              loadedMachine: this.props.trainedNet.fromJSON(JSON.parse(rawFile.responseText)),
+            })
+          }
+        }
+      }
+      rawFile.send(null);
     }
 
     mouseDown() {
@@ -164,6 +183,7 @@ class TestingCanvas extends React.Component {
         this.mousemove = this.mouseMove();
 
        // window.setTimeout(this.resetCanvas.bind(this), 2000);
+       window.setTimeout(this.resetCanvas.bind(this), 2000);
        window.setTimeout(() => canvas.addEventListener("mousedown", this.mousedownFunc), 2000);
        window.setTimeout(() => canvas.addEventListener("mousemove", this.mousemove), 2000);
     }
@@ -209,6 +229,16 @@ class TestingCanvas extends React.Component {
     }
 
     render() {
+        // let data = this.props.trainedNet.toJSON();
+        // console.log(data);
+        // if(data){
+        //   createMachine(JSON.stringify(data));
+        // }
+        // console.log(this.state);
+        // let data = this.props.dumbNet.toJSON();
+        // if(data){
+        //   createMachine(JSON.stringify(data));
+        // }
         return (
             <div className="testing-canvas-div">
                 <div className="testing-canvas-container">

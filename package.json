@@ -16,6 +16,9 @@
     "express": "^4.16.3",
     "fs": "0.0.1-security",
     "particles.js": "^2.0.0",
+    "mongodb": "~3.0.8",
+    "mongoose": "^5.1.7",
+    "node-fetch": "^2.1.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
@@ -32,7 +35,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack -d -w",
-    "dev": "nodemon server/server.js"
+    "dev": "nodemon server.js"
   },
   "repository": {
     "type": "git",
