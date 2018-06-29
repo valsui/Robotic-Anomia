@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { doSimulationStep, reduce, outOfBounds } from '../../javascripts/canvas_utils';
 import { receiveOutputData, receiveArrayShapes } from '../../actions/test_data_actions';
+import { createMachine } from '../../javascripts/api_utils';
+
 
 class TestingCanvas extends React.Component {
     constructor(props) {
@@ -20,7 +22,8 @@ class TestingCanvas extends React.Component {
     componentDidMount() {
         const canvas = this.refs.testingCanvas;
         const ctx = canvas.getContext("2d");
-
+        console.log(this.props);
+        this.readTextFromFile("http://localhost:8000/machine.txt");
         this.setState({
             canvas: canvas,
             ctx: ctx
@@ -38,6 +41,22 @@ class TestingCanvas extends React.Component {
         canvas.removeEventListener("mousedown", this.mouseDown());
         canvas.removeEventListener("mousemove", this.mouseMove());
         document.removeEventListener("mouseup", this.mouseUp());
+    }
+
+    readTextFromFile(file){
+      let rawFile = new XMLHttpRequest();
+      console.log(this.props);
+      rawFile.open("GET", file, true);
+      rawFile.onreadystatechange = () => {
+        if(rawFile.readyState === 4){
+          if(rawFile.status === 200 || rawFile.status == 0){
+            this.setState({
+              loadedMachine: this.props.trainedNet.fromJSON(JSON.parse(rawFile.responseText)),
+            })
+          }
+        }
+      }
+      rawFile.send(null);
     }
 
     mouseDown() {
@@ -147,7 +166,7 @@ class TestingCanvas extends React.Component {
        this.props.receiveArrayShapes(newArr);
        this.props.receiveOutputData(outputArray);
        this.matrixify();
-    
+
     //    window.setTimeout(this.resetCanvas.bind(this), 2000);
     }
 
@@ -191,6 +210,12 @@ class TestingCanvas extends React.Component {
     }
 
     render() {
+        // let data = this.props.trainedNet.toJSON();
+        // console.log(data);
+        // if(data){
+        //   createMachine(JSON.stringify(data));
+        // }
+        console.log(this.state);
         return (
             <div className="testing-canvas-div">
                 <div className="testing-canvas-container">
