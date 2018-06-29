@@ -54,6 +54,7 @@ class OutputContainer extends React.Component {
             .text((d) => d.string)
             .attr('y', (d) => d.y)
             .attr('x', (d) => d.x)
+
             
 
         g.on('click', (d) => this.handleClick(d))
