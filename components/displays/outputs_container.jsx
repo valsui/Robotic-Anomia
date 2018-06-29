@@ -21,63 +21,133 @@ class OutputContainer extends React.Component {
     }
 
     createOutputD3() {
-        const node = this.node;
+        // const node = this.node;
+        //node data
         const words = this.getPercentages();
         const percentages = this.parsePercentages(words);
-
+        
         if ( percentages === null ) {
             return;
         }
+        const percentageLength = percentages.length;
 
-        const radiusScale = d3.scaleSqrt().domain([0, percentages[0].percent]).range([20,70]);
+        //link data
+        const links = this.addLinks(percentageLength);
 
+        //radius scale - max out at 80
+        const radiusScale = d3.scaleSqrt().domain([0, percentages[0].percent]).range([20,80]);
+        // color gradient scale based on radius 
+        const linearColorScale = d3.scaleLinear()
+            .domain([0, percentages[0].percent])
+            .range(['#c0c0aa', '#1cefff']);
+        //shuffle percentages so that largest isn't always in teh middle
         const shuffledPercentages = shuffleData(percentages);
-
+        //remove all the elements inside the svg before creating 
         d3.selectAll("svg > *").remove();
 
+        //add mouseover event on circle to expand radius on hover
+        const handleMouseOver = (d) => {  // Add interactivity
+        // console.log(this)
+            // Use D3 to select element, change color and size
+            console.log(d3.select(`#${d.string}`));
+            d3.select(`#${d.string}`).attr({
+                fill: "orange",
+                r: (d) => radiusScale(d.percent) * 2
+            });
+        }
+        // add mouseout event to return to normal
+        const handleMouseOut = (d) => {
+            // Use D3 to select element, change color back to normal
+            d3.select(`#${d.string}`).attr({
+                fill: (d) => linearColorScale(d.percent),
+                r: (d) => radiusScale(d.percent)
+            });
+        }
+
+        //append group tag to svg
         const svg = d3.selectAll("svg")
             .append("g")
-        
+        //bind data to the group
         const circle = svg.selectAll("circle")
-            .data(shuffledPercentages)
-            
-
+            .data(shuffledPercentages)  
+        //create circle for each output in percentages - put each circle in it's own group to bind text to it 
         const g = circle.enter().append("g")
             g.append("circle")
-            .attr('r', (d) => radiusScale(d.percent))
             .attr('class', 'node')
-            .style('fill', 'white')
+            .attr('id', (d) => `#${d.string}`)
+            .attr('r', (d) => radiusScale(d.percent))
+            .style('fill', (d) => linearColorScale(d.percent))
             .style('stroke-width', '5px')
             .style('stroke', "blue")
+            // .on('mouseover', handleMouseOver)
+            // .on('mouseout', handleMouseOut)
 
+        //add text along with the circle
         g.append("text")
             .text((d) => d.string)
             .attr('y', (d) => d.y)
             .attr('x', (d) => d.x)
-
-            
-
+        //click handler to add to training data
         g.on('click', (d) => this.handleClick(d))
+
+        //draw lines for nodelinks
+        const nodeLinks = svg.selectAll('line')
+            .data(links)
+            .enter()
+            .append('line')
+            .style("stroke", "lightgrey")
+            .style('stroke-opacity', 0.4)
 
         const width = 800;
         const height = 800;
+        // define force simulation
         const simulation = d3.forceSimulation()
             .force("x", d3.forceX(width/2).strength(.005))
             .force("y", d3.forceY(height/2).strength(.01))
             .force("center", d3.forceCenter().x(width * .5).y(height * .5))
             .force("charge", d3.forceManyBody().strength(-15))
             .force("collide", d3.forceCollide((d) => radiusScale(d.percent)+ 5).strength(.5))
-        
-
+    
+        //bind nodes and links to simulation 
         simulation
             .nodes(shuffledPercentages)
+            .force('link', d3.forceLink().links(links).distance(100))
             .on("tick", () => {
-                g
-                .attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
-
+                //translate the axis of the group (text an circle) while it moves
+                g.attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
+                //redraw link while it moves
+                nodeLinks
+                    .attr('x1', function (d) {
+                        return d.source.x 
+                    })
+                    .attr('y1', function (d) {
+                        return d.source.y 
+                    })
+                    .attr('x2', function (d) {
+                        return d.target.x 
+                    })
+                    .attr('y2', function (d) {
+                        return d.target.y 
+                    })
             });
 
          
+    }
+
+    addLinks(length){
+        // const length = percentages.length;
+        const links = [];
+        for( let i = 0; i < length - 1; i++){
+            for( let j = i + 1; j < length; j++){
+                let temp = {};
+                temp['source'] = i;
+                temp['target'] = j; 
+                links.push(temp);
+            }
+        }
+        // links.push({'source': 0, 'target': links.length - 1});
+        // console.log(links);
+        return links;
     }
 
     addLettersToTraining(d){
@@ -104,7 +174,7 @@ class OutputContainer extends React.Component {
         const { net } = this.props;
 
         let trainingData = this.addLettersToTraining(d);
-        console.log(trainingData);
+        // console.log(trainingData);
         net.trainAsync(trainingData).then(() => {
             resetOutputData()
             console.log("done training!");
@@ -200,7 +270,7 @@ class OutputContainer extends React.Component {
         // )
 
         return (
-            <div>
+            <div className = 'svgContainer'>
                 <svg id="svg" ref={node => this.node = node}
                     width={800} height={800}>
                 </svg>
