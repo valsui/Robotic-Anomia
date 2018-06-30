@@ -1,8 +1,16 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 class DoneTraining extends React.Component {
     constructor(props) {
         super(props);
+
+        this.redirectToTest = this.redirectToTest.bind(this);
+    }
+
+    redirectToTest(e) {
+        e.preventDefault();
+        this.props.history.push('/test');
     }
 
     render() {
@@ -17,7 +25,7 @@ class DoneTraining extends React.Component {
                     Would you like to test it now or train some more data?
                 </div>
                 <div className="done-training-container">
-                    <button>Test!</button>
+                    <button onClick={this.redirectToTest}>Test!</button>
                     <button>Continue Training</button>
                 </div>
             </div>
@@ -25,4 +33,4 @@ class DoneTraining extends React.Component {
     }
 }
 
-export default DoneTraining;
+export default withRouter(DoneTraining);

@@ -218,11 +218,8 @@ class OutputContainer extends React.Component {
         const trainingData = this.addLettersToTraining(d);
         const shuffledData = shuffleData(trainingData);
 
-<<<<<<< HEAD
-=======
         // d3.select(this).transition().duration(200).delay(100).attr('r', 200)
 
->>>>>>> d92b3422e94e85d6cf6210e8ce16ec51cd53c715
         if ( currentNetwork === "trainedNet" ) {
             net.trainAsync(shuffledData).then(() => {
                 resetOutputData();
