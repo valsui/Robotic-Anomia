@@ -41,7 +41,7 @@ class OutputContainer extends React.Component {
         //node data
         const words = this.getPercentages();
         const data = this.parsePercentages(words);
-        
+
         if ( data === null ) {
             return;
         }
@@ -49,17 +49,17 @@ class OutputContainer extends React.Component {
 
         // //link data
         const links = this.addLinks(dataLength);
-        
+
         // let dataPoints = data.top;
         let graphSelection = d3.select(".chart")
-        let width = 800;
-        let height = 800;
+        let width = 1050;
+        let height = 600;
 
-        // let color = d3.scaleOrdinal(d3.schemeCategory10); 
+        // let color = d3.scaleOrdinal(d3.schemeCategory10);
         // let color = d3.scaleLinear()
         //     .domain([0, data[0].percent])
         //     .range(['#C6FFDD', '#FBD786', '#f7797d', '#d9a7c7','#89253e']);
-        
+
         //remove all elements from svg
         d3.selectAll("svg").remove();
 
@@ -72,7 +72,7 @@ class OutputContainer extends React.Component {
             .attr("transform", "translate(0,0)");
 
         //radius scale
-        let radiusScale = d3.scaleSqrt().domain([0, data[0].percent]).range([30, 90]);
+        let radiusScale = d3.scaleSqrt().domain([0, data[0].percent]).range([10,65]);
         // formats numbers by rounding down. ex 6.2 => 6
         let format = d3.format(",d");
         //shuffle data
@@ -86,7 +86,7 @@ class OutputContainer extends React.Component {
 
         let forceY = d3.forceY(function (d) {
             return height / 2;
-        }).strength(0.1); 
+        }).strength(0.05);
 
         let forceCollide = d3.forceCollide(function (d) {
             return radiusScale(d.percent) + 10;
@@ -96,15 +96,14 @@ class OutputContainer extends React.Component {
             .force("x", forceXCombine)
             .force("y", forceY)
             .force("collide", forceCollide)
-            .force('charge', d3.forceManyBody().strength(-20))
-        
+            .force('charge', d3.forceManyBody().strength(10))
+
         // //draw lines for nodelinks
         const nodeLinks = svgContainer.selectAll('line')
             .data(links)
             .enter()
             .append('line')
             .style("stroke", "lightgrey")
-            .style('stroke-opacity', 0.9)
 
         //draw circles
         let circles = svgContainer.selectAll(".node")
@@ -118,8 +117,7 @@ class OutputContainer extends React.Component {
                 // return color(d.percent);
                 return 'white';
             })
-            .style('stroke', 'blue')
-            .style('stroke-width', 5)
+            
             .on('click', (d) => {
                     // let mouseNode = d3.select(this)
                     // console.log('click', mouseNode);
@@ -130,9 +128,9 @@ class OutputContainer extends React.Component {
                 // d3.selectAll("circle").style('opacity', 0.3);
                 let mouseNode = d3.select(this)
                     console.log('mouseover', mouseNode);
-                    mouseNode.style('opacity', 0.5)
+                    mouseNode.style('opacity', 1)
                 // mouseNode.style('opacity', 1)
-                    mouseNode.transition().duration(200).delay(100).attr('r', 200);
+                    mouseNode.transition().duration(200).delay(100).attr('r', 80);
                     mouseNode.style('stroke-width', 5)
                 // d3.selectAll("text").attr("visibility", "hidden")
 
@@ -158,10 +156,11 @@ class OutputContainer extends React.Component {
             .text((d) => {
                 return d.string
             })
+            .style("fill","black")
 
         simulation
             .nodes(shuffledData)
-            .force('link', d3.forceLink().links(links).distance(100))
+            .force('link', d3.forceLink().links(links))
             .on('tick', ticked);
 
 
@@ -170,16 +169,16 @@ class OutputContainer extends React.Component {
             //redraw link while it moves
             nodeLinks
                 .attr('x1', function (d) {
-                    return d.source.x 
-                })    
+                    return d.source.x
+                })
                 .attr('y1', function (d) {
-                    return d.source.y 
+                    return d.source.y
                 })
                 .attr('x2', function (d) {
-                    return d.target.x 
+                    return d.target.x
                 })
                 .attr('y2', function (d) {
-                    return d.target.y 
+                    return d.target.y
                 })
 
             circles
@@ -194,7 +193,7 @@ class OutputContainer extends React.Component {
                 return "translate(" + d.x + "," + d.y + ")"
             })
         }
-         
+
     }
 
     addLinks(length){
@@ -203,7 +202,7 @@ class OutputContainer extends React.Component {
             for( let j = i + 1; j < length; j++){
                 let temp = {};
                 temp['source'] = i;
-                temp['target'] = j; 
+                temp['target'] = j;
                 links.push(temp);
             }
         }
@@ -237,7 +236,7 @@ class OutputContainer extends React.Component {
         let trainingData = this.addLettersToTraining(d);
 
         // d3.select(this).transition().duration(200).delay(100).attr('r', 200)
-        
+
         if ( currentNetwork === "trainedNet" ) {
             net.trainAsync(trainingData).then(() => {
                 resetOutputData();
@@ -333,12 +332,6 @@ class OutputContainer extends React.Component {
     render() {
         const words = this.getPercentages();
         const percentages = this.parsePercentages(words);
-
-        // return (
-        //     <div className="output-wrapper">
-        //        <Outputs output={percentages} />
-        //     </div>
-        // )
 
         return (
             <div className="output-container">
