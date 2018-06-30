@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Outputs from './outputs';
 import * as d3 from "d3";
-import { shuffleData } from '../../tensorflow/data';
 import { resetOutputData } from '../../actions/test_data_actions';
 
 class OutputContainer extends React.Component {
@@ -20,6 +19,23 @@ class OutputContainer extends React.Component {
         this.createOutputD3();
     }
 
+    shuffleData(data) {
+      let currentIdx = data.length;
+      let tempVal, randomIdx;
+
+      while (0 !== currentIdx) {
+          //Pick random idx
+          randomIdx = Math.floor(Math.random() * currentIdx);
+          currentIdx -= 1;
+
+          //swap with current element
+          tempVal = data[currentIdx];
+          data[currentIdx] = data[randomIdx];
+          data[randomIdx] = tempVal;
+      }
+      return data
+    }
+
     createOutputD3() {
         const node = this.node;
         const words = this.getPercentages();
@@ -31,16 +47,16 @@ class OutputContainer extends React.Component {
 
         const radiusScale = d3.scaleSqrt().domain([0, percentages[0].percent]).range([20,70]);
 
-        const shuffledPercentages = shuffleData(percentages);
+        const shuffledPercentages = this.shuffleData(percentages);
 
         d3.selectAll("svg > *").remove();
 
         const svg = d3.selectAll("svg")
             .append("g")
-        
+
         const circle = svg.selectAll("circle")
             .data(shuffledPercentages)
-            
+
 
         const g = circle.enter().append("g")
             g.append("circle")
@@ -55,7 +71,7 @@ class OutputContainer extends React.Component {
             .attr('y', (d) => d.y)
             .attr('x', (d) => d.x)
 
-            
+
 
         g.on('click', (d) => this.handleClick(d))
 
@@ -67,7 +83,7 @@ class OutputContainer extends React.Component {
             .force("center", d3.forceCenter().x(width * .5).y(height * .5))
             .force("charge", d3.forceManyBody().strength(-15))
             .force("collide", d3.forceCollide((d) => radiusScale(d.percent)+ 5).strength(.5))
-        
+
 
         simulation
             .nodes(shuffledPercentages)
@@ -77,7 +93,7 @@ class OutputContainer extends React.Component {
 
             });
 
-         
+
     }
 
     addLettersToTraining(d){
@@ -104,7 +120,7 @@ class OutputContainer extends React.Component {
         const { net, dumbNet, currentNetwork, resetOutputData } = this.props;
 
         let trainingData = this.addLettersToTraining(d);
-        
+
         if ( currentNetwork === "trainedNet" ) {
             net.trainAsync(trainingData).then(() => {
                 resetOutputData();
@@ -125,7 +141,7 @@ class OutputContainer extends React.Component {
         const { outputs } = this.props;
         // console.log(outputs);
 
-        let outputArray = outputs.map (( output ) => { 
+        let outputArray = outputs.map (( output ) => {
             let subArray = [];
 
             // adds all the key value pairs as nested arrays
@@ -137,7 +153,7 @@ class OutputContainer extends React.Component {
 
             // returns only the top three values for each canvas character
             return subArray.slice(0,3);
-        }) 
+        })
 
         // outputArray = [["a", .99], ["b", .98]]
        return outputArray;

@@ -17,6 +17,7 @@ class TestingCanvas extends React.Component {
 
         this.array = this.createArray();
         this.sendData = this.sendData.bind(this);
+        this.download = this.download.bind(this);
     }
 
     componentDidMount() {
@@ -227,6 +228,16 @@ class TestingCanvas extends React.Component {
         // d3.selectAll("svg > *").remove();
     }
 
+    download(){
+      let data;
+      if ( this.props.currentNetwork === "trainedNet" ) {
+        data = this.props.trainedNet.toJSON();
+      } else if ( this.props.currentNetwork === "dumbNet" ) {
+        data = this.props.dumbNet.toJSON();
+      }
+      createMachine(JSON.stringify(data));
+    }
+
     render() {
         // let data = this.props.trainedNet.toJSON();
         // console.log(data);
@@ -246,6 +257,7 @@ class TestingCanvas extends React.Component {
                 <div className="testing-canvas-button-container">
                     <button onClick={this.sendData} className="test-button">Read This</button>
                     <button className="test-button" onClick={(e) => {e.preventDefault(); this.resetCanvas()}}>Clear Canvas</button>
+                      <button onClick={this.download} className="test-button">Download Machine</button>
                 </div>
             </div>
         )
