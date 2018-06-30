@@ -11,7 +11,7 @@ const dumbNet = new NeuralNetwork(config);
 
 let rawFile = new XMLHttpRequest();
 
-rawFile.open("GET",  "http://localhost:8000/dumbNet.txt", true);
+rawFile.open("GET",  "https://raw.githubusercontent.com/valsui/Robotic-Anomia/Dan/public/dumbNet.txt", true);
 rawFile.onreadystatechange = () => {
   if(rawFile.readyState === 4){
     if(rawFile.status === 200 || rawFile.status == 0){
