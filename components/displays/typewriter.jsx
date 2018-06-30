@@ -4,14 +4,6 @@ class TypeWriter extends React.Component {
 
   constructor(props){
     super(props);
-    this.dataText = [ "Hello!",
-                      "I am a robot 🤖",
-                      "I can read your hand writing",
-                      "Train 💡 me to read",
-                      "or play with me!",
-                      "I always forget things",
-                      "correct me while playing",
-                      "Surely we will have lots of fun!   🎉"];
   }
 
   componentDidMount(){
@@ -20,6 +12,15 @@ class TypeWriter extends React.Component {
 
   textAnimation(){
     const testInfo = document.getElementById('typing-text');
+
+    const dataText = [ "Hello!",
+                      "I am a robot 🤖",
+                      "I can read your hand writing",
+                      "Train 💡 me to read",
+                      "or play with me!",
+                      "I always forget things",
+                      "correct me while playing",
+                      "Surely we will have lots of fun!   🎉"];
 
     const typeWriter = (text, i, fnCallback) => {
       if (text && i < (text.length)) {
@@ -34,14 +35,14 @@ class TypeWriter extends React.Component {
     }
 
      const StartTextAnimation = (i) => {
-       if (typeof this.dataText[i] == 'undefined'){
+       if (typeof dataText[i] == 'undefined'){
           setTimeout(function() {
             StartTextAnimation(0);
           }, 2500);
        }
 
-      if (this.dataText && i < this.dataText[i].length) {
-       typeWriter(this.dataText[i], 0, function(){
+      if (dataText && i < dataText[i].length) {
+       typeWriter(dataText[i], 0, function(){
          StartTextAnimation(i + 1);
        });
       }
