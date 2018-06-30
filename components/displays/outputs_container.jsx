@@ -175,10 +175,10 @@ class OutputContainer extends React.Component {
             .attr("transform", "translate(0,0)");
 
 
-        let radiusScale = d3.scaleSqrt().domain([0, data[0].percent]).range([30, 80]);
+        let radiusScale = d3.scaleSqrt().domain([0, data[0].percent]).range([30, 100]);
         // formats numbers by rounding down. ex 6.2 => 6
         let format = d3.format(",d");
-        // const shuffledPercentages = this.shuffleData(percentages);
+        const shuffledData = shuffleData(data);
 
         // the simulation is a collection of forces
         // about where we want our circles to go
@@ -191,30 +191,41 @@ class OutputContainer extends React.Component {
         }).strength(0.05); 
 
         let forceCollide = d3.forceCollide(function (d) {
-            return radiusScale(d.percent) + 2;
+            return radiusScale(d.percent) + 10;
         })
 
         let simulation = d3.forceSimulation()
             .force("x", forceXCombine)
             .force("y", forceY)
             .force("collide", forceCollide)
+        
+        // //draw lines for nodelinks
+        const nodeLinks = svgContainer.selectAll('line')
+            .data(links)
+            .enter()
+            .append('line')
+            .style("stroke", "lightgrey")
+            .style('stroke-opacity', 0.9)
 
+        //draw circles
         let circles = svgContainer.selectAll(".node")
-            .data(data)
+            .data(shuffledData)
             .enter().append("circle")
             .attr("class", "output")
             .attr("r", function (d) {
                 return radiusScale(d.percent);
             })
             .attr("fill", function (d) {
-                return color(d.percent);
+                // return color(d.percent);
+                return 'white';
             })
-            .style('z-index', 10)
+            .style('stroke', 'blue')
+            .style('stroke-width', 5)
             .on('click', (d) => this.handleClick(d))
             .on("mouseenter", function (d) {
                 // d3.selectAll("circle").style('opacity', 0.3);
                 let mouseNode = d3.select(this)
-                    mouseNode.style('opacity', 0.3)
+                    mouseNode.style('opacity', 0.5)
                 // mouseNode.style('opacity', 1)
                     // mouseNode.transition().duration(200).delay(100).attr('r', 200);
                 // mouseNode.style('stroke-width', 5)
@@ -226,19 +237,12 @@ class OutputContainer extends React.Component {
                 //     return radiusScale(d.percent);
                 // });
                 // d3.select(this).style('stroke-width', 1);
-                d3.select(this).style('opacity', 0.95);
+                d3.select(this).style('opacity', 1);
                 // d3.selectAll("text").attr("visibility", "visible");
 
             });
 
-        // //draw lines for nodelinks
-        const nodeLinks = svgContainer.selectAll('line')
-            .data(links)
-            .enter()
-            .append('line')
-            .style("stroke", "lightgrey")
-            .style('stroke-opacity', 0.4)
-            .style('z-index', -4)
+
 
         // d3.select("#decade").on("click", function(){
         // 	simulation
@@ -256,7 +260,7 @@ class OutputContainer extends React.Component {
 
 
         let texts = svgContainer.selectAll(null)
-            .data(data)
+            .data(shuffledData)
             .enter()
             .append("g")
 
@@ -267,12 +271,28 @@ class OutputContainer extends React.Component {
             })
 
         simulation
-            .nodes(data)
+            .nodes(shuffledData)
             .force('link', d3.forceLink().links(links).distance(100))
             .on('tick', ticked);
 
 
         function ticked() {
+
+            //redraw link while it moves
+            nodeLinks
+                .attr('x1', function (d) {
+                    return d.source.x 
+                })    
+                .attr('y1', function (d) {
+                    return d.source.y 
+                })
+                .attr('x2', function (d) {
+                    return d.target.x 
+                })
+                .attr('y2', function (d) {
+                    return d.target.y 
+                })
+
             circles
                 .attr("cx", function (d) {
                     return d.x;
@@ -284,21 +304,6 @@ class OutputContainer extends React.Component {
             texts.attr("transform", function (d) {
                 return "translate(" + d.x + "," + d.y + ")"
             })
-
-            //redraw link while it moves
-            nodeLinks
-                .attr('x1', function (d) {
-                    return d.source.x 
-                })
-                .attr('y1', function (d) {
-                    return d.source.y 
-                })
-                .attr('x2', function (d) {
-                    return d.target.x 
-                })
-                .attr('y2', function (d) {
-                    return d.target.y 
-                })
         }
          
     }
