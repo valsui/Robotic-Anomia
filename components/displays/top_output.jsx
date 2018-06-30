@@ -30,8 +30,8 @@ class TopOutput extends React.Component {
                       <p>or type the answer here:</p>
                     <form onSubmit={(e) => {e.preventDefault(); this.props.handleClick(this.state)}}>
                         <input type="text" value={this.state.string} onChange={this.handleChange} />
-                        <button> Submit </button>
-                  </form>
+                        <input type="submit" onClick={(e) => {e.preventDefault(); this.props.handleClick(this.state)}} value="Submit"/>
+                    </form>
                 </div>
             </div>
         )

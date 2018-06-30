@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { doSimulationStep, reduce, outOfBounds } from '../../javascripts/canvas_utils';
 import { receiveOutputData, receiveArrayShapes } from '../../actions/test_data_actions';
-import d3 from 'd3';
 import { createMachine } from '../../javascripts/api_utils';
 import { openModal } from '../../actions/modal_actions';
 
@@ -165,6 +164,10 @@ class TestingCanvas extends React.Component {
             return mapSubArray;
         })
 
+       if ( newArr.length === 0) {
+           return;
+       }
+
         let outputArray = [];
 
        newArr.forEach((array) => {
@@ -185,9 +188,9 @@ class TestingCanvas extends React.Component {
         this.mousedownFunc = this.mouseDown();
         this.mousemove = this.mouseMove();
 
-       window.setTimeout(this.resetCanvas.bind(this), 10000);
-       window.setTimeout(() => canvas.addEventListener("mousedown", this.mousedownFunc), 2000);
-       window.setTimeout(() => canvas.addEventListener("mousemove", this.mousemove), 2000);
+       window.setTimeout(this.resetCanvas.bind(this), 3000);
+       window.setTimeout(() => canvas.addEventListener("mousedown", this.mousedownFunc), 3000);
+       window.setTimeout(() => canvas.addEventListener("mousemove", this.mousemove), 3000);
     }
 
     matrixify() {
