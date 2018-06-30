@@ -5,7 +5,7 @@ import { NeuralNetwork } from 'brain.js';
 
 
 // On intialization, it will create a neural network object called "trainedNet" users can access this trainedNet to run test on whether or not their canvas is recognizable.
-// Users should not be able modify the training data in this neural network.  
+// Users should not be able modify the training data in this neural network.
 
 const initialState = {
     trainedNet: net,
@@ -18,7 +18,7 @@ const neuralNetworksReducer = (state = initialState, action) => {
     switch ( action.type ) {
         case RECEIVE_NEURAL_NETWORK:
         // Returns an the untrained neural network as "dumbNet"  Whenever users add training data to dumbNet, you should pull dumbNet from the store, do something like 'dumbNet.train(data)' and then dispatch the new dumbNet back into this reducer.
-            return Object.assign({}, state, { dumbNet: action.net });
+            return Object.assign({}, state, { [action.name]: action.net });
         default:
             return state;
     }
