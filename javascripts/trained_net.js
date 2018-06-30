@@ -1,5 +1,4 @@
 import brain from 'brain.js';
-import { machine } from '../public/machine.js';
 
 // This is our trained neural network.  It will be trained using the information stored on test data, which is what we need to train the neural network every time the page loads.
 
