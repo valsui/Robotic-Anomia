@@ -1,5 +1,7 @@
 import { RECEIVE_NEURAL_NETWORK } from '../actions/neural_network_actions';
 import net from '../javascripts/trained_net';
+import dumbNet from '../javascripts/dumb_net';
+import { NeuralNetwork } from 'brain.js';
 
 
 // On intialization, it will create a neural network object called "trainedNet" users can access this trainedNet to run test on whether or not their canvas is recognizable.
@@ -7,7 +9,7 @@ import net from '../javascripts/trained_net';
 
 const initialState = {
     trainedNet: net,
-    dumbNet: null
+    dumbNet: dumbNet
 }
 
 const neuralNetworksReducer = (state = initialState, action) => {

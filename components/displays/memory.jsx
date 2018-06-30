@@ -18,14 +18,12 @@ class Memory extends React.Component {
             </div>
         } else {
             return (
-                <div className="memory-div">
-                    <p> Memory </p>
+                <div className="memory-div"><p> Memory </p>
                     <ul className="memory-div-container">
-                        { values.map( (datum, i) => {
+                        { values.map((datum, i) => {
                             return <MemoryItem key={keys[i]} datum={datum} idx={keys[i]}/>
                         })}
-                    </ul>
-                </div>
+                    </ul></div>
             )
         }
 

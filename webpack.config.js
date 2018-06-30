@@ -2,9 +2,9 @@ var path = require("path");
 
 module.exports = {
     context: __dirname,
-    entry: "./robotic_anomia.jsx",
+    entry: ['babel-polyfill',"./robotic_anomia.jsx"],
     output: {
-        path: path.resolve(__dirname),
+        path: path.resolve(__dirname, 'public'),
         filename: "bundle.js"
     },
     module: {
