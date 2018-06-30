@@ -41,13 +41,13 @@ class Modal extends React.Component {
             case "text":
                 this.component = <Text />
                 break;
-            default: 
+            default:
                 return null;
         }
 
-        return ( 
+        return (
             <div id="modal-div" className="modal-background" onClick={closeModal}>
-                <div className="modal-child" onClick={(e) => e.stopPropagation()}>
+                <div className="modal-child" >
                     { this.component }
                 </div>
             </div>
@@ -64,7 +64,3 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Modal);
-
-
-
-

@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { doSimulationStep, reduce, outOfBounds } from '../../javascripts/canvas_utils';
 import { receiveOutputData, receiveArrayShapes } from '../../actions/test_data_actions';
+import d3 from 'd3';
+import { createMachine } from '../../javascripts/api_utils';
 
 class TestingCanvas extends React.Component {
     constructor(props) {
@@ -20,7 +22,8 @@ class TestingCanvas extends React.Component {
     componentDidMount() {
         const canvas = this.refs.testingCanvas;
         const ctx = canvas.getContext("2d");
-
+        // console.log(this.props);
+        // this.readTextFromFile("http://localhost:8000/machine.txt");
         this.setState({
             canvas: canvas,
             ctx: ctx
@@ -42,6 +45,22 @@ class TestingCanvas extends React.Component {
         canvas.removeEventListener("mousedown", this.mousedownFunc);
         canvas.removeEventListener("mousemove", this.mousemove);
         document.removeEventListener("mouseup", this.mouseup);
+    }
+
+    readTextFromFile(file){
+      let rawFile = new XMLHttpRequest();
+      console.log(this.props);
+      rawFile.open("GET", file, true);
+      rawFile.onreadystatechange = () => {
+        if(rawFile.readyState === 4){
+          if(rawFile.status === 200 || rawFile.status == 0){
+            this.setState({
+              loadedMachine: this.props.trainedNet.fromJSON(JSON.parse(rawFile.responseText)),
+            })
+          }
+        }
+      }
+      rawFile.send(null);
     }
 
     mouseDown() {
@@ -104,8 +123,6 @@ class TestingCanvas extends React.Component {
             if (!outOfBounds(this.array, arrX, arrY + 1)) this.array[arrX][arrY + 1] = 1;
             if (!outOfBounds(this.array, arrX + 1, arrY)) this.array[arrX + 1][arrY] = 1;
             if (!outOfBounds(this.array, arrX + 1, arrY + 1)) this.array[arrX + 1][arrY + 1] = 1;
-            if (!outOfBounds(this.array, arrX - 1, arrY + 1)) this.array[arrX - 1][arrY + 1] = 1;
-            if (!outOfBounds(this.array, arrX + 1, arrY - 1)) this.array[arrX + 1][arrY - 1] = 1;
             ctx.lineTo(x, y);
             ctx.stroke();
             ctx.strokeStyle = "#30B2F9";
@@ -122,9 +139,10 @@ class TestingCanvas extends React.Component {
     drawBox(box) {
       const { ctx } = this.state;
       ctx.beginPath();
-      ctx.rect(box.left, box.top, box.right - box.left, box.bottom - box.top);
-      ctx.lineWidth = 7;
-      ctx.strokeStyle = 'black';
+      ctx.setLineDash([5, 10]);
+      ctx.rect(box.left, box.top + 30, box.right - box.left, box.bottom - box.top - 50);
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'white';
       ctx.stroke();
     }
     sendData(e) {
@@ -147,7 +165,7 @@ class TestingCanvas extends React.Component {
         let outputArray = [];
 
        newArr.forEach((array) => {
-           if ( currentNetwork === "trainedNet" ) { 
+           if ( currentNetwork === "trainedNet" ) {
                outputArray.push(trainedNet.run(array));
            } else if ( currentNetwork === "dumbNet" ) {
                outputArray.push(dumbNet.run(array))
@@ -163,7 +181,7 @@ class TestingCanvas extends React.Component {
 
         this.mousedownFunc = this.mouseDown();
         this.mousemove = this.mouseMove();
-    
+
        window.setTimeout(this.resetCanvas.bind(this), 2000);
        window.setTimeout(() => canvas.addEventListener("mousedown", this.mousedownFunc), 2000);
        window.setTimeout(() => canvas.addEventListener("mousemove", this.mousemove), 2000);
@@ -210,6 +228,16 @@ class TestingCanvas extends React.Component {
     }
 
     render() {
+        // let data = this.props.trainedNet.toJSON();
+        // console.log(data);
+        // if(data){
+        //   createMachine(JSON.stringify(data));
+        // }
+        // console.log(this.state);
+        // let data = this.props.dumbNet.toJSON();
+        // if(data){
+        //   createMachine(JSON.stringify(data));
+        // }
         return (
             <div className="testing-canvas-div">
                 <div className="testing-canvas-container">
