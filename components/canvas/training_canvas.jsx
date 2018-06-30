@@ -19,6 +19,7 @@ class TrainingCanvas extends React.Component {
         this.changeLetter = this.changeLetter.bind(this);
         this.trainData = this.trainData.bind(this);
         this.downloadData = this.downloadData.bind(this);
+        this.handleScroll = this.handleScroll.bind(this);
     }
 
     componentDidMount() {
@@ -119,7 +120,7 @@ class TrainingCanvas extends React.Component {
         } else if ( this.state.letter.length > 1 ) {
             console.log("please only enter one letter");
             return;
-        } 
+        }
 
         let newArray = doSimulationStep(this.array);
         let tempArray = reduce(newArray)[0];
@@ -137,13 +138,13 @@ class TrainingCanvas extends React.Component {
              newArr = newArr.concat(tempArray[i].slice(0,25));
              consoleLogArray.push(tempArray[i].slice(0,25))
         }
-        
+
         let data = { [this.state.counter]: { input: newArr, output: {[this.state.letter]: 1} } }
 
         this.setState({
             counter: this.state.counter + 1
         })
-        
+
         this.props.receiveTestData(data);
         this.resetCanvas();
     }
@@ -157,10 +158,14 @@ class TrainingCanvas extends React.Component {
     }
 
     changeLetter(e) {
-        e.preventDefault();
-
+        // e.preventDefault();
+        // return (e) => {
+        //   this.setState({
+        //     letter: letter
+        //   })
+        // }
         this.setState({
-            letter: e.currentTarget.value
+          letter: e.target.value
         })
     }
 
@@ -192,19 +197,40 @@ class TrainingCanvas extends React.Component {
                 })
             }
             this.props.resetTestData();
-        } 
+        }
+        this.props.resetTestData();
+    }
+
+    handleScroll(e){
+      // console.log(e.target.scrollTop);
+      console.log(Math.floor(e.target.scrollTop));
+      let scrollY = e.target.scrollTop;
+      // this part is to make it slightly more fluid
+      // let idx = Math.floor(scrollY / 29);
+      // let bias = Math.floor(idx / 6);
+      // idx = idx - bias;
+      let idx = Math.floor(scrollY / 35);
+      let letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+      let letter = letters[idx];
+      if(this.state.letter !== letter){
+        this.setState({
+          letter: letter
+        })
+      }
     }
 
     render() {
+        // let letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' ', ' '];
         return (
             <div className="training-canvas-div">
-              <input onChange={this.changeLetter} value={this.state.letter} />
+                <input onChange={this.changeLetter} value={this.state.letter} />
                 <canvas ref="trainingCanvas" width={200} height={200} />
+
                 <button onClick={this.sendData}>Add to Memory</button>
                 <button onClick={(e) => {e.preventDefault(); this.resetCanvas()}}>Clear Canvas</button>
                 <button onClick={this.trainData}>Train Network</button>
                 <form>
-                    <button onClick={this.downloadData}>Download Data</button>
+                    <button onClick={this.trainData}>Download Data</button>
                     <input id="filename" type="text" name="name" value="data.txt"/>
                     <input id="download" type="submit" />
                 </form>
@@ -228,3 +254,26 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default (connect(mapStateToProps, mapDispatchToProps)(TrainingCanvas));
+
+// <div className="hide-scroll">
+// <div className="scrollable" onScroll={this.handleScroll}>
+//   <ul>
+//     {
+//       letters.map( (letter, idx) => {
+//         if(this.state.letter === letter){
+//           return(
+//             <div className='selected select-letter' key={idx}>
+//               <li onClick={this.changeLetter(letter)}>{letter}</li>
+//             </div>
+//           )
+//         }else{
+//           return(
+//             <div className='select-letter' key={idx}>
+//             </div>
+//           )
+//         }
+//       })
+//     }
+//   </ul>
+// </div>
+// </div>

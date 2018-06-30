@@ -1,0 +1,36 @@
+.scrollable {
+  overflow: auto;
+  width: 50px;
+  height: 100px;
+  border: 1px silver solid;
+  overflow-x: hidden;
+  position: absolute;
+}
+
+.scrollable ul {
+  border: none;
+  width: 50px;
+}
+
+.select-letter {
+  width: 50px;
+  height: 35px;
+  overflow: hidden;
+  font-size: 30px;
+}
+
+.selected {
+  background: yellow;
+}
+
+.buffer {
+  width: 50px;
+  height: 10px;
+}
+
+.hide-scroll {
+  overflow: hidden;
+  position: relative;
+  height: 50px;
+  width: 50px;
+}

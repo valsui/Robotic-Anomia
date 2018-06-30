@@ -1,4 +1,4 @@
-import React from 'react'; 
+import React from 'react';
 
 class DoneTraining extends React.Component {
     constructor(props) {
@@ -7,17 +7,20 @@ class DoneTraining extends React.Component {
 
     render() {
         return (
-            <div className="dev-bios-container">
+            <div className="dev-bios-container" id="train-message">
+                <div className="light">
+                  <p>💡</p>
+                </div>
                 <div className="dev-bios-text">
-                    Robotic Anomia is now done training your data.  Would you like to test it now or train some more data?
+                    Robotic Anomia is now done training your data!
+                    <br/>
+                    Would you like to test it now or train some more data?
                 </div>
-                <br />
-                <br />
                 <div className="done-training-container">
-                    <button>Continue Training</button>
                     <button>Test!</button>
+                    <button>Continue Training</button>
                 </div>
-            </div> 
+            </div>
         )
     }
 }
