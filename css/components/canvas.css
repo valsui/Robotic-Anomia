@@ -208,3 +208,7 @@ canvas:hover{
   display: flex;
   flex-direction: column;
 }
+
+.svgContainer {
+  height: 100%;
+}

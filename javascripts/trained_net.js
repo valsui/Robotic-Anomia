@@ -62,16 +62,14 @@ const revertToBox = (dataObject) => {
 
 // let rawFile = new XMLHttpRequest();
 
-// rawFile.open("GET",  "http://localhost:8000/machine.txt", true);
-// rawFile.onreadystatechange = () => {
-//   if(rawFile.readyState === 4){
-//     if(rawFile.status === 200 || rawFile.status == 0){
-//         net.fromJSON(JSON.parse(rawFile.responseText));
-//       }
-//     }
-//   }
-// rawFile.send(null);
-
-net.fromJSON(JSON.parse(machine));
+rawFile.open("GET",  "https://raw.githubusercontent.com/valsui/Robotic-Anomia/master/public/machine.txt", true);
+rawFile.onreadystatechange = () => {
+  if(rawFile.readyState === 4){
+    if(rawFile.status === 200 || rawFile.status == 0){
+        net.fromJSON(JSON.parse(rawFile.responseText));
+      }
+    }
+  }
+rawFile.send(null);
 
 export default net;
