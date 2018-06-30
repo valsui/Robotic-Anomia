@@ -15,9 +15,9 @@
 #particles-js canvas{
   /* background-color: red; */
   -webkit-animation-name: opacity-animate; /* Safari 4.0 - 8.0 */
-  -webkit-animation-duration: 2.2s; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 1.2s; /* Safari 4.0 - 8.0 */
   animation-name: opacity-animate;
-  animation-duration: 2.2s;
+  animation-duration: 1.2s;
 
   background-color: rgba(0,0,0,0);
   border: none;
@@ -27,16 +27,14 @@
 
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes opacity-animate {
-    0% {opacity: 0; background-color: rgba(0,0,0,0);}
-    65% {opacity: 1; background-color: none;}
-    100% {opacity: 1; }
+    0% {opacity: 0;}
+    65% {opacity: 1;}
 }
 
 /* Standard syntax */
 @keyframes opacity-animate {
-  0% {opacity: 0; background-color: rgba(0,0,0,1);}
-  65% {opacity: 1; background-color: none;}
-  100% {opacity: 1; }
+  0% {opacity: 0; }
+  65% {opacity: 1;}
 }
 
 #particles-js canvas:hover{
