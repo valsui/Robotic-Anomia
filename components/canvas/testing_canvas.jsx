@@ -4,6 +4,8 @@ import { doSimulationStep, reduce, outOfBounds } from '../../javascripts/canvas_
 import { receiveOutputData, receiveArrayShapes } from '../../actions/test_data_actions';
 import d3 from 'd3';
 import { createMachine } from '../../javascripts/api_utils';
+import { openModal } from '../../actions/modal_actions';
+
 
 class TestingCanvas extends React.Component {
     constructor(props) {
@@ -258,6 +260,7 @@ class TestingCanvas extends React.Component {
                     <button onClick={this.sendData} className="test-button">Read This</button>
                     <button className="test-button" onClick={(e) => {e.preventDefault(); this.resetCanvas()}}>Clear Canvas</button>
                       <button onClick={this.download} className="test-button">Download Machine</button>
+                      <button onClick={this.props.openModal} className="test-button">Load Machine</button>
                 </div>
             </div>
         )
@@ -273,7 +276,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     receiveOutputData: (data) => dispatch(receiveOutputData(data)),
-    receiveArrayShapes: (data) => dispatch(receiveArrayShapes(data))
+    receiveArrayShapes: (data) => dispatch(receiveArrayShapes(data)),
+    openModal: () => dispatch(openModal("LoadMachine")),
 })
 
 export default (connect(mapStateToProps, mapDispatchToProps)(TestingCanvas));
