@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Outputs from './outputs';
+import TopOutput from './top_output';
 import * as d3 from "d3";
 import { shuffleData } from '../../tensorflow/data';
 import { resetOutputData } from '../../actions/test_data_actions';
@@ -81,7 +81,7 @@ class OutputContainer extends React.Component {
     }
 
     addLettersToTraining(d){
-        const { arrayShapes} = this.props;
+        const { arrayShapes } = this.props;
         const letters = d.string.split("");
 
         let trainingData = [];
@@ -103,6 +103,7 @@ class OutputContainer extends React.Component {
     handleClick(d) {
         const { net, dumbNet, currentNetwork, resetOutputData } = this.props;
 
+        debugger;
         let trainingData = this.addLettersToTraining(d);
         
         if ( currentNetwork === "trainedNet" ) {
@@ -208,7 +209,12 @@ class OutputContainer extends React.Component {
         // )
 
         return (
-            <div>
+            <div className="output-container">
+                { percentages === undefined || percentages === null ? (
+                    null
+                ) : (
+                    <TopOutput top={percentages[0]} handleClick={this.handleClick.bind(this)} />
+                )}
                 <svg id="svg" ref={node => this.node = node}
                     width={800} height={800}>
                 </svg>

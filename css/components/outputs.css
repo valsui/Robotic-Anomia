@@ -22,3 +22,13 @@ svg {
     color: black;
     font-size: 14px;
 }
+
+.top-output {
+    display: flex;
+    flex-direction: column;
+}
+
+.output-container {
+    display: flex;
+    flex-direction: column;
+}
