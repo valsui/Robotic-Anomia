@@ -147,7 +147,7 @@ class TestingCanvas extends React.Component {
         let outputArray = [];
 
        newArr.forEach((array) => {
-           if ( currentNetwork === "trainedNet" ) { 
+           if ( currentNetwork === "trainedNet" ) {
                outputArray.push(trainedNet.run(array));
            } else if ( currentNetwork === "dumbNet" ) {
                outputArray.push(dumbNet.run(array))
@@ -163,7 +163,7 @@ class TestingCanvas extends React.Component {
 
         this.mousedownFunc = this.mouseDown();
         this.mousemove = this.mouseMove();
-    
+
        window.setTimeout(this.resetCanvas.bind(this), 2000);
        window.setTimeout(() => canvas.addEventListener("mousedown", this.mousedownFunc), 2000);
        window.setTimeout(() => canvas.addEventListener("mousemove", this.mousemove), 2000);
@@ -210,6 +210,7 @@ class TestingCanvas extends React.Component {
     }
 
     render() {
+        console.log("yay");
         return (
             <div className="testing-canvas-div">
                 <div className="testing-canvas-container">
