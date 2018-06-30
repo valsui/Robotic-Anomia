@@ -22,7 +22,7 @@ class TypeWriter extends React.Component {
     const testInfo = document.getElementById('typing-text');
 
     const typeWriter = (text, i, fnCallback) => {
-      if (i < (text.length)) {
+      if (text && i < (text.length)) {
        testInfo.innerHTML = text.substring(0, i+1) +'<span aria-hidden="true"></span>';
         setTimeout(function() {
           typeWriter(text, i + 1, fnCallback)
@@ -40,7 +40,7 @@ class TypeWriter extends React.Component {
           }, 2500);
        }
 
-      if (i < this.dataText[i].length) {
+      if (this.dataText && i < this.dataText[i].length) {
        typeWriter(this.dataText[i], 0, function(){
          StartTextAnimation(i + 1);
        });
