@@ -25,11 +25,13 @@ class TopOutput extends React.Component {
 
         return (
             <div className="top-output">
-                <h1>Robotic Anomia thinks the text reads: {top.string}. Is it correct?</h1>
-                <div>Click on the correct answer, or type the answer here:
+                <p>Robotic Anomia thinks the text reads: {top.string}. Is it correct?</p>
+                <div><p>Click on the correct answer, </p>
+                      <p>or type the answer here:</p>
                     <form onSubmit={(e) => {e.preventDefault(); this.props.handleClick(this.state)}}>
                         <input type="text" value={this.state.string} onChange={this.handleChange} />
-                    </form>
+                        <button> Submit </button>
+                  </form>
                 </div>
             </div>
         )
