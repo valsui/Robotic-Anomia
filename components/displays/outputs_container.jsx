@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import TopOutput from './top_output';
 import * as d3 from "d3";
-import { shuffleData } from '../../javascripts/d3_util';
+import { shuffleData } from '../../javascripts/data_util';
 import { resetOutputData } from '../../actions/test_data_actions';
 
 class OutputContainer extends React.Component {
@@ -18,23 +18,6 @@ class OutputContainer extends React.Component {
 
     componentDidUpdate() {
         this.createOutputD3();
-    }
-
-    shuffleData(data) {
-      let currentIdx = data.length;
-      let tempVal, randomIdx;
-
-      while (0 !== currentIdx) {
-          //Pick random idx
-          randomIdx = Math.floor(Math.random() * currentIdx);
-          currentIdx -= 1;
-
-          //swap with current element
-          tempVal = data[currentIdx];
-          data[currentIdx] = data[randomIdx];
-          data[randomIdx] = tempVal;
-      }
-      return data
     }
 
     createOutputD3() {
@@ -233,19 +216,17 @@ class OutputContainer extends React.Component {
     handleClick(d) {
         const { net, dumbNet, currentNetwork, resetOutputData } = this.props;
 
-        // debugger;
-        let trainingData = this.addLettersToTraining(d);
+        const trainingData = this.addLettersToTraining(d);
+        const shuffledData = shuffleData(trainingData);
 
-        // d3.select(this).transition().duration(200).delay(100).attr('r', 200)
-        
         if ( currentNetwork === "trainedNet" ) {
-            net.trainAsync(trainingData).then(() => {
+            net.trainAsync(shuffledData).then(() => {
                 resetOutputData();
                 console.log("done training!");
                 d3.selectAll("svg > *").remove();
             });
         } else {
-            dumbNet.trainAsync(trainingData).then(() => {
+            dumbNet.trainAsync(shuffledData).then(() => {
                 resetOutputData();
                 console.log("done training dumbnet!");
                 d3.selectAll("svg > *").remove();
