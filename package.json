@@ -2,7 +2,7 @@
   "name": "RoboticAnomia",
   "version": "1.0.0",
   "description": "## Robotic Anomia is a project aiming to use machine learning to analyze text in images, and then simulate what functionality the AI would lose when certain capabilities are taken away.",
-  "main": "public/index.html",
+  "main": "index.js",
   "dependencies": {
     "@tensorflow/tfjs": "^0.11.7",
     "babel-core": "^6.26.3",
