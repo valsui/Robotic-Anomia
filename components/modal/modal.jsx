@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import DevBios from "./dev_bios";
 import DoneTraining from './done_training';
 import Text from './text';
+import LoadMachine from './LoadMachine';
 
 class Modal extends React.Component {
     constructor(props) {
@@ -41,6 +42,9 @@ class Modal extends React.Component {
             case "text":
                 this.component = <Text />
                 break;
+            case "LoadMachine":
+              this.component = <LoadMachine />
+              break; 
             default:
                 return null;
         }
