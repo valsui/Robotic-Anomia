@@ -1,4 +1,5 @@
 import brain from 'brain.js';
+import { machine } from '../public/machine.js';
 
 // This is our trained neural network.  It will be trained using the information stored on test data, which is what we need to train the neural network every time the page loads.
 
@@ -59,7 +60,7 @@ const revertToBox = (dataObject) => {
 }
 //shuffle dataset to input into training model
 
-let rawFile = new XMLHttpRequest();
+// let rawFile = new XMLHttpRequest();
 
 rawFile.open("GET",  "https://raw.githubusercontent.com/valsui/Robotic-Anomia/master/public/machine.txt", true);
 rawFile.onreadystatechange = () => {
