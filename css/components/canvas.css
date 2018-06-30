@@ -1,36 +1,35 @@
 canvas {
-    border: 2px solid rgb(255,255,255,0.3);
+    border: 2px solid rgba(255,255,255,0.3);
     cursor: crosshair !important;
-    background: rgb(255,255,255,0.1);
+    background: rgba(255,255,255,0.1);
     border-radius: 8px;
     -webkit-transition: background 0.4s;
     transition: background 0.4s;
 }
 
 canvas:hover{
-  background: rgb(255,255,255,1);
-  box-shadow: 0vw 0.5vw 1vw rgb(2,12,144,0.4);
+  background: rgba(255,255,255,1);
+  box-shadow: 0vw 0.5vw 1vw rgba(2,12,144,0.4);
 }
 
 .testing-canvas-view-div {
     margin-left: 21vw;
-    width: 100%;
     margin-top: 10vh;
-    height: 65vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
 }
 
 .testing-canvas-div {
     width: 100%;
-    height: 100%;
+    height: 300px;
     display: flex;
     flex-direction: row;
 }
 
 .testing-canvas-container {
     box-sizing: content-box;
-    height: 100%;
+    height: 220px;
     display: block;
 }
 
@@ -38,29 +37,31 @@ canvas:hover{
 
   color: white;
   font-weight: 100;
-  border: 1px solid rgb(2,12,144, 0.4);
-  border-radius: 1.5vw;
-  box-shadow: 0vw 0.15vw 0.2vw rgb(2,12,144, 0.4);
+  border: 1px solid rgba(2,12,144, 0.4);
+  border-radius: 60px;
+  box-shadow: 0vw 0.15vw 0.2vw rgba(2,12,144, 0.4);
   cursor: pointer;
   -webkit-transition: background 0.2s;
   transition: background 0.2s;
   border: 2px solid white;
   width: 12vw;
+  min-width: 180px;
   text-align: center;
 
   height: 3vw;
+  min-height: 50px;
   margin-left: 5vw;
-  margin-top: 80px;
+  margin-top: 25px;
 }
 
 .test-button:hover {
-  background:  rgb(48,178,249,0.6);
+  background:  rgba(48,178,249,0.6);
   box-shadow: 0vw 0.3vw 0.2vw rgb(2,12,144, 0.4);
 }
 
 .training-canvas-view-div {
-  margin-left: 23vw;
-  width: 100%;
+  margin-left:33vw;
+  /* width: 100%; */
   margin-top: 10vh;
   min-height: 200px;
   display: flex;
@@ -91,15 +92,18 @@ canvas:hover{
 
 .training-canvas-div button {
   color: white;
+  font-size: 15px;
   font-weight: 100;
   border: 1px solid rgb(2,12,144, 0.4);
-  border-radius: 1.5vw;
+  border-radius: 60px;
+  min-height: 50px;
   box-shadow: 0vw 0.15vw 0.2vw rgb(2,12,144, 0.4);
   cursor: pointer;
   -webkit-transition: background 0.2s;
   transition: background 0.2s;
   border: 2px solid white;
   width: 12vw;
+  min-width: 180px;
   text-align: center;
 
   height: 3vw;
@@ -117,6 +121,11 @@ canvas:hover{
   box-shadow: 0vw 0.3vw 0.2vw rgb(2,12,144, 0.4);
 }
 
+
+.training-canvas-div form {
+  display: none;
+}
+
 .memory-div{
   margin-left: 6vw;
   box-shadow: 0vw 0.25vw 0.3vw rgb(2,12,144, 0.4);
@@ -124,6 +133,7 @@ canvas:hover{
   padding-top: 10px;
   padding-bottom: 10px;
   width: 20vw;
+  min-width: 320px;
   box-sizing: content-box;
   min-height: 10vw;
   max-height: 85vh;
@@ -141,18 +151,20 @@ canvas:hover{
 .memory-div p {
   margin: 1vw;
   color: white;
-  font-size: 2vw;
+  font-size: 30px;
   font-weight: 100;
   align-items: center;
 }
 
 .memory-div-container{
   /* margin-left: 1.5vw; */
-  width: 20vw;
+  width: 300px;
   align-items: center;
   display: grid;
   grid-template-columns: 33% 33% 33%;
   background-color: rgb(255,255,255,0.1);
+  margin-bottom: 1vw;
+  border-radius: 10px;
 }
 
 .memory-div-container li{
@@ -161,19 +173,35 @@ canvas:hover{
    align-items: center;
 }
 
+.memory-li {
+  position: relative;
+}
+
+.memory-li #talkbubble {
+  position: absolute;
+  display: none;
+  color: white;
+  text-shadow: 0 0 2px rgba(0,0,0,0.3);
+}
+
+.memory-li:hover #talkbubble {
+  display: block;
+}
+
 .memory-li canvas{
   cursor: default !important;
   background-color: white;
-  padding: 20px;
-  margin: 0.7vw;
-  margin-left: 1vw;
+  padding: 0.3vw;
+  margin: 1vw;
   border-radius: 10vw;
-  -webkit-transition: box-shadow 0.2s;
-  transition: box-shadow 0.2s;
+  -webkit-transition: box-shadow 0.1s;
+  transition: box-shadow 0.1s;
 }
 
-.memory-li canvas:hover {
+.memory-li:hover canvas {
   cursor: default !important;
+  background-color: rgba(0,0,0,0.4);
+  border: 2px solid rgba(255,255,255,0);
 }
 
 .testing-canvas-button-container {

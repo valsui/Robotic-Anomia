@@ -30,7 +30,7 @@ class NetworkSelector extends React.Component {
             return (
                 <div className="network-selector-div">
                     <div className="network-selector-container">
-                        <button className="trained-net-button selected-network">Use Our Network</button>
+                        <button className="trained-net-button selected-network">Use Default Network</button>
                         <button className="new-net-button" onClick={this.useNew} >Use Your Own Network</button>
                     </div>
                 </div>
@@ -39,7 +39,7 @@ class NetworkSelector extends React.Component {
             return (
                 <div className="network-selector-div">
                     <div className="network-selector-container">
-                        <button className="trained-net-button" onClick={this.useTrained}>Use Our Network</button>
+                        <button className="trained-net-button" onClick={this.useTrained}>Use Default Network</button>
                         <button className="new-net-button selected-network" >Use Your Own Network</button>
                     </div>
                 </div>

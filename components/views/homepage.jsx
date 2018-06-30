@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { resetCurrentNetwork } from '../../actions/neural_network_actions';
+import TypeWriter from '../displays/typewriter';
 
 class Homepage extends React.Component {
     constructor(props) {
@@ -8,11 +9,17 @@ class Homepage extends React.Component {
 
         this.linkTest = this.linkTest.bind(this);
         this.linkTrain = this.linkTrain.bind(this);
+        this.good = "good";
     }
 
-    // componentDidMount() {
-    //     this.props.resetCurrentNetwork();
-    // }
+    componentDidMount(){
+      let particles = document.getElementById('particles-js');
+      if ( particles.classList.contains('hidden')){
+        particles.classList.remove('hidden');
+      }
+
+      let testInfo = document.getElementById('text-info');
+    }
 
     linkTest() {
         this.props.history.push('/test');
@@ -20,7 +27,8 @@ class Homepage extends React.Component {
 
     linkTrain() {
         this.props.history.push('/train');
-    }
+    };
+
 
     render() {
         return(
@@ -28,14 +36,14 @@ class Homepage extends React.Component {
                 <div className="homepage-content">
                     <div className="homepage-content-center">
                         <div className="text-info">
-        
+                          <TypeWriter />
                         </div>
                         <div className="homepage-button-div">
                             <div className="homepage-button" onClick={this.linkTest}>
-                                Play with Robotic Anomia.
+                                Play with Robotic Anomia
                             </div>
                             <div className="homepage-button" onClick={this.linkTrain}>
-                                Train Robotic Anomia.
+                                Train Robotic Anomia 🧠
                             </div>
                         </div>
                     </div>

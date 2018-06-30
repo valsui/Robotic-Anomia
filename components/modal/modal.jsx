@@ -2,6 +2,8 @@ import React from 'react';
 import { closeModal } from '../../actions/modal_actions';
 import { connect } from 'react-redux';
 import DevBios from "./dev_bios";
+import DoneTraining from './done_training';
+import Text from './text';
 
 class Modal extends React.Component {
     constructor(props) {
@@ -33,13 +35,19 @@ class Modal extends React.Component {
             case "devBios":
                 this.component = <DevBios />;
                 break;
-            default: 
+            case "doneTraining":
+                this.component = <DoneTraining />;
+                break;
+            case "text":
+                this.component = <Text />
+                break;
+            default:
                 return null;
         }
 
-        return ( 
+        return (
             <div id="modal-div" className="modal-background" onClick={closeModal}>
-                <div className="modal-child" onClick={(e) => e.stopPropogation()}>
+                <div className="modal-child" >
                     { this.component }
                 </div>
             </div>
@@ -56,7 +64,3 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Modal);
-
-
-
-

@@ -15,6 +15,10 @@ class TrainingView extends React.Component {
         if (currentNetwork === null || currentNetwork === undefined) {
             selectTrainedNet();
         }
+
+        let particles = document.getElementById('particles-js');
+        if (!particles.classList.contains('hidden')){
+          particles.classList.add('hidden');}
     }
 
     render() {

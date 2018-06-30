@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Outputs from './outputs';
+import TopOutput from './top_output';
 import * as d3 from "d3";
 import { shuffleData } from '../../javascripts/d3_util';
 import { resetOutputData } from '../../actions/test_data_actions';
@@ -18,6 +18,23 @@ class OutputContainer extends React.Component {
 
     componentDidUpdate() {
         this.createOutputD3();
+    }
+
+    shuffleData(data) {
+      let currentIdx = data.length;
+      let tempVal, randomIdx;
+
+      while (0 !== currentIdx) {
+          //Pick random idx
+          randomIdx = Math.floor(Math.random() * currentIdx);
+          currentIdx -= 1;
+
+          //swap with current element
+          tempVal = data[currentIdx];
+          data[currentIdx] = data[randomIdx];
+          data[randomIdx] = tempVal;
+      }
+      return data
     }
 
     createOutputD3() {
@@ -161,6 +178,7 @@ class OutputContainer extends React.Component {
         let radiusScale = d3.scaleSqrt().domain([0, data[0].percent]).range([30, 80]);
         // formats numbers by rounding down. ex 6.2 => 6
         let format = d3.format(",d");
+        const shuffledPercentages = this.shuffleData(percentages);
 
         // the simulation is a collection of forces
         // about where we want our circles to go
@@ -302,7 +320,7 @@ class OutputContainer extends React.Component {
     }
 
     addLettersToTraining(d){
-        const { arrayShapes} = this.props;
+        const { arrayShapes } = this.props;
         const letters = d.string.split("");
 
         let trainingData = [];
@@ -324,6 +342,7 @@ class OutputContainer extends React.Component {
     handleClick(d) {
         const { net, dumbNet, currentNetwork, resetOutputData } = this.props;
 
+        debugger;
         let trainingData = this.addLettersToTraining(d);
 
         // d3.select(this).transition().duration(200).delay(100).attr('r', 200)
@@ -348,7 +367,7 @@ class OutputContainer extends React.Component {
         const { outputs } = this.props;
         // console.log(outputs);
 
-        let outputArray = outputs.map (( output ) => { 
+        let outputArray = outputs.map (( output ) => {
             let subArray = [];
 
             // adds all the key value pairs as nested arrays
@@ -360,7 +379,7 @@ class OutputContainer extends React.Component {
 
             // returns only the top three values for each canvas character
             return subArray.slice(0,3);
-        }) 
+        })
 
         // outputArray = [["a", .99], ["b", .98]]
        return outputArray;
@@ -431,7 +450,13 @@ class OutputContainer extends React.Component {
         // )
 
         return (
-            <div className = 'chart'>
+            <div className="output-container">
+                { percentages === undefined || percentages === null ? (
+                    null
+                ) : (
+                    <TopOutput top={percentages[0]} handleClick={this.handleClick.bind(this)} />
+                )}
+                <div className = 'chart'></div>
             </div>
         )
     }

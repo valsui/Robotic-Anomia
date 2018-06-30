@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createArray, doSimulationStep, reduce, download, outOfBounds } from '../../javascripts/canvas_utils';
 import { receiveTestData, resetTestData } from '../../actions/test_data_actions';
+import { openModal, receiveText } from '../../actions/modal_actions';
 
 class TrainingCanvas extends React.Component {
     constructor(props) {
@@ -18,6 +19,7 @@ class TrainingCanvas extends React.Component {
         this.changeLetter = this.changeLetter.bind(this);
         this.trainData = this.trainData.bind(this);
         this.downloadData = this.downloadData.bind(this);
+        this.handleScroll = this.handleScroll.bind(this);
     }
 
     componentDidMount() {
@@ -124,19 +126,25 @@ class TrainingCanvas extends React.Component {
         let tempArray = reduce(newArray)[0];
         let newArr = [];
         let consoleLogArray = []
+
+        if ( tempArray === undefined ) {
+            this.props.receiveText("Please draw something on the canvas.")
+            return;
+        }
+
         tempArray = tempArray.array;
 
         for ( let i = 0; i < tempArray.length; i++ ) {
              newArr = newArr.concat(tempArray[i].slice(0,25));
              consoleLogArray.push(tempArray[i].slice(0,25))
         }
-        
+
         let data = { [this.state.counter]: { input: newArr, output: {[this.state.letter]: 1} } }
 
         this.setState({
             counter: this.state.counter + 1
         })
-        
+
         this.props.receiveTestData(data);
         this.resetCanvas();
     }
@@ -150,10 +158,14 @@ class TrainingCanvas extends React.Component {
     }
 
     changeLetter(e) {
-        e.preventDefault();
-
+        // e.preventDefault();
+        // return (e) => {
+        //   this.setState({
+        //     letter: letter
+        //   })
+        // }
         this.setState({
-            letter: e.currentTarget.value
+          letter: e.target.value
         })
     }
 
@@ -172,30 +184,53 @@ class TrainingCanvas extends React.Component {
     trainData(e) {
         e.preventDefault();
 
-        if ( this.props.currentNetwork === "trainedNet" ) {
-            debugger
-            this.props.trainedNet.trainAsync(this.props.data).then( () => {
-                console.log("done tarining!")
-            })
+        if ( this.props.data.length === 0 ) {
+            this.props.receiveText("Please enter at least one data set.")
         } else {
-            this.props.dumbNet.trainAsync(this.props.data).then( () => {
-                console.log("doneeeee");
-            })
+            if (this.props.currentNetwork === "trainedNet") {
+                this.props.trainedNet.trainAsync(this.props.data).then(() => {
+                    this.props.openModal("doneTraining");
+                })
+            } else {
+                this.props.dumbNet.trainAsync(this.props.data).then(() => {
+                    this.props.openModal("doneTraining");
+                })
+            }
+            this.props.resetTestData();
         }
-        
         this.props.resetTestData();
     }
 
+    handleScroll(e){
+      // console.log(e.target.scrollTop);
+      console.log(Math.floor(e.target.scrollTop));
+      let scrollY = e.target.scrollTop;
+      // this part is to make it slightly more fluid
+      // let idx = Math.floor(scrollY / 29);
+      // let bias = Math.floor(idx / 6);
+      // idx = idx - bias;
+      let idx = Math.floor(scrollY / 35);
+      let letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+      let letter = letters[idx];
+      if(this.state.letter !== letter){
+        this.setState({
+          letter: letter
+        })
+      }
+    }
+
     render() {
+        // let letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' ', ' '];
         return (
             <div className="training-canvas-div">
-              <input onChange={this.changeLetter} value={this.state.letter} />
+                <input onChange={this.changeLetter} value={this.state.letter} />
                 <canvas ref="trainingCanvas" width={200} height={200} />
+
                 <button onClick={this.sendData}>Add to Memory</button>
                 <button onClick={(e) => {e.preventDefault(); this.resetCanvas()}}>Clear Canvas</button>
                 <button onClick={this.trainData}>Train Network</button>
                 <form>
-                    <button onClick={this.downloadData}>Download Data</button>
+                    <button onClick={this.trainData}>Download Data</button>
                     <input id="filename" type="text" name="name" value="data.txt"/>
                     <input id="download" type="submit" />
                 </form>
@@ -213,7 +248,32 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     receiveTestData: (data) => dispatch(receiveTestData(data)),
-    resetTestData: () => dispatch(resetTestData())
+    resetTestData: () => dispatch(resetTestData()),
+    openModal: (modal) => dispatch(openModal(modal)),
+    receiveText: (text) => dispatch(receiveText(text))
 })
 
 export default (connect(mapStateToProps, mapDispatchToProps)(TrainingCanvas));
+
+// <div className="hide-scroll">
+// <div className="scrollable" onScroll={this.handleScroll}>
+//   <ul>
+//     {
+//       letters.map( (letter, idx) => {
+//         if(this.state.letter === letter){
+//           return(
+//             <div className='selected select-letter' key={idx}>
+//               <li onClick={this.changeLetter(letter)}>{letter}</li>
+//             </div>
+//           )
+//         }else{
+//           return(
+//             <div className='select-letter' key={idx}>
+//             </div>
+//           )
+//         }
+//       })
+//     }
+//   </ul>
+// </div>
+// </div>

@@ -4,7 +4,7 @@ module.exports = {
     context: __dirname,
     entry: ['babel-polyfill',"./robotic_anomia.jsx"],
     output: {
-        path: path.resolve(__dirname),
+        path: path.resolve(__dirname, 'public'),
         filename: "bundle.js"
     },
     module: {
