@@ -183,7 +183,7 @@ class TestingCanvas extends React.Component {
         this.mousedownFunc = this.mouseDown();
         this.mousemove = this.mouseMove();
 
-       window.setTimeout(this.resetCanvas.bind(this), 2000);
+       window.setTimeout(this.resetCanvas.bind(this), 10000);
        window.setTimeout(() => canvas.addEventListener("mousedown", this.mousedownFunc), 2000);
        window.setTimeout(() => canvas.addEventListener("mousemove", this.mousemove), 2000);
     }

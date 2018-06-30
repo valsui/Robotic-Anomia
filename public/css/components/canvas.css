@@ -25,6 +25,7 @@ canvas:hover{
     height: 100%;
     display: flex;
     flex-direction: row;
+    margin-bottom: 20px;
 }
 
 .testing-canvas-container {
@@ -123,7 +124,7 @@ canvas:hover{
 
 
 .training-canvas-div form {
-  /* display: none; */
+  display: none;
 }
 
 .memory-div{

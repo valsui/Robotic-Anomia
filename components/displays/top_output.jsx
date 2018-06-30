@@ -25,8 +25,8 @@ class TopOutput extends React.Component {
 
         return (
             <div className="top-output">
-                <h1>Robotic Anomia thinks the text reads: {top.string}. Were we correct?</h1>
-                <div>Click on the correct answer, or write the correct string here:
+                <h1>Robotic Anomia thinks the text reads: {top.string}. Is it correct?</h1>
+                <div>Click on the correct answer, or type the answer here:
                     <form onSubmit={(e) => {e.preventDefault(); this.props.handleClick(this.state)}}>
                         <input type="text" value={this.state.string} onChange={this.handleChange} />
                     </form>
@@ -45,4 +45,3 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(null, mapDispatchToProps)(TopOutput);
-

@@ -179,6 +179,7 @@ canvas:hover{
 
 .memory-li #talkbubble {
   font-weight: 100;
+  font-size: 12px;
   position: absolute;
   display: none;
   color: white;

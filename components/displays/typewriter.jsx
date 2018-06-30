@@ -35,13 +35,13 @@ class TypeWriter extends React.Component {
     }
 
      const StartTextAnimation = (i) => {
-       if (typeof dataText[i] == 'undefined'){
+       if (!dataText[i]){
           setTimeout(function() {
             StartTextAnimation(0);
           }, 2500);
        }
 
-      if (dataText && i < dataText[i].length) {
+      if (dataText[i] && i < dataText[i].length) {
        typeWriter(dataText[i], 0, function(){
          StartTextAnimation(i + 1);
        });
