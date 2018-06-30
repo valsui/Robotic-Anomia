@@ -178,7 +178,7 @@ class OutputContainer extends React.Component {
         let radiusScale = d3.scaleSqrt().domain([0, data[0].percent]).range([30, 80]);
         // formats numbers by rounding down. ex 6.2 => 6
         let format = d3.format(",d");
-        const shuffledPercentages = this.shuffleData(percentages);
+        // const shuffledPercentages = this.shuffleData(percentages);
 
         // the simulation is a collection of forces
         // about where we want our circles to go

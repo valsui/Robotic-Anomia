@@ -59,7 +59,7 @@ const revertToBox = (dataObject) => {
 }
 //shuffle dataset to input into training model
 
-// let rawFile = new XMLHttpRequest();
+let rawFile = new XMLHttpRequest();
 
 rawFile.open("GET",  "https://raw.githubusercontent.com/valsui/Robotic-Anomia/master/public/machine.txt", true);
 rawFile.onreadystatechange = () => {
