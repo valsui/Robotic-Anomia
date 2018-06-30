@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import TopOutput from './top_output';
 import * as d3 from "d3";
+import { shuffleData } from '../../javascripts/d3_util';
 import { resetOutputData } from '../../actions/test_data_actions';
 
 class OutputContainer extends React.Component {
@@ -37,63 +38,176 @@ class OutputContainer extends React.Component {
     }
 
     createOutputD3() {
-        const node = this.node;
+        //node data
         const words = this.getPercentages();
-        const percentages = this.parsePercentages(words);
-
-        if ( percentages === null ) {
+        const data = this.parsePercentages(words);
+        
+        if ( data === null ) {
             return;
         }
+        const dataLength = data.length;
 
-        const radiusScale = d3.scaleSqrt().domain([0, percentages[0].percent]).range([20,70]);
+        // //link data
+        const links = this.addLinks(dataLength);
+        
+        // let dataPoints = data.top;
+        let graphSelection = d3.select(".chart")
+        let width = 800;
+        let height = 800;
 
-        const shuffledPercentages = this.shuffleData(percentages);
+        // let color = d3.scaleOrdinal(d3.schemeCategory10); 
+        // let color = d3.scaleLinear()
+        //     .domain([0, data[0].percent])
+        //     .range(['#C6FFDD', '#FBD786', '#f7797d', '#d9a7c7','#89253e']);
+        
+        //remove all elements from svg
+        d3.selectAll("svg").remove();
 
-        d3.selectAll("svg > *").remove();
-
-        const svg = d3.selectAll("svg")
+        // selects the "graph" div on the html page and appends a svg container
+        let svgContainer = graphSelection
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height)
             .append("g")
+            .attr("transform", "translate(0,0)");
 
-        const circle = svg.selectAll("circle")
-            .data(shuffledPercentages)
+        //radius scale
+        let radiusScale = d3.scaleSqrt().domain([0, data[0].percent]).range([30, 90]);
+        // formats numbers by rounding down. ex 6.2 => 6
+        let format = d3.format(",d");
+        //shuffle data
+        const shuffledData = shuffleData(data);
 
+        // the simulation is a collection of forces
+        // about where we want our circles to go
+        // and how we want our circles to interact
 
-        const g = circle.enter().append("g")
-            g.append("circle")
-            .attr('r', (d) => radiusScale(d.percent))
-            .attr('class', 'node')
-            .style('fill', 'white')
-            .style('stroke-width', '5px')
-            .style('stroke', "blue")
+        let forceXCombine = d3.forceX(width / 2).strength(0.05);
 
-        g.append("text")
-            .text((d) => d.string)
-            .attr('y', (d) => d.y)
-            .attr('x', (d) => d.x)
+        let forceY = d3.forceY(function (d) {
+            return height / 2;
+        }).strength(0.1); 
 
+        let forceCollide = d3.forceCollide(function (d) {
+            return radiusScale(d.percent) + 10;
+        })
 
+        let simulation = d3.forceSimulation()
+            .force("x", forceXCombine)
+            .force("y", forceY)
+            .force("collide", forceCollide)
+            .force('charge', d3.forceManyBody().strength(-20))
+        
+        // //draw lines for nodelinks
+        const nodeLinks = svgContainer.selectAll('line')
+            .data(links)
+            .enter()
+            .append('line')
+            .style("stroke", "lightgrey")
+            .style('stroke-opacity', 0.9)
 
-        g.on('click', (d) => this.handleClick(d))
+        //draw circles
+        let circles = svgContainer.selectAll(".node")
+            .data(shuffledData)
+            .enter().append("circle")
+            .attr("class", "output")
+            .attr("r", function (d) {
+                return radiusScale(d.percent);
+            })
+            .attr("fill", function (d) {
+                // return color(d.percent);
+                return 'white';
+            })
+            .style('stroke', 'blue')
+            .style('stroke-width', 5)
+            .on('click', (d) => {
+                    // let mouseNode = d3.select(this)
+                    // console.log('click', mouseNode);
+                    return this.handleClick(d);
+                }
+            )
+            .on("mouseenter", function (d) {
+                // d3.selectAll("circle").style('opacity', 0.3);
+                let mouseNode = d3.select(this)
+                    console.log('mouseover', mouseNode);
+                    mouseNode.style('opacity', 0.5)
+                // mouseNode.style('opacity', 1)
+                    mouseNode.transition().duration(200).delay(100).attr('r', 200);
+                    mouseNode.style('stroke-width', 5)
+                // d3.selectAll("text").attr("visibility", "hidden")
 
-        const width = 800;
-        const height = 800;
-        const simulation = d3.forceSimulation()
-            .force("x", d3.forceX(width/2).strength(.005))
-            .force("y", d3.forceY(height/2).strength(.01))
-            .force("center", d3.forceCenter().x(width * .5).y(height * .5))
-            .force("charge", d3.forceManyBody().strength(-15))
-            .force("collide", d3.forceCollide((d) => radiusScale(d.percent)+ 5).strength(.5))
-
-
-        simulation
-            .nodes(shuffledPercentages)
-            .on("tick", () => {
-                g
-                .attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
+            })
+            .on('mouseleave', function (d) {
+                d3.select(this).transition().duration(200).delay(0).attr('r', function (d) {
+                    return radiusScale(d.percent);
+                });
+                d3.select(this).style('stroke-width', 1);
+                d3.select(this).style('opacity', 1);
+                // d3.selectAll("text").attr("visibility", "visible");
 
             });
 
 
+        let texts = svgContainer.selectAll(null)
+            .data(shuffledData)
+            .enter()
+            .append("g")
+
+        texts.append("text")
+            .attr("text-anchor", "middle")
+            .text((d) => {
+                return d.string
+            })
+
+        simulation
+            .nodes(shuffledData)
+            .force('link', d3.forceLink().links(links).distance(100))
+            .on('tick', ticked);
+
+
+        function ticked() {
+
+            //redraw link while it moves
+            nodeLinks
+                .attr('x1', function (d) {
+                    return d.source.x 
+                })    
+                .attr('y1', function (d) {
+                    return d.source.y 
+                })
+                .attr('x2', function (d) {
+                    return d.target.x 
+                })
+                .attr('y2', function (d) {
+                    return d.target.y 
+                })
+
+            circles
+                .attr("cx", function (d) {
+                    return d.x;
+                })
+                .attr("cy", function (d) {
+                    return d.y;
+                })
+
+            texts.attr("transform", function (d) {
+                return "translate(" + d.x + "," + d.y + ")"
+            })
+        }
+         
+    }
+
+    addLinks(length){
+        const links = [];
+        for( let i = 0; i < length - 1; i++){
+            for( let j = i + 1; j < length; j++){
+                let temp = {};
+                temp['source'] = i;
+                temp['target'] = j; 
+                links.push(temp);
+            }
+        }
+        return links;
     }
 
     addLettersToTraining(d){
@@ -119,9 +233,11 @@ class OutputContainer extends React.Component {
     handleClick(d) {
         const { net, dumbNet, currentNetwork, resetOutputData } = this.props;
 
-        debugger;
+        // debugger;
         let trainingData = this.addLettersToTraining(d);
 
+        // d3.select(this).transition().duration(200).delay(100).attr('r', 200)
+        
         if ( currentNetwork === "trainedNet" ) {
             net.trainAsync(trainingData).then(() => {
                 resetOutputData();
@@ -231,9 +347,7 @@ class OutputContainer extends React.Component {
                 ) : (
                     <TopOutput top={percentages[0]} handleClick={this.handleClick.bind(this)} />
                 )}
-                <svg id="svg" ref={node => this.node = node}
-                    width={800} height={800}>
-                </svg>
+                <div className = 'chart'></div>
             </div>
         )
     }

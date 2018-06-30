@@ -22,7 +22,7 @@ canvas:hover{
 
 .testing-canvas-div {
     width: 100%;
-    height: 300px;
+    height: 250px;
     display: flex;
     flex-direction: row;
 }
@@ -207,4 +207,8 @@ canvas:hover{
 .testing-canvas-button-container {
   display: flex;
   flex-direction: column;
+}
+
+.svgContainer {
+  height: 100%;
 }

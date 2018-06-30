@@ -35,7 +35,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack -d -w",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "postinstall": "webpack"
   },
   "repository": {
     "type": "git",
