@@ -15,3 +15,16 @@ svg {
     color: black;
     font-size: 14px;
 }
+<<<<<<< HEAD:css/components/outputs.css
+
+.top-output {
+    display: flex;
+    flex-direction: column;
+}
+
+.output-container {
+    display: flex;
+    flex-direction: column;
+}
+=======
+>>>>>>> f5918573aa05b129365b2ef3ca4f75507fe60742:public/css/components/outputs.css
