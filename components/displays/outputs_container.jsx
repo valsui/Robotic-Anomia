@@ -53,7 +53,7 @@ class OutputContainer extends React.Component {
         // let dataPoints = data.top;
         let graphSelection = d3.select(".chart")
         let width = 1050;
-        let height = 800;
+        let height = 600;
 
         // let color = d3.scaleOrdinal(d3.schemeCategory10);
         // let color = d3.scaleLinear()
@@ -72,7 +72,7 @@ class OutputContainer extends React.Component {
             .attr("transform", "translate(0,0)");
 
         //radius scale
-        let radiusScale = d3.scaleSqrt().domain([0, data[0].percent]).range([10, 90]);
+        let radiusScale = d3.scaleSqrt().domain([0, data[0].percent]).range([10,65]);
         // formats numbers by rounding down. ex 6.2 => 6
         let format = d3.format(",d");
         //shuffle data
@@ -104,7 +104,6 @@ class OutputContainer extends React.Component {
             .enter()
             .append('line')
             .style("stroke", "lightgrey")
-            .style('stroke-opacity', 0.9)
 
         //draw circles
         let circles = svgContainer.selectAll(".node")
@@ -118,8 +117,7 @@ class OutputContainer extends React.Component {
                 // return color(d.percent);
                 return 'white';
             })
-            .style('stroke', 'blue')
-            .style('stroke-width', 5)
+            
             .on('click', (d) => {
                     // let mouseNode = d3.select(this)
                     // console.log('click', mouseNode);
@@ -130,9 +128,9 @@ class OutputContainer extends React.Component {
                 // d3.selectAll("circle").style('opacity', 0.3);
                 let mouseNode = d3.select(this)
                     console.log('mouseover', mouseNode);
-                    mouseNode.style('opacity', 0.5)
+                    mouseNode.style('opacity', 1)
                 // mouseNode.style('opacity', 1)
-                    mouseNode.transition().duration(200).delay(100).attr('r', 120);
+                    mouseNode.transition().duration(200).delay(100).attr('r', 80);
                     mouseNode.style('stroke-width', 5)
                 // d3.selectAll("text").attr("visibility", "hidden")
 
@@ -158,7 +156,7 @@ class OutputContainer extends React.Component {
             .text((d) => {
                 return d.string
             })
-            .style("fill","red")
+            .style("fill","black")
 
         simulation
             .nodes(shuffledData)

@@ -10,6 +10,7 @@
 
 svg {
     z-index: 2;
+    border: 2px solid white;
 }
 
 .chart {
@@ -23,7 +24,6 @@ svg {
 .top-output {
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
     color: white;
     font-weight: 100;
 }

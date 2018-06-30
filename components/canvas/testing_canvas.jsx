@@ -257,7 +257,7 @@ class TestingCanvas extends React.Component {
                     <canvas ref="testingCanvas" width={800} height={200} />
                 </div>
                 <div className="testing-canvas-button-container">
-                    <button onClick={this.sendData} className="test-button">Read This</button>
+                    <button onClick={this.sendData} className="test-button" id="read">Read This</button>
                     <button className="test-button" onClick={(e) => {e.preventDefault(); this.resetCanvas()}}>Clear Canvas</button>
                       <button onClick={this.download} className="test-button">Download Machine</button>
                       <button onClick={this.props.openModal} className="test-button">Load Machine</button>
