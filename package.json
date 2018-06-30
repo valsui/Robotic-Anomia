@@ -2,7 +2,7 @@
   "name": "RoboticAnomia",
   "version": "1.0.0",
   "description": "## Robotic Anomia is a project aiming to use machine learning to analyze text in images, and then simulate what functionality the AI would lose when certain capabilities are taken away.",
-  "main": "index.js",
+  "main": "public/index.html",
   "dependencies": {
     "@tensorflow/tfjs": "^0.11.7",
     "babel-core": "^6.26.3",
@@ -35,7 +35,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack -d -w",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "postinstall": "webpack"
   },
   "repository": {
     "type": "git",
