@@ -5,6 +5,8 @@ import DevBios from "./dev_bios";
 import DoneTraining from './done_training';
 import Text from './text';
 import LoadMachine from './LoadMachine';
+import TrainingInfo from './TrainingInfo';
+import TestingInfo from './TestingInfo';
 
 class Modal extends React.Component {
     constructor(props) {
@@ -43,8 +45,15 @@ class Modal extends React.Component {
                 this.component = <Text />
                 break;
             case "LoadMachine":
-              this.component = <LoadMachine />
-              break; 
+                this.component = <LoadMachine />
+                break; 
+            case "trainingInfo":
+                this.component = <TrainingInfo />
+                break;
+            case "testingInfo":
+                this.component = <TestingInfo />
+                break;
+
             default:
                 return null;
         }
