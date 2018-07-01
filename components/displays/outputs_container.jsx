@@ -109,7 +109,6 @@ class OutputContainer extends React.Component {
             )
             .on("mouseenter", function (d) {
                 let mouseNode = d3.select(this)
-                    console.log('mouseover', mouseNode);
                     mouseNode.style('fill', 'rgba(255,255,255,0.9)')
                 // mouseNode.style('opacity', 1)
                     mouseNode.transition().duration(100).delay(50).attr('r', 72);
