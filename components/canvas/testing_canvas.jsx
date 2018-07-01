@@ -264,17 +264,17 @@ class TestingCanvas extends React.Component {
         //   createMachine(JSON.stringify(data));
         // }
         return (
-            <div className="testing-canvas-div">          
+            <div className="testing-canvas-div">
                 <div className="testing-canvas-container">
                     <canvas ref="testingCanvas" width={800} height={200} />
                 </div>
                 <div className="testing-canvas-button-container">
                     <button onClick={this.sendData} className="test-button" id="read">Read This</button>
                     <button className="test-button" onClick={(e) => {e.preventDefault(); this.resetCanvas()}}>Clear Canvas</button>
-                      <button onClick={this.download} className="test-button">Download Machine</button>
-                      <i className="far fa-question-circle download-info" onClick = {this.displayDownloadInfo}></i>
-                      <button onClick={this.props.openModal} className="test-button">Load Machine</button>
-                      <i className="far fa-question-circle load-info" onClick = {this.displayLoadInfo}></i>
+                      <button onClick={this.download} className="test-button" id="DL">Download Machine</button>
+                      <i className="far fa-question-circle download-info" id="question-mark1" onClick = {this.displayDownloadInfo}></i>
+                      <button onClick={this.props.openModal} className="test-button" id="LM">Load Machine</button>
+                      <i className="far fa-question-circle load-info" id="question-mark2" onClick = {this.displayLoadInfo}></i>
                 </div>
             </div>
         )

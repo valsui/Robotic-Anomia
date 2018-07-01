@@ -25,7 +25,7 @@ class TestingView extends React.Component {
             <div className="testing-canvas-view-div">
                 <TestingCanvas />
                 { this.props.arrayShapes.length === 0 ? (
-                    <h1> Please space out your letters and write in lower case. </h1>
+                    <h1 className="reminder"> Please space out your letters and write in lower case on the canvas above. </h1>
                 ) : ( <OutputContainer /> ) }
             </div>
         )

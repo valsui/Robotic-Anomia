@@ -63,11 +63,11 @@ class OutputContainer extends React.Component {
         // about where we want our circles to go
         // and how we want our circles to interact
 
-        let forceXCombine = d3.forceX(width / 2).strength(0.05);
+        let forceXCombine = d3.forceX(width / 2).strength(0.14);
 
         let forceY = d3.forceY(function (d) {
-            return 560 / 1.73;
-        }).strength(0.07);
+            return (height + 10) / 2;
+        }).strength(0.1);
 
         let forceCollide = d3.forceCollide(function (d) {
             return radiusScale(d.percent) + 10;

@@ -23,9 +23,11 @@ class TrainingInfo extends React.Component {
     displayInstructions(){
         return(
             <div onClick = {(e) => e.stopPropagation()}>
-                <div>Instructions</div>
-                
-                <div onClick = {this.displayMoreInfo}>learn more</div>
+                <div >
+                  <h1>Instructions</h1>
+                </div>
+
+                <div onClick = {this.displayMoreInfo} className = "learn-more">Next Tip</div>
             </div>
         )
     }
@@ -42,12 +44,12 @@ class TrainingInfo extends React.Component {
 
     render() {
         return (
-            <div>
+            <div class="training-modal">
                 {this.state.moreInfo ? this.displayLearning() : this.displayInstructions()}
             </div>
         )
     }
-    
+
 }
 
 export default TrainingInfo;
