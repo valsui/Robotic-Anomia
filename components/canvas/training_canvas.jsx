@@ -115,7 +115,7 @@ class TrainingCanvas extends React.Component {
         e.preventDefault();
 
         if ( this.state.letter.length < 1 ) {
-            console.log("please enter one letter");
+            this.props.receiveText("Please enter a letter.")
             return;
         } else if ( this.state.letter.length > 1 ) {
             console.log("please only enter one letter");
@@ -164,9 +164,15 @@ class TrainingCanvas extends React.Component {
         //     letter: letter
         //   })
         // }
-        this.setState({
-          letter: e.target.value
-        })
+        let letters = ['', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+
+        if ( letters.indexOf(e.target.value) !== -1 ) {
+            this.setState({
+                letter: e.target.value
+            })
+        } else {
+            this.props.receiveText("Please enter a single lower-case letter.")
+        }  
     }
 
     downloadData(e) {
