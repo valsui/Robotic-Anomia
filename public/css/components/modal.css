@@ -32,6 +32,7 @@
   font-weight: 100;
 
   width: 540px;
+  /* height: 200px; */
   height: 370px;
   border: 2px solid rgba(255,255,255,0.5);
   background-color: rgba(13, 101, 241, 0.9);
@@ -71,7 +72,8 @@
 
 .dev-bios-container #train-message  {
   width: 540px;
-  height: 370px;
+  /* height: 370px; */
+  height: 200px;
   border: 2px solid rgba(255,255,255,0.5);
   background-color: rgba(13, 101, 241, 0.9);
   box-shadow: 0px 10px 10px rgba(0,0,0,0.1);
@@ -122,4 +124,56 @@
 .done-training-container button:hover{
   background:  rgba(48,178,249,0.6);
   box-shadow: 0vw 0.3vw 0.2vw rgba(2,12,144, 0.4);
+}
+
+#load-machine {
+  font-size: 12px;
+  color: white;
+  border-radius: 10px;
+  border: 2 solid rgb(255,255,255, 0.3);
+  height: 450px;
+  width: 600px;
+  background-color: rgb(0,0,0,0.4);
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  font-weight: 100;
+
+  width: 540px;
+  height: 150px;
+  /* height: 370px; */
+  border: 2px solid rgba(255,255,255,0.5);
+  background-color: rgba(13, 101, 241, 0.9);
+  box-shadow: 0px 10px 10px rgba(0,0,0,0.2);
+}
+
+
+#load-machine input {
+  height: 35px;
+  width: 90%;
+  margin-bottom: 2vw;
+  border-radius: 8px;
+  border: 2px solid rgba(255,255,255,0.4);
+  text-align: center;
+  color: white;
+  font-size: 15px;
+}
+
+.load-button {
+  margin: auto;
+  color: white;
+  font-size: 15px;
+  font-weight: 100;
+  border: 1px solid rgb(2,12,144, 0.4);
+  border-radius: 60px;
+  box-shadow: 0vw 0.15vw 0.2vw rgb(2,12,144, 0.4);
+  cursor: pointer;
+  -webkit-transition: background 0.2s;
+  transition: background 0.2s;
+  border: 2px solid white;
+  width: 140px;
+  text-align: center;
+  min-height: 40px !important;
 }

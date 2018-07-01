@@ -185,9 +185,7 @@ class TestingCanvas extends React.Component {
         this.mousedownFunc = this.mouseDown();
         this.mousemove = this.mouseMove();
 
-       window.setTimeout(this.resetCanvas.bind(this), 10000);
-       window.setTimeout(() => canvas.addEventListener("mousedown", this.mousedownFunc), 2000);
-       window.setTimeout(() => canvas.addEventListener("mousemove", this.mousemove), 2000);
+       // window.setTimeout(this.resetCanvas.bind(this), 10000);
     }
 
     matrixify() {
@@ -228,6 +226,8 @@ class TestingCanvas extends React.Component {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         this.array = this.createArray();
         // d3.selectAll("svg > *").remove();
+        window.setTimeout(() => canvas.addEventListener("mousedown", this.mousedownFunc), 10);
+        window.setTimeout(() => canvas.addEventListener("mousemove", this.mousemove), 10);
     }
 
     download(){

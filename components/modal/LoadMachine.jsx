@@ -42,14 +42,15 @@ class LoadMachine extends React.Component {
 
     render() {
         return (
-            <div className="dev-bios-container" id="train-message" onClick={(e) => e.stopPropagation()}>
+            <div className="dev-bios-container" id="load-machine" onClick={(e) => e.stopPropagation()}>
                 <div className="dev-bios-text">
                     Copy and paste the information in your machines.txt file and input it below!
+                    <br/>
                     <br/>
                 <input className="machine-input" type="text" maxLength="unlimited" value={this.state.input} onChange={this.handleInput}>
                 </input>
                 </div>
-                <button onClick={this.handleSubmit}> Submit </button>
+                <button onClick={this.handleSubmit} class = "load-button"> Load </button>
             </div>
         )
     }

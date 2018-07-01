@@ -20,31 +20,17 @@ class OutputContainer extends React.Component {
         this.createOutputD3();
     }
 
-    shuffleData(data) {
-      let currentIdx = data.length;
-      let tempVal, randomIdx;
-
-      while (0 !== currentIdx) {
-          //Pick random idx
-          randomIdx = Math.floor(Math.random() * currentIdx);
-          currentIdx -= 1;
-
-          //swap with current element
-          tempVal = data[currentIdx];
-          data[currentIdx] = data[randomIdx];
-          data[randomIdx] = tempVal;
-      }
-      return data
-    }
-
     createOutputD3() {
         //node data
         const words = this.getPercentages();
-        const data = this.parsePercentages(words);
+        let data = this.parsePercentages(words);
 
         if ( data === null ) {
             return;
         }
+
+          // data = data.slice(0,9);
+
         const dataLength = data.length;
 
         // //link data
@@ -52,15 +38,10 @@ class OutputContainer extends React.Component {
 
         // let dataPoints = data.top;
         let graphSelection = d3.select(".chart")
-        let width = 1050;
+        let width = 850;
         let height = 600;
 
-        // let color = d3.scaleOrdinal(d3.schemeCategory10);
-        // let color = d3.scaleLinear()
-        //     .domain([0, data[0].percent])
-        //     .range(['#C6FFDD', '#FBD786', '#f7797d', '#d9a7c7','#89253e']);
 
-        //remove all elements from svg
         d3.selectAll("svg").remove();
 
         // selects the "graph" div on the html page and appends a svg container
@@ -85,7 +66,7 @@ class OutputContainer extends React.Component {
         let forceXCombine = d3.forceX(width / 2).strength(0.05);
 
         let forceY = d3.forceY(function (d) {
-            return height / 2;
+            return 560 / 1.73;
         }).strength(0.05);
 
         let forceCollide = d3.forceCollide(function (d) {
@@ -103,7 +84,7 @@ class OutputContainer extends React.Component {
             .data(links)
             .enter()
             .append('line')
-            .style("stroke", "lightgrey")
+            // .style("stroke", "lightgrey")
 
         //draw circles
         let circles = svgContainer.selectAll(".node")
@@ -114,35 +95,28 @@ class OutputContainer extends React.Component {
                 return radiusScale(d.percent);
             })
             .attr("fill", function (d) {
-                // return color(d.percent);
-                return 'white';
+                return 'rgba(255,255,255,0.5)';
             })
-            
+
             .on('click', (d) => {
-                    // let mouseNode = d3.select(this)
-                    // console.log('click', mouseNode);
                     return this.handleClick(d);
                 }
             )
             .on("mouseenter", function (d) {
-                // d3.selectAll("circle").style('opacity', 0.3);
                 let mouseNode = d3.select(this)
                     console.log('mouseover', mouseNode);
-                    mouseNode.style('opacity', 1)
+                    mouseNode.style('fill', 'rgba(255,255,255,0.9)')
                 // mouseNode.style('opacity', 1)
-                    mouseNode.transition().duration(200).delay(100).attr('r', 80);
-                    mouseNode.style('stroke-width', 5)
-                // d3.selectAll("text").attr("visibility", "hidden")
-
+                    mouseNode.transition().duration(100).delay(50).attr('r', 72);
+                    mouseNode.attr('id','hover-node')
+                    // mouseNode.select('text')
             })
-            .on('mouseleave', function (d) {
-                d3.select(this).transition().duration(200).delay(0).attr('r', function (d) {
-                    return radiusScale(d.percent);
-                });
-                d3.select(this).style('stroke-width', 1);
-                d3.select(this).style('opacity', 1);
-                // d3.selectAll("text").attr("visibility", "visible");
 
+            .on('mouseleave', function (d) {
+              let mouseNode = d3.select(this)
+                  mouseNode.transition().duration(200).delay(0).attr('r', function (d) {
+                      return radiusScale(d.percent);
+                  }).style('fill', 'rgba(255,255,255,0.5)');
             });
 
 
@@ -150,13 +124,14 @@ class OutputContainer extends React.Component {
             .data(shuffledData)
             .enter()
             .append("g")
+            .attr("class", "output-text")
 
         texts.append("text")
             .attr("text-anchor", "middle")
             .text((d) => {
                 return d.string
             })
-            .style("fill","black")
+            .style("fill","rgb(11,93,228)")
 
         simulation
             .nodes(shuffledData)
@@ -235,7 +210,6 @@ class OutputContainer extends React.Component {
         // debugger;
         let trainingData = this.addLettersToTraining(d);
 
-        // d3.select(this).transition().duration(200).delay(100).attr('r', 200)
 
         if ( currentNetwork === "trainedNet" ) {
             net.trainAsync(trainingData).then(() => {
