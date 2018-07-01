@@ -24,14 +24,17 @@ class TestingView extends React.Component {
         return (
             <div className="testing-canvas-view-div">
                 <TestingCanvas />
-                <OutputContainer />
+                { this.props.arrayShapes.length === 0 ? (
+                    <h1> Please space out your letters and write in lower case. </h1>
+                ) : ( <OutputContainer /> ) }
             </div>
         )
     }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    currentNetwork: state.ui.currentNetwork
+    currentNetwork: state.ui.currentNetwork,
+    arrayShapes: state.entities.arrayShapes
 })
 
 const mapDispatchToProps = dispatch => ({
