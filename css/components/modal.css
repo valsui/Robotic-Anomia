@@ -20,7 +20,7 @@
   color: white;
   border-radius: 10px;
   border: 2 solid rgb(255,255,255, 0.3);
-  height: 450px;
+  /* height: 450px; */
   width: 600px;
   background-color: rgb(0,0,0,0.4);
   padding: 50px;
@@ -29,6 +29,7 @@
   justify-content: space-between;
   text-align: center;
   font-weight: 100;
+  box-sizing: content-box;
 }
 
 .dev-bios-text {
@@ -57,4 +58,9 @@
   line-height: 25px;
   font-size: 25px;
   text-align: center;
+}
+
+
+.dev-bios-container #load-machine {
+  height: 200px !important;
 }

@@ -22,7 +22,7 @@ class Header extends React.Component {
         return (
             <header className="page-header">
                 <div className="title-container">
-                    <h1 className="page-title" onClick={this.returnHome} > 🤖 Robotic Anomia 🧠</h1>
+                    <h1 className="page-title" onClick={this.returnHome} > 🤖 Robotic Anomia 💡</h1>
                     <NetworkSelector />
                     <div className="header-icon-container">
                         <a className="github-link" href="https://github.com/valsui/Robotic-Anomia">

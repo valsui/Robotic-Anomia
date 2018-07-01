@@ -2,6 +2,7 @@
     margin-bottom: 10px;
     display: flex;
     flex-direction: column;
+    width: 800px;
 }
 
 .outputs-ul {
@@ -10,33 +11,72 @@
 
 svg {
     z-index: 2;
-    border: 2px solid white;
+    /* border: 2px solid white; */
 }
 
 .chart {
 }
 
 .node {
-    color: black;
-    font-size: 14px;
+    font-size: 40px;
 }
 
+#hover-node:hover {
+  font-size: 20px;
+}
+
+
 .top-output {
+    width: 800px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     color: white;
     font-weight: 100;
+    justify-content: space-between;
+    margin-bottom: 10px
+}
+
+.top-output #instruction {
+  display: flex;
+  flex-direction: column;
+  height: 40px;
+}
+
+.top-output #instruction span {
+  font-size: 25px;
+  margin-bottom: 3px;
+  height: 27px;
+}
+
+.top-output button {
+  color: white;
+  font-weight: 100;
+  border: 1px solid rgba(2,12,144, 0.4);
+  border-radius: 60px;
+  box-shadow: 0vw 0.15vw 0.2vw rgba(2,12,144, 0.4);
+  cursor: pointer;
+  -webkit-transition: background 0.2s;
+  transition: background 0.2s;
+  border: 2px solid white;
+  min-width: 120px;
+  text-align: center;
+  margin-left: 20px;
+  min-height: 35px;
 }
 
 .top-output input {
   height: 35px;
   width: 200px;
-  margin-bottom: 2vw;
   border-radius: 8px;
   border: 2px solid rgba(255,255,255,0.4);
   text-align: center;
   color: white;
-  font-size: 1.6vw;
+  font-size: 25px;
+  font-weight: 100;
+}
+
+.top-output form {
+  vertical-align: middle;
 }
 
 .output-container {
@@ -44,3 +84,14 @@ svg {
     flex-direction: column;
     height: 100%;
 }
+
+.output-text {
+  font-size: 24px;
+  font-weight: 100;
+}
+
+
+/*
+#hover-node {
+
+} */
