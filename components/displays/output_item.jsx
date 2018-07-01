@@ -25,8 +25,6 @@ class OutputItem extends React.Component {
 
             this.trainingData.push(obj);
         })
-
-        console.log("trainingData", this.trainingData);
     }
 
     handleClick() {
@@ -34,7 +32,6 @@ class OutputItem extends React.Component {
 
         net.trainAsync(this.trainingData).then(() => {
             this.props.resetOutputData()
-            console.log("done training!");
         });
     }
 

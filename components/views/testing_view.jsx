@@ -15,16 +15,18 @@ class TestingView extends React.Component {
         if ( currentNetwork === null || currentNetwork === undefined ) {
             selectTrainedNet();
         }
+        
         let particles = document.getElementById('particles-js');
         if (!particles.classList.contains('hidden')){
-          particles.classList.add('hidden');}
+          particles.classList.add('hidden');
+        }
     }
 
     render() {
         return (
             <div className="testing-canvas-view-div">
                 <TestingCanvas />
-                { this.props.arrayShapes.length === 0 ? (
+                { this.props.outputs.length === 0 ? (
                     <h1 className="reminder"> Please space out your letters and write in lower case on the canvas above. </h1>
                 ) : ( <OutputContainer /> ) }
             </div>
@@ -34,7 +36,7 @@ class TestingView extends React.Component {
 
 const mapStateToProps = (state, ownProps) => ({
     currentNetwork: state.ui.currentNetwork,
-    arrayShapes: state.entities.arrayShapes
+    outputs: state.entities.outputs
 })
 
 const mapDispatchToProps = dispatch => ({

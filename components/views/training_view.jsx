@@ -18,7 +18,8 @@ class TrainingView extends React.Component {
 
         let particles = document.getElementById('particles-js');
         if (!particles.classList.contains('hidden')){
-          particles.classList.add('hidden');}
+          particles.classList.add('hidden');
+        }
     }
 
     render() {

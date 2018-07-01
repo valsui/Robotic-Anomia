@@ -20,6 +20,11 @@ class OutputContainer extends React.Component {
         this.createOutputD3();
     }
 
+    componentWillUnmount() {
+        this.props.resetOutputData();
+        d3.selectAll("svg").remove();
+    }
+
     createOutputD3() {
         //node data
         const words = this.getPercentages();
@@ -214,13 +219,11 @@ class OutputContainer extends React.Component {
         if ( currentNetwork === "trainedNet" ) {
             net.trainAsync(shuffledData).then(() => {
                 resetOutputData();
-                console.log("done training!");
                 d3.selectAll("svg > *").remove();
             });
         } else {
             dumbNet.trainAsync(shuffledData).then(() => {
                 resetOutputData();
-                console.log("done training dumbnet!");
                 d3.selectAll("svg > *").remove();
             })
         }
