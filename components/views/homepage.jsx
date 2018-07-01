@@ -16,7 +16,6 @@ class Homepage extends React.Component {
       let particles = document.getElementById('particles-js');
       if ( particles.classList.contains('hidden')){
         particles.classList.remove('hidden');
-        this.setState();
       }
 
       let testInfo = document.getElementById('text-info');
