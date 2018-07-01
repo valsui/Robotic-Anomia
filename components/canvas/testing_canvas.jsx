@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { doSimulationStep, reduce, outOfBounds } from '../../javascripts/canvas_utils';
 import { receiveOutputData, receiveArrayShapes, resetOutputData } from '../../actions/test_data_actions';
 import { createMachine } from '../../javascripts/api_utils';
-import { openModal } from '../../actions/modal_actions';
+import { openModal, receiveText } from '../../actions/modal_actions';
 
 
 class TestingCanvas extends React.Component {
@@ -19,6 +19,8 @@ class TestingCanvas extends React.Component {
         this.array = this.createArray();
         this.sendData = this.sendData.bind(this);
         this.download = this.download.bind(this);
+        this.displayDownloadInfo = this.displayDownloadInfo.bind(this);
+        this.displayLoadInfo = this.displayLoadInfo.bind(this);
     }
 
     componentDidMount() {
@@ -241,6 +243,15 @@ class TestingCanvas extends React.Component {
       createMachine(JSON.stringify(data));
     }
 
+    displayDownloadInfo(e) {
+        e.preventDefault();
+        this.props.receiveText('Download your trained machine as a .txt file.')
+    }
+
+    displayLoadInfo(e) {
+        e.preventDefault();
+        this.props.receiveText('Open your machine.txt and paste your whole machine as a text string')
+    }
     render() {
         // let data = this.props.trainedNet.toJSON();
         // console.log(data);
@@ -260,8 +271,10 @@ class TestingCanvas extends React.Component {
                 <div className="testing-canvas-button-container">
                     <button onClick={this.sendData} className="test-button" id="read">Read This</button>
                     <button className="test-button" onClick={(e) => {e.preventDefault(); this.resetCanvas()}}>Clear Canvas</button>
-                      <button onClick={this.download} className="test-button">Download Machine</button>
-                      <button onClick={this.props.openModal} className="test-button">Load Machine</button>
+                      <button onClick={this.download} className="test-button" id="DL">Download Machine</button>
+                      <i className="far fa-question-circle download-info" id="question-mark1" onClick = {this.displayDownloadInfo}></i>
+                      <button onClick={this.props.openModal} className="test-button" id="LM">Load Machine</button>
+                      <i className="far fa-question-circle load-info" id="question-mark2" onClick = {this.displayLoadInfo}></i>
                 </div>
             </div>
         )
@@ -279,7 +292,8 @@ const mapDispatchToProps = dispatch => ({
     receiveOutputData: (data) => dispatch(receiveOutputData(data)),
     receiveArrayShapes: (data) => dispatch(receiveArrayShapes(data)),
     openModal: () => dispatch(openModal("LoadMachine")),
-    resetOutputData: () => dispatch(resetOutputData())
+    resetOutputData: () => dispatch(resetOutputData()),
+    receiveText: (text) => dispatch(receiveText(text))
 })
 
 export default (connect(mapStateToProps, mapDispatchToProps)(TestingCanvas));
