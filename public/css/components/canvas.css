@@ -18,7 +18,19 @@ canvas:hover{
     height: 100%;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
+
+.reminder {
+  color: rgba(255,255,255,0.4);
+  font-weight: 100;
+  font-size: 20px;
+  position: absolute;
+  top: 230px;
+  left: 70px;
+}
+
+
 
 .testing-canvas-div {
     width: 100%;
@@ -35,9 +47,9 @@ canvas:hover{
 }
 
 .test-button {
-
   color: white;
   font-weight: 100;
+  font-size: 12px;
   border: 1px solid rgba(2,12,144, 0.4);
   border-radius: 60px;
   box-shadow: 0vw 0.15vw 0.2vw rgba(2,12,144, 0.4);
@@ -45,15 +57,45 @@ canvas:hover{
   -webkit-transition: background 0.2s;
   transition: background 0.2s;
   border: 2px solid white;
-  width: 12vw;
-  min-width: 180px;
+  margin-bottom: 18px;
+  min-width: 190px;
   text-align: center;
-
-  height: 3vw;
-  min-height: 50px;
-  margin-left: 5vw;
-  margin-top: 25px;
+  height: 34px;
+  margin-left: 60px;
 }
+
+#DL {
+  position: relative;
+}
+
+#question-mark1 {
+  position: absolute;
+  top: 118px;
+  left: 1100px;
+  font-size: 25px;
+  color: rgba(255,255,255,0.6);
+
+}
+
+#question-mark2 {
+  position: absolute;
+  top: 176px;
+  left: 1100px;
+  font-size: 25px;
+  color: rgba(255,255,255,0.6);
+}
+
+#question-mark1:hover {
+  color: white;
+  cursor: pointer;
+}
+
+#question-mark2:hover {
+  color: white;
+  cursor: pointer;
+}
+
+
 
 #read{
   margin-top: 0px;
@@ -63,6 +105,7 @@ canvas:hover{
   background:  rgba(48,178,249,0.6);
   box-shadow: 0vw 0.3vw 0.2vw rgb(2,12,144, 0.4);
 }
+
 
 .training-canvas-view-div {
   margin-left:33vw;
@@ -77,12 +120,28 @@ canvas:hover{
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
+
+
+#question-mark3 {
+  position: absolute;
+  top: 155px;
+  left: -40px;
+  font-size: 25px;
+  color: rgba(255,255,255,0.6);
+}
+
+#question-mark3:hover {
+  color: white;
+  cursor: pointer;
+}
+
 
 .training-canvas-div input {
   height: 35px;
   width: 200px;
-  margin-bottom: 2vw;
+  margin-bottom: 30px;
   border-radius: 8px;
   border: 2px solid rgba(255,255,255,0.4);
   text-align: center;
@@ -107,7 +166,7 @@ canvas:hover{
   font-weight: 100;
   border: 1px solid rgb(2,12,144, 0.4);
   border-radius: 60px;
-  min-height: 50px;
+  height: 60px;
   box-shadow: 0vw 0.15vw 0.2vw rgb(2,12,144, 0.4);
   cursor: pointer;
   -webkit-transition: background 0.2s;
@@ -116,8 +175,6 @@ canvas:hover{
   width: 12vw;
   min-width: 180px;
   text-align: center;
-
-  height: 3vw;
   margin-top: 30px;
 }
 
@@ -218,4 +275,13 @@ canvas:hover{
 .testing-canvas-button-container {
   display: flex;
   flex-direction: column;
+}
+
+
+#question-mark {
+  color: white;
+}
+
+#question-mark:hover {
+  cursor: pointer;
 }

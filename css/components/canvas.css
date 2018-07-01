@@ -18,18 +18,26 @@ canvas:hover{
     height: 100%;
     display: flex;
     flex-direction: column;
+    position: relative;
+}
+
+.reminder {
+  color: white;
+  position: absolute;
+  top: -100px;
 }
 
 .testing-canvas-div {
     width: 100%;
-    height: 250px;
+    height: 210px;
     display: flex;
     flex-direction: row;
+    margin-bottom: none !important;
 }
 
 .testing-canvas-container {
     box-sizing: content-box;
-    height: 220px;
+    height: 210px;
     display: block;
 }
 

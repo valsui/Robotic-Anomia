@@ -17,7 +17,8 @@ class TopOutput extends React.Component {
 
         this.setState({
             string: e.currentTarget.value
-        })
+        });
+        e.currentTarget.value = "";
     }
 
     render() {
@@ -25,14 +26,14 @@ class TopOutput extends React.Component {
 
         return (
             <div className="top-output">
-                <p>Robotic Anomia thinks the text reads: {top.string}. Is it correct?</p>
-                <div><p>Click on the correct answer, </p>
-                      <p>or type the answer here:</p>
-                    <form onSubmit={(e) => {e.preventDefault(); this.props.handleClick(this.state); this.setState({string: ""})}}>
-                        <input type="text" value={this.state.string} onChange={this.handleChange} />
-                        <input type="submit" onClick={(e) => { e.preventDefault(); this.props.handleClick(this.state); this.setState({ string: "" })}} value="Submit"/>
-                    </form>
+              <div id="instruction">
+                  <p>Is this: <span> {top.string}</span> ? </p>
+                  <p>Click on the correct answer bubble, or type the answer here: </p>
                 </div>
+                <form onSubmit={(e) => {e.preventDefault(); this.props.handleClick(this.state); this.setState({ string: "" })}}>
+                  <input type="text" value={this.state.string} onChange={this.handleChange} />
+                  <input id="correct-button" type="submit" onClick={(e) => { e.preventDefault(); this.props.handleClick(this.state); this.setState({ string: "" })}} value="Submit"/>
+                </form>
             </div>
         )
     }

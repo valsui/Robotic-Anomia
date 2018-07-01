@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { doSimulationStep, reduce, outOfBounds } from '../../javascripts/canvas_utils';
-import { receiveOutputData, receiveArrayShapes } from '../../actions/test_data_actions';
+import { receiveOutputData, receiveArrayShapes, resetOutputData } from '../../actions/test_data_actions';
 import { createMachine } from '../../javascripts/api_utils';
-import { openModal } from '../../actions/modal_actions';
+import { openModal, receiveText } from '../../actions/modal_actions';
 
 
 class TestingCanvas extends React.Component {
@@ -19,6 +19,8 @@ class TestingCanvas extends React.Component {
         this.array = this.createArray();
         this.sendData = this.sendData.bind(this);
         this.download = this.download.bind(this);
+        this.displayDownloadInfo = this.displayDownloadInfo.bind(this);
+        this.displayLoadInfo = this.displayLoadInfo.bind(this);
     }
 
     componentDidMount() {
@@ -51,7 +53,6 @@ class TestingCanvas extends React.Component {
 
     readTextFromFile(file){
       let rawFile = new XMLHttpRequest();
-      console.log(this.props);
       rawFile.open("GET", file, true);
       rawFile.onreadystatechange = () => {
         if(rawFile.readyState === 4){
@@ -147,6 +148,7 @@ class TestingCanvas extends React.Component {
       ctx.strokeStyle = 'white';
       ctx.stroke();
     }
+
     sendData(e) {
         e.preventDefault();
         let newArray = doSimulationStep(this.array);
@@ -185,12 +187,10 @@ class TestingCanvas extends React.Component {
         canvas.removeEventListener("mousedown", this.mousedownFunc);
         canvas.removeEventListener("mousemove", this.mousemove);
 
-        this.mousedownFunc = this.mouseDown();
-        this.mousemove = this.mouseMove();
+        setTimeout(() => this.resetCanvas(), 3000);
+        setTimeout(() => canvas.addEventListener("mousedown", this.mousedownFunc), 3000);
+        setTimeout(() => canvas.addEventListener("mousemove", this.mousemove), 3000);
 
-       window.setTimeout(this.resetCanvas.bind(this), 3000);
-       window.setTimeout(() => canvas.addEventListener("mousedown", this.mousedownFunc), 3000);
-       window.setTimeout(() => canvas.addEventListener("mousemove", this.mousemove), 3000);
     }
 
     matrixify() {
@@ -230,7 +230,6 @@ class TestingCanvas extends React.Component {
         ctx.fillStyle = "rgb(255,255,255,0)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         this.array = this.createArray();
-        // d3.selectAll("svg > *").remove();
     }
 
     download(){
@@ -243,6 +242,15 @@ class TestingCanvas extends React.Component {
       createMachine(JSON.stringify(data));
     }
 
+    displayDownloadInfo(e) {
+        e.preventDefault();
+        this.props.receiveText('Download your trained machine as a .txt file.')
+    }
+
+    displayLoadInfo(e) {
+        e.preventDefault();
+        this.props.receiveText('Open your machine.txt and paste your whole machine as a text string')
+    }
     render() {
         // let data = this.props.trainedNet.toJSON();
         // console.log(data);
@@ -262,8 +270,10 @@ class TestingCanvas extends React.Component {
                 <div className="testing-canvas-button-container">
                     <button onClick={this.sendData} className="test-button" id="read">Read This</button>
                     <button className="test-button" onClick={(e) => {e.preventDefault(); this.resetCanvas()}}>Clear Canvas</button>
-                      <button onClick={this.download} className="test-button">Download Machine</button>
-                      <button onClick={this.props.openModal} className="test-button">Load Machine</button>
+                      <button onClick={this.download} className="test-button" id="DL">Download Machine</button>
+                      <i className="far fa-question-circle download-info" id="question-mark1" onClick = {this.displayDownloadInfo}></i>
+                      <button onClick={this.props.openModal} className="test-button" id="LM">Load Machine</button>
+                      <i className="far fa-question-circle load-info" id="question-mark2" onClick = {this.displayLoadInfo}></i>
                 </div>
             </div>
         )
@@ -281,6 +291,8 @@ const mapDispatchToProps = dispatch => ({
     receiveOutputData: (data) => dispatch(receiveOutputData(data)),
     receiveArrayShapes: (data) => dispatch(receiveArrayShapes(data)),
     openModal: () => dispatch(openModal("LoadMachine")),
+    resetOutputData: () => dispatch(resetOutputData()),
+    receiveText: (text) => dispatch(receiveText(text))
 })
 
 export default (connect(mapStateToProps, mapDispatchToProps)(TestingCanvas));
