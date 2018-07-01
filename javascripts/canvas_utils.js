@@ -32,52 +32,43 @@ const createBoxes = (array) => {
   let box = {};
   box.array = [];
 
-  while(rowNumber < array.length){
-    if( characterFound < 2){
-      if (!anyValue(array[rowNumber])){
+  while ( rowNumber < array.length ){
+    if ( characterFound < 2 ){
+      if ( !anyValue(array[rowNumber]) ){
         characterFound += 1;
-        if (characterFound === 2) {
+        if ( characterFound === 2 ) {
           boxes.push(box);
           box = Object.assign({});
           box.array = [];
           // draw the box
           // right border x = rowNumber
           // left border x = rowNumber - 25
-        } else if ( !(rowNumber !== array.length - 1)) {
-        box.array.push(array[rowNumber]);
+        } else if ( !(rowNumber !== array.length - 1) ) {
+        box.array.push( array[rowNumber] );
         }
       } else {
         // character detected
-        if(box.array.length >= 25){
+        if( box.array.length >= 25 ){
           // do nothing, just skipping due to too long width wise
         }else {
-          box.array.push(array[rowNumber]);
+          box.array.push( array[rowNumber] );
         }
       }
-    } else if(anyValue(array[rowNumber])){
+    } else if(anyValue( array[rowNumber]) ){
       characterFound = 0;
-      box.array.push(array[rowNumber]);
+      box.array.push (array[rowNumber] );
       box.left = rowNumber * 8;
       box.right = rowNumber * 8 + 100;
-      let index = findIndex(array[rowNumber]);
       box.bottom = 200;
-      // box.top = index * 4;
       box.top = 0;
     }
+    
     rowNumber++;
   }
 
   if ( box.array.length > 0 ) {
     boxes.push(box);
   }
-  // let ones = boxes[0].array.map((array) => {
-  //   return array.map((el) => {
-  //     return Math.ceil(el + 0)});
-  // })
-
-  // console.log(boxes);
-  // console.log(ones);
-  // boxes = boxes.filter((box) => box.length > 4)
 
   return boxes;
 }
