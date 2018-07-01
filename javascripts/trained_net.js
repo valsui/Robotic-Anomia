@@ -6,8 +6,8 @@ import { brainTrainFour } from '../test_suite/brain_train4';
 
 let config = {
     iterations: 10000,
-    learningRate: 0.3,
-    hiddenLayers: [312, 312]
+    learningRate: 0.1,
+    hiddenLayers: [312, 312, 312]
 }
 
 const net = new brain.NeuralNetwork(config);
@@ -33,19 +33,19 @@ const net = new brain.NeuralNetwork(config);
 
 // net.trainAsync(data).then( () => console.log("valerie"));
 
-const revertToBox = (dataObject) => {
-  let box = []
-  let row = [];
-  for(let i = 0; i < dataObject.input.length; i++){
-    if(row.length === 25){
-      box.push(row);
-      row = [];
-    }
-    row.push(dataObject.input[i])
-  }
-  box.push(row);
-  return box;
-}
+// const revertToBox = (dataObject) => {
+//   let box = []
+//   let row = [];
+//   for(let i = 0; i < dataObject.input.length; i++){
+//     if(row.length === 25){
+//       box.push(row);
+//       row = [];
+//     }
+//     row.push(dataObject.input[i])
+//   }
+//   box.push(row);
+//   return box;
+// }
 
 
 let rawFile = new XMLHttpRequest();
