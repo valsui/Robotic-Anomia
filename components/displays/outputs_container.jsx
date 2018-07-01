@@ -20,6 +20,11 @@ class OutputContainer extends React.Component {
         this.createOutputD3();
     }
 
+    componentWillUnmount() {
+        this.props.resetOutputData();
+        d3.selectAll("svg").remove();
+    }
+
     createOutputD3() {
         //node data
         const words = this.getPercentages();

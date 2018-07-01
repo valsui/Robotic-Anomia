@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { doSimulationStep, reduce, outOfBounds } from '../../javascripts/canvas_utils';
-import { receiveOutputData, receiveArrayShapes } from '../../actions/test_data_actions';
+import { receiveOutputData, receiveArrayShapes, resetOutputData } from '../../actions/test_data_actions';
 import { createMachine } from '../../javascripts/api_utils';
 import { openModal } from '../../actions/modal_actions';
 
@@ -147,6 +147,7 @@ class TestingCanvas extends React.Component {
       ctx.strokeStyle = 'white';
       ctx.stroke();
     }
+
     sendData(e) {
         e.preventDefault();
         let newArray = doSimulationStep(this.array);
@@ -185,6 +186,10 @@ class TestingCanvas extends React.Component {
         canvas.removeEventListener("mousedown", this.mousedownFunc);
         canvas.removeEventListener("mousemove", this.mousemove);
 
+        setTimeout(() => this.resetCanvas(), 3000);
+        setTimeout(() => canvas.addEventListener("mousedown", this.mousedownFunc), 3000);
+        setTimeout(() => canvas.addEventListener("mousemove", this.mousemove), 3000);
+
     }
 
     matrixify() {
@@ -219,15 +224,11 @@ class TestingCanvas extends React.Component {
     }
 
     resetCanvas() {
-        // canvas.removeEventListener("mousedown", this.mousedownFunc);
-        // canvas.removeEventListener("mousemove", this.mousemove);
         const { ctx, canvas } = this.state;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = "rgb(255,255,255,0)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         this.array = this.createArray();
-        canvas.addEventListener("mousedown", this.mousedownFunc);
-        canvas.addEventListener("mousemove", this.mousemove);
     }
 
     download(){
@@ -278,6 +279,7 @@ const mapDispatchToProps = dispatch => ({
     receiveOutputData: (data) => dispatch(receiveOutputData(data)),
     receiveArrayShapes: (data) => dispatch(receiveArrayShapes(data)),
     openModal: () => dispatch(openModal("LoadMachine")),
+    resetOutputData: () => dispatch(resetOutputData())
 })
 
 export default (connect(mapStateToProps, mapDispatchToProps)(TestingCanvas));
