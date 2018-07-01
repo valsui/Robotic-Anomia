@@ -21,6 +21,10 @@ svg {
     font-size: 40px;
 }
 
+svg:hover{
+  cursor: pointer;
+}
+
 #hover-node:hover {
   font-size: 20px;
 }

@@ -177,3 +177,69 @@
   text-align: center;
   min-height: 40px !important;
 }
+
+
+
+.training-modal {
+  font-size: 12px;
+  color: white;
+  border-radius: 10px;
+  border: 2 solid rgb(255,255,255, 0.3);
+  height: 450px;
+  background-color: rgb(0,0,0,0.4);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  font-weight: 100;
+
+  width: 350px;
+  height: 370px;
+  border: 2px solid rgba(255,255,255,0.5);
+  background-color: rgba(13, 101, 241, 0.9);
+  box-shadow: 0px 10px 10px rgba(0,0,0,0.2);
+  position:relative;
+  top: 43px;
+  left: -650px;
+}
+
+.training-modal h1 {
+  margin: none;
+  color: white;
+  font-size: 20px;
+  text-align: center;
+  font-weight: 100;
+  align-items: center;
+}
+
+
+.learn-more {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    align-items: center;
+    margin: auto;
+    background:  rgb(11,93,228);
+    color: white;
+    height: 35px;
+    width: 120px;
+    font-weight: 100;
+    border: 2px solid rgba(255,255,255, 0.6);
+    border-radius: 100px;
+    box-shadow: 0vw 0.15vw 0.2vw rgba(2,12,144, 0.6);
+    margin-top: 1vw;
+    text-align: center;
+    justify-content: center;
+    cursor: pointer;
+    -webkit-transition: background 0.4s;
+    transition: background 0.4s;
+    -webkit-transition: box-shadow 0.2s;
+    transition: box-shadow 0.2s;
+    font-size: 15px;
+}
+
+.learn-more:hover {
+  background:  rgba(48,178,249,0.6);
+  box-shadow: 0vw 0.3vw 0.2vw rgb(2,12,144, 0.4);
+}

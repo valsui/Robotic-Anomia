@@ -45,7 +45,7 @@ class LoadMachine extends React.Component {
         return (
             <div className="dev-bios-container" id="load-machine" onClick={(e) => e.stopPropagation()}>
                 <div className="dev-bios-text">
-                    Copy and paste the information in your machines.txt file and input it below!
+                    Copy and paste all the texts in your machines.txt file and input it below
                     <br/>
                     <br/>
                 <input className="machine-input" type="text" maxLength="unlimited" value={this.state.input} onChange={this.handleInput}>
