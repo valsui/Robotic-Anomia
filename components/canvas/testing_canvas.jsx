@@ -53,7 +53,6 @@ class TestingCanvas extends React.Component {
 
     readTextFromFile(file){
       let rawFile = new XMLHttpRequest();
-      console.log(this.props);
       rawFile.open("GET", file, true);
       rawFile.onreadystatechange = () => {
         if(rawFile.readyState === 4){

@@ -119,7 +119,6 @@ class TrainingCanvas extends React.Component {
             this.props.receiveText("Please enter a letter.")
             return;
         } else if ( this.state.letter.length > 1 ) {
-            console.log("please only enter one letter");
             return;
         }
 
@@ -209,8 +208,6 @@ class TrainingCanvas extends React.Component {
     }
 
     handleScroll(e){
-      // console.log(e.target.scrollTop);
-      console.log(Math.floor(e.target.scrollTop));
       let scrollY = e.target.scrollTop;
       // this part is to make it slightly more fluid
       // let idx = Math.floor(scrollY / 29);

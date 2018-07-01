@@ -44,7 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         data.push(JSON.stringify(dataPoint) + '\n');
-        console.log('data added to file')
     })
 
     let downloadButton = document.getElementById('download');

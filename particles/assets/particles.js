@@ -1141,7 +1141,6 @@ var pJS = function(tag_id, params){
               pJS.tmp.source_svg = data.currentTarget.response;
               pJS.fn.vendors.checkBeforeDraw();
             }else{
-              console.log('Error pJS - Image not found');
               pJS.tmp.img_error = true;
             }
           }
@@ -1160,7 +1159,6 @@ var pJS = function(tag_id, params){
       }
 
     }else{
-      console.log('Error pJS - No image.src');
       pJS.tmp.img_error = true;
     }
 
@@ -1390,7 +1388,6 @@ window.particlesJS.load = function(tag_id, path_config_json, callback){
         if(callback) callback();
       }else{
         console.log('Error pJS - XMLHttpRequest status: '+xhr.status);
-        console.log('Error pJS - File config not found');
       }
     }
   };

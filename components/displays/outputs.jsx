@@ -13,7 +13,6 @@ class Outputs extends React.Component {
             return null;
         }
 
-        console.log("outputs", output)
         const outputs = Object.values(output);
 
         return (

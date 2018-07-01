@@ -16,7 +16,6 @@ const readTextFromFile = (file) => {
   rawFile.onreadystatechange = () => {
     if(rawFile.readyState === 4){
       if(rawFile.status === 200 || rawFile.status == 0){
-        console.log(rawFile.responseText);
         return rawFile.responseText;
       }
     }
