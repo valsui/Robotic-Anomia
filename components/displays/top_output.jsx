@@ -30,9 +30,10 @@ class TopOutput extends React.Component {
                   <p>Is this: <span> {top.string}</span> ? </p>
                   <p>Click on the correct answer bubble, or type the answer here: </p>
                 </div>
-                <form onSubmit={(e) => {e.preventDefault(); this.props.handleClick(this.state)}}>
+                <form onSubmit={(e) => {e.preventDefault(); this.props.handleClick(this.state); this.setState({ string: "" })}}>
                   <input type="text" value={this.state.string} onChange={this.handleChange} />
-                  <button> Submit </button>
+                  <input type="submit" onClick={(e) => { e.preventDefault(); this.props.handleClick(this.state); this.setState({ string: "" })}} value="Submit"/>
+
                 </form>
             </div>
         )

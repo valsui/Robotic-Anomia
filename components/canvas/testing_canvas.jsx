@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { doSimulationStep, reduce, outOfBounds } from '../../javascripts/canvas_utils';
 import { receiveOutputData, receiveArrayShapes } from '../../actions/test_data_actions';
-import d3 from 'd3';
 import { createMachine } from '../../javascripts/api_utils';
 import { openModal } from '../../actions/modal_actions';
 
@@ -164,6 +163,10 @@ class TestingCanvas extends React.Component {
             }
             return mapSubArray;
         })
+
+       if ( newArr.length === 0) {
+           return;
+       }
 
         let outputArray = [];
 

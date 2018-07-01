@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import TopOutput from './top_output';
 import * as d3 from "d3";
-import { shuffleData } from '../../javascripts/d3_util';
+import { shuffleData } from '../../javascripts/data_util';
 import { resetOutputData } from '../../actions/test_data_actions';
 
 class OutputContainer extends React.Component {
@@ -53,7 +53,7 @@ class OutputContainer extends React.Component {
             .attr("transform", "translate(0,0)");
 
         //radius scale
-        let radiusScale = d3.scaleSqrt().domain([0, data[0].percent]).range([10,65]);
+        let radiusScale = d3.scaleSqrt().domain([0, data[0].percent]).range([20,65]);
         // formats numbers by rounding down. ex 6.2 => 6
         let format = d3.format(",d");
         //shuffle data
@@ -67,7 +67,7 @@ class OutputContainer extends React.Component {
 
         let forceY = d3.forceY(function (d) {
             return 560 / 1.73;
-        }).strength(0.05);
+        }).strength(0.07);
 
         let forceCollide = d3.forceCollide(function (d) {
             return radiusScale(d.percent) + 10;
@@ -207,18 +207,18 @@ class OutputContainer extends React.Component {
     handleClick(d) {
         const { net, dumbNet, currentNetwork, resetOutputData } = this.props;
 
-        // debugger;
-        let trainingData = this.addLettersToTraining(d);
+        const trainingData = this.addLettersToTraining(d);
+        const shuffledData = shuffleData(trainingData);
 
 
         if ( currentNetwork === "trainedNet" ) {
-            net.trainAsync(trainingData).then(() => {
+            net.trainAsync(shuffledData).then(() => {
                 resetOutputData();
                 console.log("done training!");
                 d3.selectAll("svg > *").remove();
             });
         } else {
-            dumbNet.trainAsync(trainingData).then(() => {
+            dumbNet.trainAsync(shuffledData).then(() => {
                 resetOutputData();
                 console.log("done training dumbnet!");
                 d3.selectAll("svg > *").remove();

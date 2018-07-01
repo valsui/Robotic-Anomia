@@ -1,7 +1,7 @@
 import React from 'react';
 import { NeuralNetwork } from "brain.js";
 import { connect } from 'react-redux';
-import { receiveNeuralNetwork } from '../../actions/neural_network_actions';
+import { receiveNeuralNetwork, selectNewNetwork } from '../../actions/neural_network_actions';
 import { closeModal } from '../../actions/modal_actions';
 
 class LoadMachine extends React.Component {
@@ -35,7 +35,8 @@ class LoadMachine extends React.Component {
         console.log(err);
       }
       finally{
-        this.props.receiveNeuralNetwork("userNet", net);
+        this.props.receiveNeuralNetwork("dumbNet", net);
+        this.props.selectNewNetwork();
         this.props.closeModal();
       }
     }
@@ -59,6 +60,7 @@ class LoadMachine extends React.Component {
 const mapDispatchToProps = dispatch => ({
   receiveNeuralNetwork: (name, net) => dispatch(receiveNeuralNetwork(name, net)),
   closeModal: () => dispatch(closeModal()),
+  selectNewNetwork: () => dispatch(selectNewNetwork())
 })
 
 export default connect(null, mapDispatchToProps)(LoadMachine);
