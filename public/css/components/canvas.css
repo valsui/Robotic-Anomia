@@ -18,7 +18,19 @@ canvas:hover{
     height: 100%;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
+
+.reminder {
+  color: rgba(255,255,255,0.4);
+  font-weight: 100;
+  font-size: 20px;
+  position: absolute;
+  top: 230px;
+  left: 160px;
+}
+
+
 
 .testing-canvas-div {
     width: 100%;
@@ -63,6 +75,7 @@ canvas:hover{
   background:  rgba(48,178,249,0.6);
   box-shadow: 0vw 0.3vw 0.2vw rgb(2,12,144, 0.4);
 }
+
 
 .training-canvas-view-div {
   margin-left:33vw;
