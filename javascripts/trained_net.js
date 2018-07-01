@@ -6,14 +6,14 @@ import { brainTrainFour } from '../test_suite/brain_train4';
 
 let config = {
     iterations: 10000,
-    learningRate: 0.3,
-    hiddenLayers: [312, 312]
+    learningRate: 0.1,
+    hiddenLayers: [312, 312, 312]
 }
 
 const net = new brain.NeuralNetwork(config);
 
 //shuffle dataset to input into training model
-// const data = shuffleData(brainTrainFour);
+const data = shuffleData(brainTrainFour);
 
 // const train = (net, data, iterator) => {
 //   if(iterator === data.length){
@@ -31,33 +31,33 @@ const net = new brain.NeuralNetwork(config);
 //   });
 // }
 
-// net.trainAsync(data).then( () => console.log("valerie"));
+net.trainAsync(data).then( () => console.log("valerie"));
 
-const revertToBox = (dataObject) => {
-  let box = []
-  let row = [];
-  for(let i = 0; i < dataObject.input.length; i++){
-    if(row.length === 25){
-      box.push(row);
-      row = [];
-    }
-    row.push(dataObject.input[i])
-  }
-  box.push(row);
-  return box;
-}
+// const revertToBox = (dataObject) => {
+//   let box = []
+//   let row = [];
+//   for(let i = 0; i < dataObject.input.length; i++){
+//     if(row.length === 25){
+//       box.push(row);
+//       row = [];
+//     }
+//     row.push(dataObject.input[i])
+//   }
+//   box.push(row);
+//   return box;
+// }
 
 
-let rawFile = new XMLHttpRequest();
+// let rawFile = new XMLHttpRequest();
 
-rawFile.open("GET",  "https://raw.githubusercontent.com/valsui/Robotic-Anomia/master/public/machine.txt", true);
-rawFile.onreadystatechange = () => {
-  if(rawFile.readyState === 4){
-    if(rawFile.status === 200 || rawFile.status == 0){
-        net.fromJSON(JSON.parse(rawFile.responseText));
-      }
-    }
-  }
-rawFile.send(null);
+// rawFile.open("GET",  "https://raw.githubusercontent.com/valsui/Robotic-Anomia/master/public/machine.txt", true);
+// rawFile.onreadystatechange = () => {
+//   if(rawFile.readyState === 4){
+//     if(rawFile.status === 200 || rawFile.status == 0){
+//         net.fromJSON(JSON.parse(rawFile.responseText));
+//       }
+//     }
+//   }
+// rawFile.send(null);
 
 export default net;
