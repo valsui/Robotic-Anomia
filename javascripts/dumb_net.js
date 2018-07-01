@@ -3,8 +3,8 @@ import { createMachine } from './api_utils';
 
 const config = {
     iterations: 10000,
-    learningRate: 0.3,
-    hiddenLayers: [312, 312],
+    learningRate: 0.1,
+    hiddenLayers: [312, 312, 312],
 }
 
 const dumbNet = new NeuralNetwork(config);

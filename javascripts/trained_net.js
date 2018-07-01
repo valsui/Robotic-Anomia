@@ -13,7 +13,7 @@ let config = {
 const net = new brain.NeuralNetwork(config);
 
 //shuffle dataset to input into training model
-const data = shuffleData(brainTrainFour);
+// const data = shuffleData(brainTrainFour);
 
 // const train = (net, data, iterator) => {
 //   if(iterator === data.length){
@@ -31,7 +31,7 @@ const data = shuffleData(brainTrainFour);
 //   });
 // }
 
-net.trainAsync(data).then( () => console.log("valerie"));
+// net.trainAsync(data).then( () => console.log("valerie"));
 
 // const revertToBox = (dataObject) => {
 //   let box = []
@@ -48,16 +48,16 @@ net.trainAsync(data).then( () => console.log("valerie"));
 // }
 
 
-// let rawFile = new XMLHttpRequest();
+let rawFile = new XMLHttpRequest();
 
-// rawFile.open("GET",  "https://raw.githubusercontent.com/valsui/Robotic-Anomia/master/public/machine.txt", true);
-// rawFile.onreadystatechange = () => {
-//   if(rawFile.readyState === 4){
-//     if(rawFile.status === 200 || rawFile.status == 0){
-//         net.fromJSON(JSON.parse(rawFile.responseText));
-//       }
-//     }
-//   }
-// rawFile.send(null);
+rawFile.open("GET",  "https://raw.githubusercontent.com/valsui/Robotic-Anomia/master/public/machine.txt", true);
+rawFile.onreadystatechange = () => {
+  if(rawFile.readyState === 4){
+    if(rawFile.status === 200 || rawFile.status == 0){
+        net.fromJSON(JSON.parse(rawFile.responseText));
+      }
+    }
+  }
+rawFile.send(null);
 
 export default net;
