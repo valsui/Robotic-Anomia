@@ -44,7 +44,7 @@ class TrainingInfo extends React.Component {
 
     render() {
         return (
-            <div class="training-modal">
+            <div className="training-modal">
                 {this.state.moreInfo ? this.displayLearning() : this.displayInstructions()}
             </div>
         )
