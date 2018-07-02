@@ -21,6 +21,8 @@ class TestingCanvas extends React.Component {
         this.download = this.download.bind(this);
         this.displayDownloadInfo = this.displayDownloadInfo.bind(this);
         this.displayLoadInfo = this.displayLoadInfo.bind(this);
+        this.displayNetworkInfo = this.displayNetworkInfo.bind(this);
+        this.displayLoadMachineModal = this.displayLoadMachineModal.bind(this);
     }
 
     componentDidMount() {
@@ -249,7 +251,17 @@ class TestingCanvas extends React.Component {
 
     displayLoadInfo(e) {
         e.preventDefault();
-        this.props.receiveText('Open your machine.txt and paste your whole machine as a text string')
+        this.props.receiveText('Click on the Use Your Own Network tab at the header. Open your machine.txt and paste your whole machine as a text string')
+    }
+
+    displayNetworkInfo(e) {
+        e.preventDefault();
+        this.props.openModal("testingInfo");
+    }
+
+    displayLoadMachineModal(e) {
+        e.preventDefault();
+        this.props.openModal("LoadMachine");
     }
     render() {
         // let data = this.props.trainedNet.toJSON();
@@ -264,6 +276,7 @@ class TestingCanvas extends React.Component {
         // }
         return (
             <div className="testing-canvas-div">
+                <i className="far fa-question-circle testing-info" id="question-mark3" onClick={this.displayNetworkInfo}></i>
                 <div className="testing-canvas-container">
                     <canvas ref="testingCanvas" width={800} height={200} />
                 </div>
@@ -272,7 +285,7 @@ class TestingCanvas extends React.Component {
                     <button className="test-button" onClick={(e) => {e.preventDefault(); this.resetCanvas()}}>Clear Canvas</button>
                       <button onClick={this.download} className="test-button" id="DL">Download Machine</button>
                       <i className="far fa-question-circle download-info" id="question-mark1" onClick = {this.displayDownloadInfo}></i>
-                      <button onClick={this.props.openModal} className="test-button" id="LM">Load Machine</button>
+                      <button onClick={this.displayLoadMachineModal} className="test-button" id="LM">Load Machine</button>
                       <i className="far fa-question-circle load-info" id="question-mark2" onClick = {this.displayLoadInfo}></i>
                 </div>
             </div>
@@ -290,7 +303,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     receiveOutputData: (data) => dispatch(receiveOutputData(data)),
     receiveArrayShapes: (data) => dispatch(receiveArrayShapes(data)),
-    openModal: () => dispatch(openModal("LoadMachine")),
+    openModal: (modal) => dispatch(openModal(modal)),
     resetOutputData: () => dispatch(resetOutputData()),
     receiveText: (text) => dispatch(receiveText(text))
 })
