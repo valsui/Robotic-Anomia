@@ -202,6 +202,7 @@ Users can test the trained neural network by drawing letters on the canvas and c
 ## Training Demo
 Users can add training data to the network or create their own network to train.
 
+![training](https://media.giphy.com/media/9rjPhbHc7mHXir1XzJ/giphy.gif)
 
 
 ## Future Objectives
