@@ -219,7 +219,9 @@ class OutputContainer extends React.Component {
 
         if(d.string.length !== arrayShapes.length){
             d3.selectAll("svg > *").remove()
-            return this.props.receiveText("Sorry, we can't process this string.")   
+            resetOutputData();
+            this.props.receiveText("Sorry, we can't process this string.")  
+            return  
         }
 
 
