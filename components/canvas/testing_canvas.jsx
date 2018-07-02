@@ -276,7 +276,7 @@ class TestingCanvas extends React.Component {
         // }
         return (
             <div className="testing-canvas-div">
-                <i className="far fa-question-circle testing-info" id="question-mark3" onClick={this.displayNetworkInfo}></i>
+                <i className="far fa-question-circle testing-info" id="question-mark4" onClick={this.displayNetworkInfo}></i>
                 <div className="testing-canvas-container">
                     <canvas ref="testingCanvas" width={800} height={200} />
                 </div>

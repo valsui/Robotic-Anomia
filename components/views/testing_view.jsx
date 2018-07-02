@@ -27,7 +27,12 @@ class TestingView extends React.Component {
             <div className="testing-canvas-view-div">
                 <TestingCanvas />
                 { this.props.outputs.length === 0 ? (
-                    <h1 className="reminder"> Please space out your letters and write in lower case on the canvas above. </h1>
+                    <div className="reminder"> 
+                        <h1>Test out our model!</h1>
+                        <h1> Please space out your letters and write in lower case on the canvas above. </h1>
+                        <h1>Click 'Read This' to see the results.</h1> 
+                    </div>
+
                 ) : ( <OutputContainer /> ) }
             </div>
         )

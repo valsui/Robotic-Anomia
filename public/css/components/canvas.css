@@ -28,6 +28,9 @@ canvas:hover{
   position: absolute;
   top: 230px;
   left: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 
@@ -133,6 +136,19 @@ canvas:hover{
 }
 
 #question-mark3:hover {
+  color: white;
+  cursor: pointer;
+}
+
+#question-mark4 {
+  position: absolute;
+  top: 90px;
+  left: -60px;
+  font-size: 25px;
+  color: rgba(255,255,255,0.6);
+}
+
+#question-mark4:hover {
   color: white;
   cursor: pointer;
 }
