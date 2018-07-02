@@ -21,7 +21,8 @@
 }
 
 #typing-text {
-  font-size: 6vw;
+  /* font-size: 6vw; */
+  font-size: 4vw;
   text-shadow: 0.3vw 0.3vw 0.2vw rgba(2,12,144, 0.3);
 }
 
