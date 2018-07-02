@@ -22,6 +22,7 @@ class TestingCanvas extends React.Component {
         this.displayDownloadInfo = this.displayDownloadInfo.bind(this);
         this.displayLoadInfo = this.displayLoadInfo.bind(this);
         this.displayNetworkInfo = this.displayNetworkInfo.bind(this);
+        this.displayLoadMachineModal = this.displayLoadMachineModal.bind(this);
     }
 
     componentDidMount() {
@@ -250,12 +251,17 @@ class TestingCanvas extends React.Component {
 
     displayLoadInfo(e) {
         e.preventDefault();
-        this.props.receiveText('Open your machine.txt and paste your whole machine as a text string')
+        this.props.receiveText('Click on the Use Your Own Network tab at the header. Open your machine.txt and paste your whole machine as a text string')
     }
 
     displayNetworkInfo(e) {
         e.preventDefault();
         this.props.openModal("testingInfo");
+    }
+
+    displayLoadMachineModal(e) {
+        e.preventDefault();
+        this.props.openModal("LoadMachine");
     }
     render() {
         // let data = this.props.trainedNet.toJSON();
@@ -279,7 +285,7 @@ class TestingCanvas extends React.Component {
                     <button className="test-button" onClick={(e) => {e.preventDefault(); this.resetCanvas()}}>Clear Canvas</button>
                       <button onClick={this.download} className="test-button" id="DL">Download Machine</button>
                       <i className="far fa-question-circle download-info" id="question-mark1" onClick = {this.displayDownloadInfo}></i>
-                      <button onClick={this.props.openModal("LoadMachine")} className="test-button" id="LM">Load Machine</button>
+                      <button onClick={this.displayLoadMachineModal} className="test-button" id="LM">Load Machine</button>
                       <i className="far fa-question-circle load-info" id="question-mark2" onClick = {this.displayLoadInfo}></i>
                 </div>
             </div>

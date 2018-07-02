@@ -51,7 +51,7 @@ class LoadMachine extends React.Component {
                 <input className="machine-input" type="text" maxLength="unlimited" value={this.state.input} onChange={this.handleInput}>
                 </input>
                 </div>
-                <button onClick={this.handleSubmit} class = "load-button"> Load </button>
+                <button onClick={this.handleSubmit} className = "load-button"> Load </button>
             </div>
         )
     }
