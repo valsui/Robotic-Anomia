@@ -4,6 +4,7 @@ import TopOutput from './top_output';
 import * as d3 from "d3";
 import { shuffleData } from '../../javascripts/data_util';
 import { resetOutputData } from '../../actions/test_data_actions';
+import { openModal, receiveText } from '../../actions/modal_actions';
 
 class OutputContainer extends React.Component {
     constructor(props) {
@@ -214,6 +215,13 @@ class OutputContainer extends React.Component {
         const trainingData = this.addLettersToTraining(d);
         const shuffledData = shuffleData(trainingData);
 
+        const { arrayShapes } = this.props;
+
+        if(d.string.length !== arrayShapes.length){
+            d3.selectAll("svg > *").remove()
+            return this.props.receiveText("Sorry, we can't process this string.")   
+        }
+
 
         if ( currentNetwork === "trainedNet" ) {
             net.trainAsync(shuffledData).then(() => {
@@ -331,7 +339,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    resetOutputData: () => dispatch(resetOutputData())
+    resetOutputData: () => dispatch(resetOutputData()),
+    receiveText: (text) => dispatch(receiveText(text))
 })
 
 export default (connect(mapStateToProps, mapDispatchToProps)(OutputContainer));
