@@ -13,14 +13,25 @@ class TypeWriter extends React.Component {
   textAnimation(){
     const testInfo = document.getElementById('typing-text');
 
-    const dataText = [ "Hello!",
-                      "I am a robot 🤖",
-                      "I can read your hand writing",
-                      "Train 💡 me to read",
-                      "or play with me!",
-                      "I always forget things",
-                      "correct me while playing",
-                      "Surely we will have lots of fun!   🎉"];
+    // const dataText = [ "Hello!",
+    //                   "I am a robot 🤖",
+    //                   "I can read your hand writing",
+    //                   "Train 💡 me to read",
+    //                   "or play with me!",
+    //                   "I always forget things",
+    //                   "correct me while playing",
+    //                   "Surely we will have lots of fun!   🎉"];
+
+    const dataText = [
+      "Welcome to Robotica Anomia...",
+      "We trained a Neural Network to recognize handwriting...",
+      "Click Play to test our network...",
+      "Click Train to add to our network...",
+      "You can even train your own network...",
+      "Just look for the tab in the header when you are training or playing...",
+      "Have fun!"
+    ];
+
 
     const typeWriter = (text, i, fnCallback) => {
       if (text && i < (text.length)) {

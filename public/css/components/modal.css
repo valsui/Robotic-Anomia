@@ -214,7 +214,7 @@
 }
 
 
-.learn-more {
+.learn-more, .back-to-instructions {
     position: absolute;
     bottom: 20px;
     right: 20px;
@@ -237,14 +237,73 @@
     -webkit-transition: box-shadow 0.2s;
     transition: box-shadow 0.2s;
     font-size: 15px;
+  }
+  
+  .learn-more:hover {
+    background:  rgba(48,178,249,0.6);
+    box-shadow: 0vw 0.3vw 0.2vw rgb(2,12,144, 0.4);
+  }
+  
+  .back-to-instructions{
+    width: 160px;
+  }
+
+.testing-info-modal{
+  height: 500px;
+  width: 600px;
+
+  font-size: 14px;
+  color: white;
+  border-radius: 10px;
+  border: 2 solid rgb(255,255,255, 0.3);
+  /* height: 450px; */
+  background-color: rgb(0,0,0,0.4);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  text-align: center;
+  font-weight: 100;
+
+  border: 2px solid rgba(255,255,255,0.5);
+  background-color: rgba(13, 101, 241, 0.9);
+  box-shadow: 0px 10px 10px rgba(126, 11, 11, 0.2);
+  position:relative;
+}
+.testing-info-text{
+  height: auto;
+  width: auto;
+  display: flex;
+  flex-direction: column;
 }
 
-.learn-more:hover {
-  background:  rgba(48,178,249,0.6);
-  box-shadow: 0vw 0.3vw 0.2vw rgb(2,12,144, 0.4);
+.testing-span{
+  animation: none;
+  border-right: none;
+}
+
+a, strong {
+  font-weight: bold;
+}
+
+.instructions, .learn-more-info{
+  display:flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+ol{
+  text-align: left;
 }
 
 .profile-github i {
   font-size: 18px;
   padding-left: 10px;
 }
+.learning-span{
+  font-size: 14px;
+  animation: none;
+  border-right: none;
+  line-height: 25px;
+}
+
