@@ -273,9 +273,11 @@ class TrainingCanvas extends React.Component {
                 <i className="far fa-question-circle training-info" id="question-mark3" onClick = {this.displayInfo}></i>
                 <canvas ref="trainingCanvas" width={200} height={200} />
 
-                <button onClick={this.sendData}>Add to Memory</button>
-                <button onClick={(e) => {e.preventDefault(); this.resetCanvas()}}>Clear Canvas</button>
-                <button onClick={this.trainData}>Train Network</button>
+                <div className="training-buttons-div">
+                    <button onClick={this.sendData}>Add to Memory</button>
+                    <button onClick={(e) => {e.preventDefault(); this.resetCanvas()}}>Clear Canvas</button>
+                    <button onClick={this.trainData}>Train Network</button>
+                </div>
 
             </div>
         )
