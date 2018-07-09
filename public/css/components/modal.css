@@ -296,6 +296,10 @@ ol{
   text-align: left;
 }
 
+.profile-github i {
+  font-size: 18px;
+  padding-left: 10px;
+}
 .learning-span{
   font-size: 14px;
   animation: none;

@@ -36,11 +36,17 @@ class TrainingCanvas extends React.Component {
         this.mousedownFunc = this.mouseDown();
         this.mousemove = this.mouseMove();
         this.mouseup = this.mouseUp();
+        // this.touchstart = this.touchStart();
+        // this.touchmove = this.touchMove();
+        // this.touchend = this.touchEnd();
 
 
         canvas.addEventListener("mousedown", this.mousedownFunc );
         canvas.addEventListener("mousemove", this.mousemove );
         document.addEventListener("mouseup", this.mouseup );
+        // canvas.addEventListener("touchstart", this.touchstart );
+        // canvas.addEventListener("touchmove", this.touchmove );
+        // document.addEventListener("touchend", this.touchend );
     }
 
     componentWillUnmount() {
@@ -51,7 +57,39 @@ class TrainingCanvas extends React.Component {
         canvas.removeEventListener("mousedown", this.mousedownFunc );
         canvas.removeEventListener("mousemove", this.mousemove );
         document.removeEventListener("mouseup", this.mouseup );
+        // canvas.removeEventListener("touchstart", this.touchstart);
+        // canvas.removeEventListener("touchmove", this.touchmove);
+        // document.removeEventListener("touchend", this.touchend);
     }
+
+    // touchStart() {
+    //     const that = this;
+
+    //     return (event) => {
+    //         event.preventDefault();
+    //         that.mousedown = true;
+    //         that.draw(event);
+    //     }
+    // }
+
+    // touchMove() {
+    //     const that = this;
+
+    //     return (event) => {
+    //         event.preventDefault();
+    //         that.draw(event);
+    //     }
+    // }
+
+    // touchEnd() {
+    //     const that = this;
+
+    //     return (event) => {
+    //         event.preventDefault();
+    //         that.mousedown = false;
+    //         that.state.ctx.beginPath();
+    //     }
+    // }
 
     mouseDown() {
         const that = this;
