@@ -243,3 +243,8 @@
   background:  rgba(48,178,249,0.6);
   box-shadow: 0vw 0.3vw 0.2vw rgb(2,12,144, 0.4);
 }
+
+.profile-github i {
+  font-size: 18px;
+  padding-left: 10px;
+}
