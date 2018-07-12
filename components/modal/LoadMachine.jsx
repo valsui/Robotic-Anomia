@@ -8,7 +8,8 @@ class LoadMachine extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          input: ""
+          input: "",
+          errors: ""
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInput = this.handleInput.bind(this);
@@ -27,17 +28,26 @@ class LoadMachine extends React.Component {
           learningRate: 0.3,
           hiddenLayers: [312, 312],
       }
+
       const net = new brain.NeuralNetwork(config);
+      let no_errors = true;
       try{
         net.fromJSON(JSON.parse(this.state.input));
       }
       catch(err){
         console.log(err);
+        no_errors = false
       }
       finally{
-        this.props.receiveNeuralNetwork("dumbNet", net);
-        this.props.selectNewNetwork();
-        this.props.closeModal();
+        if(no_errors){
+          this.props.receiveNeuralNetwork("dumbNet", net);
+          this.props.selectNewNetwork();
+          this.props.closeModal();
+        }else{
+          this.setState({
+            errors: "Improper data!"
+          })
+        }
       }
     }
 
@@ -47,7 +57,7 @@ class LoadMachine extends React.Component {
                 <div className="dev-bios-text">
                     Copy and paste all the texts in your machines.txt file and input it below
                     <br/>
-                    <br/>
+                {this.state.errors.length > 0 ? this.state.errors : <br/>}
                 <input className="machine-input" type="text" maxLength="unlimited" value={this.state.input} onChange={this.handleInput}>
                 </input>
                 </div>
